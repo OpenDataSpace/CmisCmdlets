@@ -3,50 +3,27 @@
 
   <!--=====================================================================-->
   <Target Name="Build">
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' == 'Windows_NT'"
-             Properties='Configuration=Powershell Debug'/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' != 'Windows_NT'"
-             Properties='Configuration=Pash Debug'/>
-  </Target>
-
-  <Target Name="Release">
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' == 'Windows_NT'"
-             Properties='Configuration=Powershell Release'/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' != 'Windows_NT'"
-             Properties='Configuration=Pash Release'/>
+    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
+             Condition="'$(OS)' == 'Windows_NT'" />
+    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
+             Condition="'$(OS)' != 'Windows_NT'" />
   </Target>
 
   <Target Name="Clean">
-    <MSBuild Projects="Source\CmisCmdlets.sln"
+    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'"
-             Properties='Configuration=Powershell Release'
              Targets="Clean"/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' == 'Windows_NT'"
-             Properties='Configuration=Powershell Debug'
-             Targets="Clean"/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
+    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
              Condition="'$(OS)' != 'Windows_NT'"
-             Properties='Configuration=Pash Release'
-             Targets="Clean"/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
-             Condition="'$(OS)' != 'Windows_NT'"
-             Properties='Configuration=Pash Debug'
              Targets="Clean"/>
   </Target>
 
   <Target Name="Rebuild">
-    <MSBuild Projects="Source\CmisCmdlets.sln"
+    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'"
-             Properties='Configuration=Powershell Debug'
              Targets="Rebuild"/>
-    <MSBuild Projects="Source\CmisCmdlets.sln"
+    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
              Condition="'$(OS)' != 'Windows_NT'"
-             Properties='Configuration=Pash Debug'
              Targets="Rebuild"/>
    </Target>
 </Project>

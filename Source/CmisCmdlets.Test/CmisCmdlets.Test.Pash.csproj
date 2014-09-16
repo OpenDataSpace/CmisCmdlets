@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CmisCmdlets.Test</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>CmisCmdlets.Test</AssemblyName>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>CmisCmdlets.Test</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony">
+      <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management.Automation">
+      <HintPath>..\..\Libraries\Pash\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Management">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Utility">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CmisCmdlets\CmisCmdlets.Pash.csproj">
+      <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
+      <Name>CmisCmdlets.Pash</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

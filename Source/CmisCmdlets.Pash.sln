@@ -1,37 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets", "CmisCmdlets\CmisCmdlets.csproj", "{DEA884B9-5CFE-4A5E-B33B-24961501F11D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets.Pash", "CmisCmdlets\CmisCmdlets.Pash.csproj", "{DEA884B9-5CFE-4A5E-B33B-24961501F11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets.Test", "CmisCmdlets.Test\CmisCmdlets.Test.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets.Test.Pash", "CmisCmdlets.Test\CmisCmdlets.Test.Pash.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Pash Debug|Any CPU = Pash Debug|Any CPU
-		Pash Release|Any CPU = Pash Release|Any CPU
-		Powershell Debug|Any CPU = Powershell Debug|Any CPU
-		Powershell Release|Any CPU = Powershell Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Pash Debug|Any CPU.ActiveCfg = Pash Debug|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Pash Debug|Any CPU.Build.0 = Pash Debug|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Pash Release|Any CPU.ActiveCfg = Pash Release|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Pash Release|Any CPU.Build.0 = Pash Release|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Powershell Debug|Any CPU.ActiveCfg = Powershell Debug|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Powershell Debug|Any CPU.Build.0 = Powershell Debug|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Powershell Release|Any CPU.ActiveCfg = Powershell Release|Any CPU
-		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Powershell Release|Any CPU.Build.0 = Powershell Release|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Pash Debug|Any CPU.ActiveCfg = Pash Debug|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Pash Debug|Any CPU.Build.0 = Pash Debug|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Pash Release|Any CPU.ActiveCfg = Pash Release|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Pash Release|Any CPU.Build.0 = Pash Release|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Powershell Debug|Any CPU.ActiveCfg = Powershell Debug|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Powershell Debug|Any CPU.Build.0 = Powershell Debug|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Powershell Release|Any CPU.ActiveCfg = Powershell Release|Any CPU
-		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Powershell Release|Any CPU.Build.0 = Powershell Release|Any CPU
+		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = CmisCmdlets\CmisCmdlets.csproj
+		StartupItem = CmisCmdlets\CmisCmdlets.Pash.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = Flat
