@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Pash Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets/CmisCommandBase.cs">
+    <Files>
+      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="15" Column="44" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <AuthorInfo Name="Stefan Burnicki" Email="stefan.burnicki@graudata.com" Copyright="2014" Company="GRAU DATA" Trademark="" />
+</Properties>
