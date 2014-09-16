@@ -11,8 +11,12 @@ pushd $pashsrc
 xbuild /p:Configuration=Release
 popd
 
+libdir="Libraries/Pash"
+
+mkdir -p $libdir
+
 # Copy all dlls
-cp $pashsrc/Source/PashConsole/bin/Release/*.dll .
+cp $pashsrc/Source/PashConsole/bin/Release/*.dll $libdir/
 
 echo "Updated Pash"
 
