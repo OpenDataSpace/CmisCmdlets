@@ -1,12 +1,51 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets/CmisCommandBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets.Test/TestBase.cs">
     <Files>
-      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="23" Column="1" />
+      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="26" Column="24" />
+      <File FileName="CmisCmdlets/Properties/AssemblyInfo.cs" Line="22" Column="41" />
+      <File FileName="CmisCmdlets.Test/TestBase.cs" Line="21" Column="14" />
+      <File FileName="CmisCmdlets.Test/UtilityTests.cs" Line="17" Column="30" />
+      <File FileName="CmisCmdlets.Test/TestConfig.txt" Line="3" Column="38" />
+      <File FileName="CmisCmdlets.Test/TestConfig.config" Line="5" Column="2" />
+      <File FileName="CmisCmdlets.Test/NUnitTestClass.cs" Line="25" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CmisCmdlets.Pash" expanded="True">
+            <Node name="Properties" expanded="True" />
+          </Node>
+          <Node name="CmisCmdlets.Test.Pash" expanded="True" selected="True">
+            <Node name="Properties" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="CmisCmdlets.Test.Pash" expanded="True">
+            <Node name="CmisCmdlets" expanded="True">
+              <Node name="Test" expanded="True">
+                <Node name="ConnectionTests" expanded="True">
+                  <Node name="CanConnect" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/stefan/workspace/CmisCmdlets/Source/CmisCmdlets.Test/NUnitTestClass.cs" line="25" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <AuthorInfo Name="Stefan Burnicki" Email="stefan.burnicki@graudata.com" Copyright="2014" Company="GRAU DATA" Trademark="" />

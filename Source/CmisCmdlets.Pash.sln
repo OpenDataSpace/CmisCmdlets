@@ -27,6 +27,7 @@ Global
 		$1.DirectoryNamespaceAssociation = Flat
 		$1.ResourceNamePolicy = MSBuild
 		$0.TextStylePolicy = $2
+		$2.FileWidth = 100
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
 		$2.scope = text/x-csharp
