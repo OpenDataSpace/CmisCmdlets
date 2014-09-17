@@ -13,13 +13,14 @@ using System.Collections;
 
 namespace CmisCmdlets
 {
-    public class CmisConnectionCommandBase : CmisCommandBase
-    {
+    [Cmdlet(VerbsCommunications.Connect, "Cmis")]
+    public class ConnectCmisCommand : CmisCommandBase
+    {        
         [Parameter(Mandatory=true,
-                   ParameterSetName = "AtomPub",
-                   ValueFromPipelineByPropertyName = true,
-                   Position = 0,
-                   HelpMessage = "Url to the AtomPub interface of the Cmis repository")]
+                            ParameterSetName = "AtomPub",
+                            ValueFromPipelineByPropertyName = true,
+                            Position = 0,
+                            HelpMessage = "Url to the AtomPub interface of the Cmis repository")]
         public string Url { get; set; }
 
         [Parameter(Mandatory=true,
@@ -43,6 +44,17 @@ namespace CmisCmdlets
                    HelpMessage = "OpenCMIS parameters for the Cmis repository")]
         public Hashtable Parameters { get; set; }
 
+        protected override void ProcessRecord()
+        {
+            if (Parameters == null)
+            {
+                ConnectionParameters = ConnectionFactory.CreateAtomPubParams(Url, UserName, Password);
+            }
+            else
+            {
+                ConnectionParameters = Utilities.HashtableToStringDict(Parameters);
+            }
+        }
     }
 }
 

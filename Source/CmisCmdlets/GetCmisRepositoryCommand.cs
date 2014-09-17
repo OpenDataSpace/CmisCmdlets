@@ -13,8 +13,8 @@ using System.Management.Automation;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.Get, "CmisRepositories", DefaultParameterSetName = "AtomPub")]
-    public class GetCmisRepositoryCommand : CmisConnectionCommandBase
+    [Cmdlet(VerbsCommon.Get, "CmisRepositories")]
+    public class GetCmisRepositoryCommand : CmisCommandBase
     {
         [Parameter(Mandatory = false, HelpMessage = "Name of the Cmis repository")]
         public string[] Name { get; set; }
@@ -24,9 +24,7 @@ namespace CmisCmdlets
 
         protected override void ProcessRecord()
         {
-            var connectionParams = (Parameters == null) ? 
-                      ConnectionFactory.CreateAtomPubParams(Url, UserName, Password)
-                    : Utilities.HashtableToStringDict(Parameters);
+            var connectionParams = GetConnectionParameters();
             var repos = ConnectionFactory.GetRepositories(connectionParams);
             if (Name == null || Name.Length == 0)
             {

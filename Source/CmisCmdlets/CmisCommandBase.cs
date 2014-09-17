@@ -20,7 +20,39 @@ namespace CmisCmdlets
 {
     public class CmisCommandBase : PSCmdlet
     {
+        public const string SESSION_VAR_NAME = "_CMIS_SESSION";
 
+        internal static IDictionary<string, string> ConnectionParameters;
+
+        private ISession _session;
+        public ISession Session
+        {
+            get
+            {
+                if (_session == null)
+                {
+                    _session = GetSessionFromVariable();
+                }
+                return _session;
+            }
+        }
+
+        public void SetCmisSession(ISession session)
+        {
+            _session = session;
+            SessionState.PSVariable.Set(SESSION_VAR_NAME, session);
+        }
+
+        public ISession GetSessionFromVariable()
+        {
+            var session = SessionState.PSVariable.Get(SESSION_VAR_NAME).Value as ISession;
+            if (session == null)
+            {
+                throw new RuntimeException("Session variable not set. " +
+                                           "Did you forget to connect and set a repository?");
+            }
+            return session;
+        }
     }
 }
 
