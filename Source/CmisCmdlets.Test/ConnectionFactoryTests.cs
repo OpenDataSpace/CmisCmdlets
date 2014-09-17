@@ -16,13 +16,13 @@ using DotCMIS;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class ConnectionTests : TestBase
+    public class ConnectionFactoryTests : TestBase
     {
                 
         [Test]
         public void GetRepositories()
         {
-            var repos = CmisCommandBase.GetAtomPubRepositories(TestURL, TestUser, TestPassword);
+            var repos = ConnectionFactory.GetAtomPubRepositories(TestURL, TestUser, TestPassword);
             Assert.NotNull(repos);
             var repoNames = from rep in repos select rep.Name;
             Assert.That(repoNames, Contains.Item(TestRepository));
@@ -32,7 +32,7 @@ namespace CmisCmdlets.Test
         public void GetRepositoriesWithFeaturedUrl()
         {
             var url = BuildFeaturedUrl(TestURL, TestUser, TestPassword);
-            var repos = CmisCommandBase.GetAtomPubRepositories(url);
+            var repos = ConnectionFactory.GetAtomPubRepositories(url);
             Assert.NotNull(repos);
             var repoNames = from rep in repos select rep.Name;
             Assert.That(repoNames, Contains.Item(TestRepository));
@@ -41,9 +41,9 @@ namespace CmisCmdlets.Test
         [Test]
         public void ConnectWithRepoId()
         {
-            var parameters = CmisCommandBase.CreateAtomPubParams(TestURL, TestUser, TestPassword);
-            var repo = CmisCommandBase.GetRepositoryByName(parameters, TestRepository);
-            var session = CmisCommandBase.ConnectAtomPubById(TestURL, TestUser, TestPassword,
+            var parameters = ConnectionFactory.CreateAtomPubParams(TestURL, TestUser, TestPassword);
+            var repo = ConnectionFactory.GetRepositoryByName(parameters, TestRepository);
+            var session = ConnectionFactory.ConnectAtomPubById(TestURL, TestUser, TestPassword,
                                                          repo.Id);
             Assert.NotNull(session);
             Assert.NotNull(session.RepositoryInfo);
@@ -52,7 +52,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void ConnectWithRepoName()
         {
-            var session = CmisCommandBase.ConnectAtomPub(TestURL, TestUser, TestPassword,
+            var session = ConnectionFactory.ConnectAtomPub(TestURL, TestUser, TestPassword,
                                                          TestRepository);
             Assert.NotNull(session);
             Assert.NotNull(session.RepositoryInfo);
@@ -62,15 +62,9 @@ namespace CmisCmdlets.Test
         public void ConnectWithFeaturedURL()
         {
             var url = BuildFeaturedUrl(TestURL, TestUser, TestPassword);
-            var session = CmisCommandBase.ConnectAtomPub(url, TestRepository);
+            var session = ConnectionFactory.ConnectAtomPub(url, TestRepository);
             Assert.NotNull(session);
             Assert.NotNull(session.RepositoryInfo);
-        }
-
-        private string BuildFeaturedUrl(string rawUrl, string user, string pw)
-        {
-            var parts = rawUrl.Split(new [] { @"://" }, 2, StringSplitOptions.None);
-            return String.Format("{0}://{1}:{2}@{3}", parts[0], user, pw, parts[1]);
         }
     }
 }

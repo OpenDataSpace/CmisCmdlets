@@ -23,7 +23,7 @@ namespace CmisCmdlets.Test
         public void parsingURLWorks(string input, string user, string pw, string url)
         {
             string resUrl, resUser, resPw;
-            CmisCommandBase.ParseURL(input, out resUser, out resPw, out resUrl);
+            ConnectionFactory.ParseURL(input, out resUser, out resPw, out resUrl);
             Assert.AreEqual(user, resUser);
             Assert.AreEqual(pw, resPw);
             Assert.AreEqual(url, resUrl);

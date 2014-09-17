@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CmisCommandBase.cs" />
     <Compile Include="CmisCmdlets.cs" />
+    <Compile Include="ConnectionFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

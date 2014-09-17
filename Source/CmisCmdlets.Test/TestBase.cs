@@ -46,6 +46,13 @@ namespace CmisCmdlets.Test
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
         }
+
+        
+        protected string BuildFeaturedUrl(string rawUrl, string user, string pw)
+        {
+            var parts = rawUrl.Split(new [] { @"://" }, 2, StringSplitOptions.None);
+            return String.Format("{0}://{1}:{2}@{3}", parts[0], user, pw, parts[1]);
+        }
     }
 }
 

@@ -55,7 +55,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="UtilityTests.cs" />
     <Compile Include="TestShellInterface.cs" />
-    <Compile Include="ConnectionTests.cs" />
+    <Compile Include="ConnectionFactoryTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
