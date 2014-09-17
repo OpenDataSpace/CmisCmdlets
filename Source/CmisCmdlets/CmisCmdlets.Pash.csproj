@@ -51,6 +51,9 @@
     <Compile Include="CmisCommandBase.cs" />
     <Compile Include="CmisCmdlets.cs" />
     <Compile Include="ConnectionFactory.cs" />
+    <Compile Include="CmisConnectionCommandBase.cs" />
+    <Compile Include="GetCmisRepositoriesCommand.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

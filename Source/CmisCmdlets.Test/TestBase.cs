@@ -11,13 +11,15 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
+using TestShell;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test
 {
     public class TestBase
     {
         private AppSettingsSection _appSettings;
-        protected AppSettingsSection AppSettings
+        public AppSettingsSection AppSettings
         {
             get
             {
@@ -32,21 +34,40 @@ namespace CmisCmdlets.Test
             }
         }
 
-        protected string TestUser { get { return AppSettings.Settings["user"].Value; } }
+        public string TestUser { get { return AppSettings.Settings["user"].Value; } }
 
-        protected string TestPassword { get { return AppSettings.Settings["password"].Value; } }
+        public string TestPassword { get { return AppSettings.Settings["password"].Value; } }
 
-        protected string TestURL { get { return AppSettings.Settings["url"].Value; } }
+        public string TestURL { get { return AppSettings.Settings["url"].Value; } }
 
-        protected string TestRepository { get { return AppSettings.Settings["repository"].Value; } }
+        public string TestRepository { get { return AppSettings.Settings["repository"].Value; } }
     
+        private TestShellInterface _shell;
+        public TestShellInterface Shell
+        {
+            get
+            {
+                if (_shell == null)
+                {
+                    _shell = new TestShellInterface();
+                }
+                return _shell;
+            }
+        }
+
         protected TestBase()
         {
             // Should avoid problems with SSL and tests systems without valid certificate
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
         }
-
+        
+        public static string CmdletName(Type cmdletType)
+        {
+            var attribute = System.Attribute.GetCustomAttribute(cmdletType, typeof(CmdletAttribute))
+                as CmdletAttribute;
+            return string.Format("{0}-{1}", attribute.VerbName, attribute.NounName);
+        }
         
         protected string BuildFeaturedUrl(string rawUrl, string user, string pw)
         {

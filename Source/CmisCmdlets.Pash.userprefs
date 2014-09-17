@@ -1,23 +1,28 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets.Test/TestBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets.Test/TestShellInterface.cs">
     <Files>
-      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="26" Column="24" />
+      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="24" Column="6" />
       <File FileName="CmisCmdlets/Properties/AssemblyInfo.cs" Line="22" Column="41" />
-      <File FileName="CmisCmdlets.Test/TestBase.cs" Line="21" Column="14" />
-      <File FileName="CmisCmdlets.Test/UtilityTests.cs" Line="17" Column="30" />
-      <File FileName="CmisCmdlets.Test/TestConfig.txt" Line="3" Column="38" />
-      <File FileName="CmisCmdlets.Test/TestConfig.config" Line="5" Column="2" />
-      <File FileName="CmisCmdlets.Test/NUnitTestClass.cs" Line="25" Column="1" />
+      <File FileName="CmisCmdlets.Test/TestBase.cs" Line="65" Column="40" />
+      <File FileName="CmisCmdlets.Test/UtilityTests.cs" Line="26" Column="30" />
+      <File FileName="CmisCmdlets.Test/ConnectionFactoryTests.cs" Line="19" Column="35" />
+      <File FileName="../TestConfig.config" Line="7" Column="34" />
+      <File FileName="CmisCmdlets/ConnectionFactory.cs" Line="21" Column="1" />
+      <File FileName="CmisCmdlets/CmisConnectionCommandBase.cs" Line="20" Column="31" />
+      <File FileName="CmisCmdlets/GetCmisRepositoriesCommand.cs" Line="31" Column="6" />
+      <File FileName="CmisCmdlets.Test/TestShellInterface.cs" Line="82" Column="10" />
+      <File FileName="CmisCmdlets.Test/GetCmisRepositoryTests.cs" Line="21" Column="62" />
+      <File FileName="CmisCmdlets/Utilities.cs" Line="26" Column="25" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="CmisCmdlets.Pash" expanded="True">
+          <Node name="CmisCmdlets.Pash" expanded="True" />
+          <Node name="CmisCmdlets.Test.Pash" expanded="True">
+            <Node name="References" expanded="True" />
             <Node name="Properties" expanded="True" />
-          </Node>
-          <Node name="CmisCmdlets.Test.Pash" expanded="True" selected="True">
-            <Node name="Properties" expanded="True" />
+            <Node name="TestShellInterface.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -28,25 +33,19 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="CmisCmdlets.Test.Pash" expanded="True">
-            <Node name="CmisCmdlets" expanded="True">
-              <Node name="Test" expanded="True">
-                <Node name="ConnectionTests" expanded="True">
-                  <Node name="CanConnect" selected="True" />
-                </Node>
-              </Node>
-            </Node>
+            <Node name="CmisCmdlets" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/stefan/workspace/CmisCmdlets/Source/CmisCmdlets.Test/NUnitTestClass.cs" line="25" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="CmisCmdlets.Test/NUnitTestClass.cs" line="24" offsetX="473" offsetY="240" expression="url" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <AuthorInfo Name="Stefan Burnicki" Email="stefan.burnicki@graudata.com" Copyright="2014" Company="GRAU DATA" Trademark="" />
 </Properties>

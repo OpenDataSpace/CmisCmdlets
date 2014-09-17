@@ -14,7 +14,7 @@ using System.Text;
 using System;
 
 
-namespace Test                                                                                                                               
+namespace TestShell                                                                                                                               
 {                                                                                                                                            
     public class TestShellInterface                                                                                                          
     {                                                                                                                                        
@@ -94,9 +94,7 @@ namespace Test
                 catch (MethodInvocationException e)
                 {
                     throw new RuntimeException(String.Format(
-                        "Failed to import module '{0}'. Didn't you build it?", path),
-                                               e
-                                               );
+                        "Failed to import module '{0}'. Didn't you build it?", path), e);
                 }                                            
             }
             else
