@@ -8,6 +8,7 @@ Libraries/Pash/*.dll
 *.suo
 *.user
 *.sln.docstates
+*.userprefs
 
 # Build results
 [Dd]ebug/
