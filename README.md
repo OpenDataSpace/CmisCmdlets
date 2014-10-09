@@ -13,3 +13,21 @@ and invoke `update_pash.sh /path/to/cloned/Pash`
 
 Then build the project as usual. 
 
+# Cmdlets
+The following cmdlets are provided:
+| **Cmdlet Name**    | **Description**                                           |
+|--------------------|-----------------------------------------------------------|
+| Connect-Cmis       | Connects to a CMIS repository                             |
+| Disconnect-Cmis    | Disconnects and clears the session                        |
+| Get-CmisRepository | Lists all available repositories                          |
+| Set-CmisRepository | Sets the current repository                               |
+| Set-CmisDirectory  | Sets the dircetory in the repository where you operate in |
+| Get-CmisDirectory  | Gets in which directory you are currently in              |
+| New-CmisDirectory  | Creates a new directory                                   |
+| New-CmisFile       | Creates a new (empty) file                                |
+| Get-CmisObject     | Gets informsation about all/specific CMIS objects         |
+| Read-CmisObject    | Reads the contents of an object                           |
+| Write-CmisObject   | Writes the content of an object by stream                 |
+| Receive-CmisObject | Downloads an object with contents                         |
+| Send-CmisObject    | Uploads an object with contents                           |
+| Remove-CmisObject  | Removes an object                                         |
