@@ -25,7 +25,7 @@ namespace CmisCmdlets
                    ParameterSetName = "Id", Position = 0)]
         public string Id { get; set; }
 
-        protected override void EndProcessing()
+        protected override void ProcessRecord()
         {
             ISession session = null;
             if (!String.IsNullOrEmpty(Name))

@@ -21,6 +21,7 @@ namespace CmisCmdlets
     public class CmisCommandBase : PSCmdlet
     {
         public const string SESSION_VAR_NAME = "_CMIS_SESSION";
+        public const string DIRECTORY_VAR_NAME = "_CMIS_DIRECTORY";
 
         private static IDictionary<string, string> _connectionParameters;
         internal static IDictionary<string, string> ConnectionParameters
@@ -40,26 +41,13 @@ namespace CmisCmdlets
             }
         }
 
-        private ISession _session;
-        public ISession Session
-        {
-            get
-            {
-                if (_session == null)
-                {
-                    _session = GetSessionFromVariable();
-                }
-                return _session;
-            }
-        }
-
         public void SetCmisSession(ISession session)
         {
-            _session = session;
             SessionState.PSVariable.Set(SESSION_VAR_NAME, session);
+            SetCmisDirectory("/"); // reset the directory to root
         }
 
-        public ISession GetSessionFromVariable()
+        public ISession GetCmisSession()
         {
             var session = SessionState.PSVariable.Get(SESSION_VAR_NAME).Value as ISession;
             if (session == null)
@@ -68,6 +56,17 @@ namespace CmisCmdlets
                                            "Did you forget to connect and set a repository?");
             }
             return session;
+        }
+
+        public void SetCmisDirectory(string path)
+        {
+            SessionState.PSVariable.Set(DIRECTORY_VAR_NAME, path);
+        }
+
+        public string GetCmisDirectory(string path)
+        {
+            var dir = SessionState.PSVariable.Get(DIRECTORY_VAR_NAME).Value as string;
+            return String.IsNullOrEmpty(dir) ? "/" : dir;
         }
     }
 }

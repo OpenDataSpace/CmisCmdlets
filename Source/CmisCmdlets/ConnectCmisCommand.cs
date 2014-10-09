@@ -52,6 +52,10 @@ namespace CmisCmdlets
 
         protected override void ProcessRecord()
         {
+            // first make sure to reset existing data
+            ConnectionParameters = null;
+            SetCmisSession(null);
+
             // set the connection parameters
             if (Parameters == null)
             {
