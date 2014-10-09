@@ -21,10 +21,9 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetRepositoriesAtomPubWorks()
         {
-            var cmd = String.Format("{0} -url {1} -user {2} -password {3}",
-                                    CmdletName(typeof(GetCmisRepositoryCommand)),
-                                    TestURL, TestUser, TestPassword);
-            var results = Shell.Execute(cmd);
+            CmisCommandBase.ConnectionParameters = ConnectionFactory.CreateAtomPubParams(TestURL,
+                                                                           TestUser, TestPassword);
+            var results = Shell.Execute(CmdletName(typeof(GetCmisRepositoryCommand)));
             Assert.NotNull(results);
             Assert.Greater(results.Count, 0);
         }
@@ -32,9 +31,23 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetRepositoriesAtomPubWorksWithName()
         {
-            var cmd = String.Format("{0} -url {1} -user {2} -password {3} -name",
-                                    CmdletName(typeof(GetCmisRepositoryCommand)),
-                                    TestURL, TestUser, TestPassword, TestRepository.Substring(0,1));
+            CmisCommandBase.ConnectionParameters = ConnectionFactory.CreateAtomPubParams(TestURL,
+                                                                            TestUser, TestPassword);
+            var cmd = String.Format("{0} -name {1}", CmdletName(typeof(GetCmisRepositoryCommand)),
+                                    TestRepository.Substring(0,1));
+            var results = Shell.Execute(cmd);
+            Assert.NotNull(results);
+            var reponames = from res in results select ((IRepository)res).Name;
+            Assert.That(reponames, Contains.Item(TestRepository));
+        }
+
+        [Test]
+        public void GetRepositoriesAtomPubWorksAfterConnectCmdlet()
+        {
+            var cmd = String.Format("{0} -url {1} -user {2} -password {3}; {4} -name {5}",
+                                    CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
+                                    TestPassword, CmdletName(typeof(GetCmisRepositoryCommand)),
+                                    TestRepository);
             var results = Shell.Execute(cmd);
             Assert.NotNull(results);
             var reponames = from res in results select ((IRepository)res).Name;

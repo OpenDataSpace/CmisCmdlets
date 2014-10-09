@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Net;
 using TestShell;
 using System.Management.Automation;
+using System.Text;
 
 namespace CmisCmdlets.Test
 {
@@ -61,12 +62,38 @@ namespace CmisCmdlets.Test
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
         }
+
+        protected string GetConnectToTestRepoCmd()
+        {
+            return String.Format("{0} -url {1} -user {2} -password {3} -repo {4};",
+                                 CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
+                                 TestPassword, TestRepository);
+        }
+
+        public static string NewlineJoin(params string[] strs)
+        {
+            return String.Join(Environment.NewLine, strs);
+        }
         
         public static string CmdletName(Type cmdletType)
         {
             var attribute = System.Attribute.GetCustomAttribute(cmdletType, typeof(CmdletAttribute))
                 as CmdletAttribute;
             return string.Format("{0}-{1}", attribute.VerbName, attribute.NounName);
+        }
+
+        public static string GetCodeForHashtableDefinition(string varname,
+                                                           IDictionary<string, string> hashtable)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("${0} = @{{", varname);
+            foreach (var pair in hashtable)
+            {
+                sb.AppendFormat(" {0} = \"{1}\";", pair.Key, pair.Value);
+            }
+            sb.Remove(sb.Length - 1, 1); // remove last ;
+            sb.Append("}; ");
+            return sb.ToString();
         }
         
         protected string BuildFeaturedUrl(string rawUrl, string user, string pw)

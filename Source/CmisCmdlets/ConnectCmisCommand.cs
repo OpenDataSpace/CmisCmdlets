@@ -10,10 +10,11 @@
 using System;
 using System.Management.Automation;
 using System.Collections;
+using DotCMIS;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommunications.Connect, "Cmis")]
+    [Cmdlet(VerbsCommunications.Connect, "Cmis", DefaultParameterSetName = "AtomPub")]
     public class ConnectCmisCommand : CmisCommandBase
     {        
         [Parameter(Mandatory=true,
@@ -44,8 +45,14 @@ namespace CmisCmdlets
                    HelpMessage = "OpenCMIS parameters for the Cmis repository")]
         public Hashtable Parameters { get; set; }
 
+        [Parameter(Mandatory=false,
+                   Position = 3,
+                   HelpMessage = "Repository name to connect to")]
+        public string Repository { get; set; }
+
         protected override void ProcessRecord()
         {
+            // set the connection parameters
             if (Parameters == null)
             {
                 ConnectionParameters = ConnectionFactory.CreateAtomPubParams(Url, UserName, Password);
@@ -53,6 +60,18 @@ namespace CmisCmdlets
             else
             {
                 ConnectionParameters = Utilities.HashtableToStringDict(Parameters);
+            }
+
+            // check if we should directly connect to a specified repository
+            if (!String.IsNullOrEmpty(Repository))
+            {
+                // either by optional name
+                SetCmisSession(ConnectionFactory.Connect(ConnectionParameters, Repository));
+            }
+            else if (ConnectionParameters.ContainsKey(SessionParameter.RepositoryId))
+            {
+                // or by provided parameters
+                SetCmisSession(ConnectionFactory.Connect(ConnectionParameters));
             }
         }
     }

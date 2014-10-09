@@ -54,9 +54,7 @@ namespace CmisCmdlets
                                               string repoName)
         {
             var parameters = CreateAtomPubParams(url, user, password);
-            var repo = GetRepositoryByName(parameters, repoName);
-            parameters[SessionParameter.RepositoryId] = repo.Id;
-            return Connect(parameters);
+            return Connect(parameters, repoName);
         }
 
         public static ISession ConnectAtomPubById(string url, string user, string password,
@@ -65,8 +63,15 @@ namespace CmisCmdlets
             return Connect(CreateAtomPubParams(url, user, password, repoId));
         }
 
-        public static ISession Connect(IDictionary<string, string> parameters)
+        public static ISession Connect(IDictionary<string, string> parameters, string repoName)
         { 
+            var repo = GetRepositoryByName(parameters, repoName);
+            parameters[SessionParameter.RepositoryId] = repo.Id;
+            return Connect(parameters);
+        }
+
+        public static ISession Connect(IDictionary<string, string> parameters)
+        {
             var fact = SessionFactory.NewInstance();
             return fact.CreateSession(parameters);
         }

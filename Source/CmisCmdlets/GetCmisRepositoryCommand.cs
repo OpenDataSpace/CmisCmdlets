@@ -13,7 +13,7 @@ using System.Management.Automation;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.Get, "CmisRepositories")]
+    [Cmdlet(VerbsCommon.Get, "CmisRepository")]
     public class GetCmisRepositoryCommand : CmisCommandBase
     {
         [Parameter(Mandatory = false, HelpMessage = "Name of the Cmis repository")]
@@ -24,8 +24,7 @@ namespace CmisCmdlets
 
         protected override void ProcessRecord()
         {
-            var connectionParams = GetConnectionParameters();
-            var repos = ConnectionFactory.GetRepositories(connectionParams);
+            var repos = ConnectionFactory.GetRepositories(ConnectionParameters);
             if (Name == null || Name.Length == 0)
             {
                 Name = new [] { "" };

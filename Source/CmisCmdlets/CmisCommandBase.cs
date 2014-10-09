@@ -22,7 +22,23 @@ namespace CmisCmdlets
     {
         public const string SESSION_VAR_NAME = "_CMIS_SESSION";
 
-        internal static IDictionary<string, string> ConnectionParameters;
+        private static IDictionary<string, string> _connectionParameters;
+        internal static IDictionary<string, string> ConnectionParameters
+        {
+            set
+            {
+                _connectionParameters = value;
+            }
+
+            get
+            {
+                if (_connectionParameters == null)
+                {
+                    throw new RuntimeException("Unknown connection parameters. Please connect first");
+                }
+                return _connectionParameters;
+            }
+        }
 
         private ISession _session;
         public ISession Session

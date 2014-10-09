@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets.Pash", "CmisCmdlets\CmisCmdlets.Pash.csproj", "{DEA884B9-5CFE-4A5E-B33B-24961501F11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmisCmdlets.Test.Pash", "CmisCmdlets.Test\CmisCmdlets.Test.Pash.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Pash", "CmisCmdlets.Test\Tests.Pash.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
