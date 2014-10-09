@@ -11,6 +11,7 @@ using System;
 using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test
 {
@@ -56,6 +57,20 @@ namespace CmisCmdlets.Test
             var session = res[0] as ISession;
             Assert.NotNull(session);
             Assert.AreEqual(TestRepository, session.RepositoryInfo.Name);
+        }
+
+        [Test]
+        public void DisconnectCmdletClearsSessionAndParams()
+        {
+            var cmd = String.Format("{0}; {1}; ${2}", GetConnectToTestRepoCmd(),
+                                    CmdletName(typeof(DisconnectCmisCommand)),
+                                    CmisCommandBase.SESSION_VAR_NAME);
+            var res = Shell.Execute(cmd);
+            Assert.Throws<RuntimeException>(delegate { 
+                Assert.Null(CmisCommandBase.ConnectionParameters);
+            });
+            Assert.AreEqual(1, res.Count);
+            Assert.Null(res[0]);
         }
 
     }

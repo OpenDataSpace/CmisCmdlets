@@ -54,6 +54,7 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="GetCmisRepositoryCommand.cs" />
     <Compile Include="ConnectCmisCommand.cs" />
+    <Compile Include="DisconnectCmisCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
