@@ -15,8 +15,9 @@ Then build the project as usual.
 
 # Cmdlets
 The following cmdlets are provided:
+
 | **Cmdlet Name**    | **Description**                                           |
-|--------------------|-----------------------------------------------------------|
+|:-------------------|:----------------------------------------------------------|
 | Connect-Cmis       | Connects to a CMIS repository                             |
 | Disconnect-Cmis    | Disconnects and clears the session                        |
 | Get-CmisRepository | Lists all available repositories                          |
