@@ -35,10 +35,7 @@ namespace CmisCmdlets.Test
                                     CmisCommandBase.SESSION_VAR_NAME);
             var res = Shell.Execute(cmd);
             Assert.NotNull(CmisCommandBase.ConnectionParameters);
-            Assert.AreEqual(1, res.Count);
-            var session = res[0] as ISession;
-            Assert.NotNull(session);
-            Assert.AreEqual(TestRepository, session.RepositoryInfo.Name);
+            ValidateSession(res, TestRepository);
         }
 
         [Test, Ignore("Currently not parsed by Pash")]
@@ -53,10 +50,7 @@ namespace CmisCmdlets.Test
                                     CmisCommandBase.SESSION_VAR_NAME);
             var res = Shell.Execute(cmd);
             Assert.NotNull(CmisCommandBase.ConnectionParameters);
-            Assert.AreEqual(1, res.Count);
-            var session = res[0] as ISession;
-            Assert.NotNull(session);
-            Assert.AreEqual(TestRepository, session.RepositoryInfo.Name);
+            ValidateSession(res, TestRepository);
         }
 
         [Test]

@@ -14,6 +14,9 @@ using System.Net;
 using TestShell;
 using System.Management.Automation;
 using System.Text;
+using System.Collections.ObjectModel;
+using NUnit.Framework;
+using DotCMIS.Client;
 
 namespace CmisCmdlets.Test
 {
@@ -42,6 +45,8 @@ namespace CmisCmdlets.Test
         public string TestURL { get { return AppSettings.Settings["url"].Value; } }
 
         public string TestRepository { get { return AppSettings.Settings["repository"].Value; } }
+
+        public string TestRepositoryAlt { get { return AppSettings.Settings["repository_alt"].Value; } }
     
         private TestShellInterface _shell;
         public TestShellInterface Shell
@@ -100,6 +105,18 @@ namespace CmisCmdlets.Test
         {
             var parts = rawUrl.Split(new [] { @"://" }, 2, StringSplitOptions.None);
             return String.Format("{0}://{1}:{2}@{3}", parts[0], user, pw, parts[1]);
+        }
+
+        protected void ValidateSession(Collection<object> results, string repoName)
+        {
+            Assert.AreEqual(1, results.Count);
+            ValidateSession(results[0] as ISession, repoName);
+        }
+
+        protected void ValidateSession(ISession session, string repoName)
+        {
+            Assert.NotNull(session);
+            Assert.AreEqual(repoName, session.RepositoryInfo.Name);
         }
     }
 }

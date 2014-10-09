@@ -12,6 +12,7 @@ using System.Linq;
 using NUnit.Framework;
 using CmisCmdlets;
 using DotCMIS.Client;
+using DotCMIS;
 
 namespace CmisCmdlets.Test
 {
@@ -26,6 +27,9 @@ namespace CmisCmdlets.Test
             var results = Shell.Execute(CmdletName(typeof(GetCmisRepositoryCommand)));
             Assert.NotNull(results);
             Assert.Greater(results.Count, 0);
+            var reponames = from res in results select ((IRepository)res).Name;
+            Assert.That(reponames, Contains.Item(TestRepository));
+            Assert.That(reponames, Contains.Item(TestRepositoryAlt));
         }
 
         [Test]
@@ -52,6 +56,21 @@ namespace CmisCmdlets.Test
             Assert.NotNull(results);
             var reponames = from res in results select ((IRepository)res).Name;
             Assert.That(reponames, Contains.Item(TestRepository));
+        }
+
+        [Test]
+        public void GetRepositoriesWorksIfParametersContainRepositoryId()
+        {
+            CmisCommandBase.ConnectionParameters = ConnectionFactory.CreateAtomPubParams(TestURL,
+                                                                            TestUser, TestPassword);
+            var repo = ConnectionFactory.GetRepositoryByName(CmisCommandBase.ConnectionParameters,
+                                                             TestRepository);
+            CmisCommandBase.ConnectionParameters[SessionParameter.RepositoryId] = repo.Id;
+            var results = Shell.Execute(CmdletName(typeof(GetCmisRepositoryCommand)));
+            Assert.NotNull(results);
+            var reponames = from res in results select ((IRepository)res).Name;
+            Assert.That(reponames, Contains.Item(TestRepository));
+            Assert.That(reponames, Contains.Item(TestRepositoryAlt));
         }
     }
 }

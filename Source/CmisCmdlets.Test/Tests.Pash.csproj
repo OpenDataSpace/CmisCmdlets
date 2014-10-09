@@ -58,6 +58,7 @@
     <Compile Include="ConnectionFactoryTests.cs" />
     <Compile Include="GetCmisRepositoryTests.cs" />
     <Compile Include="ConnectCmisTests.cs" />
+    <Compile Include="SetCmisRepositoryTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
