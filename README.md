@@ -22,7 +22,7 @@ The following cmdlets are provided:
 | Disconnect-Cmis    | Disconnects and clears the session                        |
 | Get-CmisRepository | Lists all available repositories                          |
 | Set-CmisRepository | Sets the current repository                               |
-| Set-CmisDirectory  | Sets the dircetory in the repository where you operate in |
+| Set-CmisDirectory  | Sets the directory in the repository where you operate in |
 | Get-CmisDirectory  | Gets in which directory you are currently in              |
 | New-CmisDirectory  | Creates a new directory                                   |
 | New-CmisFile       | Creates a new (empty) file                                |
