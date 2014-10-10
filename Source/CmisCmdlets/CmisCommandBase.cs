@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DotCMIS;
 using DotCMIS.Client;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
@@ -44,7 +45,7 @@ namespace CmisCmdlets
         public void SetCmisSession(ISession session)
         {
             SessionState.PSVariable.Set(SESSION_VAR_NAME, session);
-            SetCmisDirectory("/"); // reset the directory to root
+            SetCmisDirectory(session == null ? "" : "/"); // reset the directory to root
         }
 
         public ISession GetCmisSession()
@@ -63,10 +64,10 @@ namespace CmisCmdlets
             SessionState.PSVariable.Set(DIRECTORY_VAR_NAME, path);
         }
 
-        public string GetCmisDirectory(string path)
+        public string GetCmisDirectory()
         {
             var dir = SessionState.PSVariable.Get(DIRECTORY_VAR_NAME).Value as string;
-            return String.IsNullOrEmpty(dir) ? "/" : dir;
+            return dir == null ? "" : dir;
         }
     }
 }
