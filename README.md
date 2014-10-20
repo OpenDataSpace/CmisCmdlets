@@ -26,7 +26,7 @@ The following cmdlets are provided:
 | Get-CmisDirectory  | Gets in which directory you are currently in              |
 | New-CmisDirectory  | Creates a new directory                                   |
 | New-CmisFile       | Creates a new (empty) file                                |
-| Get-CmisObject     | Gets informsation about all/specific CMIS objects         |
+| Get-CmisObject     | Gets information about all/specific CMIS objects         |
 | Read-CmisObject    | Reads the contents of an object                           |
 | Write-CmisObject   | Writes the content of an object by stream                 |
 | Receive-CmisObject | Downloads an object with contents                         |

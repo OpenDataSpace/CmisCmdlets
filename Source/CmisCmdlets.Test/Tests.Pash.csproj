@@ -59,6 +59,7 @@
     <Compile Include="GetCmisRepositoryTests.cs" />
     <Compile Include="ConnectCmisTests.cs" />
     <Compile Include="SetCmisRepositoryTests.cs" />
+    <Compile Include="CmisPathTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

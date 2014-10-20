@@ -59,6 +59,10 @@
     <Compile Include="SetCmisDirectoryCommand.cs" />
     <Compile Include="CmisNavigation.cs" />
     <Compile Include="GetCmisDirectoryCommand.cs" />
+    <Compile Include="NewCmisObject.cs" />
+    <Compile Include="CmisObjectType.cs" />
+    <Compile Include="CmisPath.cs" />
+    <Compile Include="CmisPathException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
