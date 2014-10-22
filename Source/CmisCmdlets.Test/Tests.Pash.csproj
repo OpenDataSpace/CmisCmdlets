@@ -45,10 +45,10 @@
       <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
-    <Reference Include="DotCMIS">
-      <HintPath>..\packages\Apache.DotCMIS.0.6\lib\DotCMIS.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="DotCMIS">
+      <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,6 +60,7 @@
     <Compile Include="ConnectCmisTests.cs" />
     <Compile Include="SetCmisRepositoryTests.cs" />
     <Compile Include="CmisPathTest.cs" />
+    <Compile Include="CmisNavigationTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

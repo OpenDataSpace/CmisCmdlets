@@ -3,6 +3,8 @@
 
   <!--=====================================================================-->
   <Target Name="Build">
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+             Properties="Configuration=Release" />
     <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'" />
     <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
@@ -10,6 +12,9 @@
   </Target>
 
   <Target Name="Clean">
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+             Properties="Configuration=Release"
+	     Targets="Clean" />
     <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'"
              Targets="Clean"/>
@@ -19,6 +24,9 @@
   </Target>
 
   <Target Name="Rebuild">
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+             Properties="Configuration=Release"
+	     Targets="Rebuild" />
     <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'"
              Targets="Rebuild"/>
