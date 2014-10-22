@@ -22,15 +22,11 @@ namespace CmisCmdlets
 
         protected override void EndProcessing()
         {
-            var curPath = GetCmisDirectory();
-            // combines current path with relative path or replaces curPath with absolute path
-            // GetFullPath resolves stuff like "/baz/../foo/././bar" to "/foo/bar"
-            var newPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(curPath, Path));
-
             //make sure it exists
+            var newPath = GetCmisDirectory().Combine(Path);
             try
             {
-                new CmisNavigation(GetCmisSession()).GetFolder(newPath);
+                new CmisNavigation(GetCmisSession()).GetFolder(Path);
             }
             catch (CmisBaseException ex)
             {
@@ -38,8 +34,8 @@ namespace CmisCmdlets
                                                       ErrorCategory.ObjectNotFound, newPath));
             }
 
-            SetCmisDirectory(newPath);
-            WriteObject(newPath);
+            SetCmisDirectory(newPath.ToString());
+            WriteObject(newPath.ToString());
         }
     }
 }

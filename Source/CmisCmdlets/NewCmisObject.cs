@@ -35,7 +35,7 @@ namespace CmisCmdlets
                 }
                 else
                 {
-                    //WriteObject(navigation.CreateDocument(p));
+                    WriteObject(navigation.CreateDocument(p, null));
                 }
             }
         }

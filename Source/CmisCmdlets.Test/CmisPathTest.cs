@@ -19,7 +19,7 @@ namespace CmisCmdlets.Test
         [TestCase(@"\", @"/")]
         [TestCase(@"foo/bar", @"foo/bar")]
         [TestCase(@"foo\bar", @"foo/bar")]
-        [TestCase(@"foo\/bar", @"foo//bar")]
+        [TestCase(@"foo/bar", @"foo/bar")]
         [TestCase(@"foo\\bar", @"foo\\bar")]
         [TestCase(@"/\\foo\bar/baz\\bla\", @"/\\foo/bar/baz\\bla/")]
         [TestCase("", "")]
@@ -28,7 +28,7 @@ namespace CmisCmdlets.Test
             Assert.That(new CmisPath(input).ToString(), Is.EqualTo(expected));
         }
 
-        [TestCase("/foo/bar//", "baz/bam", "/foo/bar///baz/bam")]
+        [TestCase("/foo/bar//", "baz/bam", "/foo/bar/baz/bam")]
         [TestCase(@"\foo", @"bla\blub/baz\\bam", @"/foo/bla/blub/baz\\bam")]
         [TestCase(@"/path/to/somehwhere\", @"\other/path\to/here\", @"/other/path/to/here/")]
         public void PathCombiningWorks(string a, string b, string expected)
@@ -45,7 +45,7 @@ namespace CmisCmdlets.Test
         [TestCase(@"..\test", "../test")]
         public void NormalizationWorks(string ugly, string expected)
         {
-            Assert.That(new CmisPath(ugly).Normalize().ToString(), Is.EqualTo(expected));
+            Assert.That(new CmisPath(ugly).ToString(), Is.EqualTo(expected));
         }
 
         [TestCase("/./..")]
@@ -54,8 +54,18 @@ namespace CmisCmdlets.Test
         public void NormalizationThrowsOnInvalidPath(string invalid)
         {
             Assert.Throws<CmisPathException>(delegate {
-                new CmisPath(invalid).Normalize();
+                new CmisPath(invalid);
             });
+        }
+
+        [TestCase("/foo/bar", "/foo/", "bar")]
+        [TestCase("/foo/bar/", "/foo/bar/", "")]
+        [TestCase("foo", "", "foo")]
+        [TestCase("/", "/", "")]
+        public void GetComponentsWorks(string path, string comp1, string comp2)
+        {
+            var components = new string[] { comp1, comp2 };
+            Assert.That(new CmisPath(path).GetComponents(), Is.EquivalentTo(components));
         }
     }
 }

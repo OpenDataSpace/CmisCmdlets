@@ -63,7 +63,7 @@ namespace CmisCmdlets
                 {
                     return GetFolder(path);
                 }
-                catch (CmisConnectionException)
+                catch (CmisObjectNotFoundException)
                 {
                 }
             }
@@ -71,27 +71,43 @@ namespace CmisCmdlets
             var components = path.GetComponents();
             var dirname = components[0];
             var basename = components[1];
-            IFolder parent = recursive ? CreateFolder(dirname) : GetFolder(dirname);
+            IFolder parent = recursive ? CreateFolder(dirname, true) : GetFolder(dirname);
 
             var props = new Dictionary<string, object>()
             {
                 { PropertyIds.ObjectTypeId, "cmis:folder" },
                 { PropertyIds.Name, basename }
             };
-            return GetFolder(dirname).CreateFolder(props);
+            return parent.CreateFolder(props);
+        }
+
+        public bool TryGet(CmisPath cmisPath, out ICmisObject obj)
+        {
+            var path = _curDir.Combine(cmisPath).ToString();
+            obj = null;
+            try
+            {
+                obj = _session.GetObjectByPath(path);
+            }
+            catch (CmisObjectNotFoundException)
+            {
+                return false;
+            }
+            return true;
         }
 
         public ICmisObject Get(CmisPath cmisPath)
         {
-            var path = _curDir.Combine(cmisPath).ToString();
-            try
+            ICmisObject obj;
+            if (!TryGet(cmisPath, out obj))
             {
-                return _session.GetObjectByPath(path);
+                // DotCMIS is not very generous when it comes to generating error messages
+                // so we create a better one
+                var msg = String.Format("The path '{0}' doesn't identify a CMIS object.",
+                                        cmisPath.ToString());
+                throw new CmisObjectNotFoundException(msg);
             }
-            catch (CmisObjectNotFoundException)
-            {
-                ThrowObjectNotFound(path);
-            }
+            return obj;
         }
 
         public IDocument GetDocument(CmisPath cmisPath)
@@ -119,26 +135,28 @@ namespace CmisCmdlets
             return f;
         }
 
-        public void Delete(CmisPath cmisPath, bool allVersions, bool recursive)
+        public IList<string> Delete(CmisPath cmisPath, bool recursive)
         {
-            var obj = Get(cmisPath);
-            var isfolder = obj is IFolder;
-            if (!recursive || !isfolder)
+            ICmisObject obj;
+            if (TryGet(cmisPath, out obj))
             {
-                obj.Delete(allVersions);
-                return;
+                if (recursive && obj is IFolder)
+                {
+                    return ((IFolder)obj).DeleteTree(false, UnfileObject.Delete, true);
+                }
+                try
+                {
+                    obj.Delete(false);
+                    return null;
+                }
+                catch (CmisBaseException)
+                {
+                }
             }
-            var folder = obj as IFolder;
-            folder.DeleteTree(allVersions, UnfileObject.Delete, false);
+            // fail otherwise
+            return new string[] { _curDir.Combine(cmisPath).ToString() };
         }
 
-        // DotCMIS is not very generous when it comes to generating error messages
-        // so we create a better one
-        private void ThrowObjectNotFound(string path)
-        {
-            var msg = String.Format("The path '{0}' doesn't identify a CMIS object.", path);
-            throw new CmisObjectNotFoundException(msg);
-        }
     }
 }
 

@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using DotCMIS.Enums;
 
 namespace CmisCmdlets
 {
@@ -75,16 +76,18 @@ namespace CmisCmdlets
                 return new string[] {_path, ""};
             }
             var parts = Split().ToList();
+            var basename = parts.Last();
             parts.RemoveAt(parts.Count - 1);
             if (IsAbsolutePath())
             {
                 parts.Insert(0, "");
             }
-            return new string[]
+            var basepath = String.Join(CorrectSlash, parts);
+            if (basepath.Length > 0)
             {
-                String.Join(CorrectSlash, parts) + CorrectSlash,
-                parts.Last()
-            };
+                basepath += CorrectSlash;
+            }
+            return new string[] { basepath, basename };
         }
 
         public CmisPath Clone()
@@ -121,7 +124,7 @@ namespace CmisCmdlets
             return WrongSlashSearch.Replace(path, CorrectSlash);
         }
         
-        private string Normalize()
+        private void Normalize()
         {
             var parts = Split();
             var newParts = new List<string>();
@@ -153,7 +156,8 @@ namespace CmisCmdlets
             {
                 if (newParts.Count == 0)
                 {
-                    return new CmisPath(CorrectSlash);
+                    _path = CorrectSlash;
+                    return;
                 }
                 if (newParts[0].Equals(".."))
                 {
@@ -171,7 +175,7 @@ namespace CmisCmdlets
             {
                 newPath += CorrectSlash;
             }
-            return new CmisPath(newPath);
+            _path = newPath;
         }
     }
 }
