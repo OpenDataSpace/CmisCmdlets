@@ -229,10 +229,11 @@ namespace CmisCmdlets.Test
              * Assert.That(resultStream.FileName, Is.EqualTo(stream.FileName));
              * Assert.That(resultStream.Length, Is.EqualTo(stream.Length));
             */
+            Assert.That(obj.ContentStreamLength, Is.EqualTo(obj.ContentStreamLength));
             Assert.That(resultStream.MimeType, Is.EqualTo(stream.MimeType));
 
-            byte[] resultBytes = new byte[content.Length];
-            resultStream.Stream.Read(resultBytes, 0, content.Length);
+            byte[] resultBytes = new byte[(int) obj.ContentStreamLength];
+            resultStream.Stream.Read(resultBytes, 0, (int) obj.ContentStreamLength);
             Assert.That(resultBytes, Is.EquivalentTo(content));
         }
 
