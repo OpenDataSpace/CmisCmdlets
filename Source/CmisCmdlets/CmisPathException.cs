@@ -8,10 +8,11 @@
 // not distributed with this file, You can obtain one at
 //  http://mozilla.org/MPL/2.0/.
 using System;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
-    public class CmisPathException : Exception
+    public class CmisPathException : CmisBaseException
     {
         public CmisPathException()
             : base()

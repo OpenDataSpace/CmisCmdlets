@@ -9,17 +9,15 @@
 //  http://mozilla.org/MPL/2.0/.
 using System;
 using System.Management.Automation;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.New, "CmisObject")]
-    public class NewCmisObject : CmisCommandBase
+    [Cmdlet(VerbsCommon.New, "CmisFolder")]
+    public class NewCmisFolder : CmisCommandBase
     {
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0)]
         public string[] Path { get; set; }
-
-        [Parameter(ValueFromPipelineByPropertyName = true, Position = 1)]
-        public CmisObjectType Type { get; set; }
 
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Recursive { get; set; }
@@ -29,20 +27,16 @@ namespace CmisCmdlets
             var navigation = new CmisNavigation(GetCmisSession(), GetCmisDirectory());
             foreach (string p in Path)
             {
-                if (Type.Equals(CmisObjectType.Folder))
+                try
                 {
                     WriteObject(navigation.CreateFolder(p, Recursive.IsPresent));
                 }
-                else
+                catch (CmisBaseException e)
                 {
-                    WriteObject(navigation.CreateDocument(p, null));
+                    ThrowTerminatingError(new ErrorRecord(e, "FolderCreationFailed",
+                                                          ErrorCategory.WriteError, p));
                 }
             }
-        }
-
-        protected void CreateFolder(string path)
-        {
-
         }
     }
 }

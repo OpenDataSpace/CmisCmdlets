@@ -22,11 +22,11 @@ The following cmdlets are provided:
 | Disconnect-Cmis    | Disconnects and clears the session                        |
 | Get-CmisRepository | Lists all available repositories                          |
 | Set-CmisRepository | Sets the current repository                               |
-| Set-CmisDirectory  | Sets the directory in the repository where you operate in |
-| Get-CmisDirectory  | Gets in which directory you are currently in              |
-| New-CmisDirectory  | Creates a new directory                                   |
-| New-CmisFile       | Creates a new (empty) file                                |
-| Get-CmisObject     | Gets information about all/specific CMIS objects         |
+| Set-CmisFolder     | Sets the folder in the repository where you operate in    |
+| Get-CmisFolder     | Gets in which folder you are currently in                 |
+| New-CmisFolder     | Creates a new folder                                      |
+| New-CmisDocument   | Creates a new (empty) document/file                       |
+| Get-CmisObject     | Gets information about all/specific CMIS objects          |
 | Read-CmisObject    | Reads the contents of an object                           |
 | Write-CmisObject   | Writes the content of an object by stream                 |
 | Receive-CmisObject | Downloads an object with contents                         |

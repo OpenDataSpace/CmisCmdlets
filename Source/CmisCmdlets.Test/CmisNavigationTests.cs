@@ -93,10 +93,16 @@ namespace CmisCmdlets.Test
             Assert.That(cmisF.Path, Is.EqualTo("/__crfFolder/recursive"));
         }
 
-        [Test]
-        public void DeleteDocument()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DeleteDocument(bool recursive)
         {
-
+            var obj = _cmisNav.CreateDocument("__ddDoc", null);
+            _createdObjects.Add(obj);
+            var fails = _cmisNav.Delete("__ddDoc", recursive);
+            Assert.That(fails, Is.Null);
+            Assert.That(_cmisNav.TryGet("__ddDoc", out obj), Is.False);
+            _createdObjects.Clear();
         }
 
         [TestCase(true)]
@@ -121,12 +127,16 @@ namespace CmisCmdlets.Test
             var folder = _cmisNav.CreateFolder("__dnefwrFolder/subdir", true);
             _createdObjects.Add(folder);
             _createdObjects.Add(folder.FolderParent);
+            var doc = _cmisNav.CreateDocument("__dnefwrFolder/testfile", null);
+            _createdObjects.Insert(0, doc);
 
             var fails = _cmisNav.Delete("__dnefwrFolder", true);
             Assert.That(fails, Is.Null);
             ICmisObject obj;
             Assert.That(_cmisNav.TryGet("__dnefwrFolder/subdir", out obj), Is.False,
                         "subdir still exists");
+            Assert.That(_cmisNav.TryGet("__dnefwrFolder/testfile", out obj), Is.False,
+                        "testfile still exists");
             Assert.That(_cmisNav.TryGet("__dnefwrFolder", out obj), Is.False,
                         "main dir still exists");
 
@@ -170,7 +180,7 @@ namespace CmisCmdlets.Test
             Assert.That(folder.Path, Is.EqualTo("/"));
         }
 
-        [TestCase()]
+        [Test]
         public void GetNotExistingObjectThrows()
         {
             Assert.Throws<CmisObjectNotFoundException>(delegate {
@@ -187,14 +197,24 @@ namespace CmisCmdlets.Test
             Assert.That(folder.Path, Is.EqualTo("/__gfFolder"));
         }
 
-        [TestCase()]
+        [Test]
         public void GetFolderFromDocThrows()
         {
+            var obj = _cmisNav.CreateDocument("__gffdtDoc", null);
+            _createdObjects.Add(obj);
+            Assert.Throws<CmisObjectNotFoundException>(delegate {
+                _cmisNav.GetFolder("__gffdtDoc");
+            });
         }
 
-        [TestCase()]
+        [Test]
         public void GetDocument()
         {
+            var obj = _cmisNav.CreateDocument("_gdDoc", null);
+            _createdObjects.Add(obj);
+            var doc = _cmisNav.GetDocument("__gdDoc");
+            Assert.That(doc.Paths[0], Contains.Item("/__gdDoc"));
+            Assert.That(doc.Name, Is.EqualTo("__gdDoc"));
         }
 
         [Test]
@@ -237,7 +257,7 @@ namespace CmisCmdlets.Test
             Assert.That(resultBytes, Is.EquivalentTo(content));
         }
 
-        [TestCase()]
+        [Test]
         public void CreateExitingDocumentThrows()
         {
             var obj = _cmisNav.CreateDocument("__cedtDoc", null);
