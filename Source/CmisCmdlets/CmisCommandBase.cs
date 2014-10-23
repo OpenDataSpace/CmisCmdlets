@@ -64,7 +64,7 @@ namespace CmisCmdlets
             SessionState.PSVariable.Set(DIRECTORY_VAR_NAME, path);
         }
 
-        public CmisPath GetCmisDirectory()
+        public CmisPath GetWorkingFolder()
         {
             var dir = SessionState.PSVariable.Get(DIRECTORY_VAR_NAME).Value as string;
             return dir == null ? "" : dir;

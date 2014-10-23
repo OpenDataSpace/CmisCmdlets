@@ -15,7 +15,7 @@ using DotCMIS.Exceptions;
 namespace CmisCmdlets
 {
     [Cmdlet(VerbsCommon.Set, "CmisDirectory")]
-    public class SetCmisDirectoryCommand : CmisCommandBase
+    public class SetCmisWorkingFolderCommand : CmisCommandBase
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path { get; set; }
@@ -23,7 +23,7 @@ namespace CmisCmdlets
         protected override void EndProcessing()
         {
             //make sure it exists
-            var newPath = GetCmisDirectory().Combine(Path);
+            var newPath = GetWorkingFolder().Combine(Path);
             try
             {
                 new CmisNavigation(GetCmisSession()).GetFolder(Path);

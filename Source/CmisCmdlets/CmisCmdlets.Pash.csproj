@@ -62,9 +62,9 @@
     <Compile Include="ConnectCmisCommand.cs" />
     <Compile Include="DisconnectCmisCommand.cs" />
     <Compile Include="SetCmisRepositoryCommand.cs" />
-    <Compile Include="SetCmisDirectoryCommand.cs" />
+    <Compile Include="SetCmisWorkingFolderCommand.cs" />
     <Compile Include="CmisNavigation.cs" />
-    <Compile Include="GetCmisDirectoryCommand.cs" />
+    <Compile Include="GetCmisWorkingFolderCommand.cs" />
     <Compile Include="CmisPath.cs" />
     <Compile Include="CmisPathException.cs" />
     <Compile Include="NewCmisFolder.cs" />

@@ -97,9 +97,12 @@ namespace CmisCmdlets.Test
         [TestCase(false)]
         public void DeleteDocument(bool recursive)
         {
-            var obj = _cmisNav.CreateDocument("__ddDoc", null);
-            _createdObjects.Add(obj);
+            var doc = _cmisNav.CreateDocument("__ddDoc", null);
+            _createdObjects.Add(doc);
+
+
             var fails = _cmisNav.Delete("__ddDoc", recursive);
+            ICmisObject obj;
             Assert.That(fails, Is.Null);
             Assert.That(_cmisNav.TryGet("__ddDoc", out obj), Is.False);
             _createdObjects.Clear();

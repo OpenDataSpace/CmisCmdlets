@@ -33,8 +33,8 @@ namespace CmisCmdlets
         protected override void ProcessRecord()
         {
             var cmisPath = new CmisPath(Path);
-            var navigation = new CmisNavigation(GetCmisSession(), GetCmisDirectory());
-            ICmisObject obj;
+            var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            ICmisObject obj = null;
             try
             {
                 obj = navigation.Get(cmisPath);
@@ -43,6 +43,7 @@ namespace CmisCmdlets
             {
                 ThrowTerminatingError(new ErrorRecord(e, "GetObjectFailed",
                                                       ErrorCategory.ResourceUnavailable, Path));
+                return;
             }
 
             var nameIsEmpty = String.IsNullOrEmpty(Name);
@@ -73,6 +74,7 @@ namespace CmisCmdlets
             {
                 ThrowTerminatingError(new ErrorRecord(e, "GetDescendatnsFailed",
                                                       ErrorCategory.ResourceUnavailable, Path));
+                return;
             }
             WriteTreeList(descendants, wildcard);
         }

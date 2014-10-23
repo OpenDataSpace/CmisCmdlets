@@ -16,19 +16,19 @@ Then build the project as usual.
 # Cmdlets
 The following cmdlets are provided:
 
-| **Cmdlet Name**    | **Description**                                           |
-|:-------------------|:----------------------------------------------------------|
-| Connect-Cmis       | Connects to a CMIS repository                             |
-| Disconnect-Cmis    | Disconnects and clears the session                        |
-| Get-CmisRepository | Lists all available repositories                          |
-| Set-CmisRepository | Sets the current repository                               |
-| Set-CmisFolder     | Sets the folder in the repository where you operate in    |
-| Get-CmisFolder     | Gets in which folder you are currently in                 |
-| New-CmisFolder     | Creates a new folder                                      |
-| New-CmisDocument   | Creates a new (empty) document/file                       |
-| Get-CmisObject     | Gets information about all/specific CMIS objects          |
-| Read-CmisObject    | Reads the contents of an object                           |
-| Write-CmisObject   | Writes the content of an object by stream                 |
-| Receive-CmisObject | Downloads an object with contents                         |
-| Send-CmisObject    | Uploads an object with contents                           |
-| Remove-CmisObject  | Removes an object                                         |
+| **Cmdlet Name**       | **Description**                                           |
+|:----------------------|:----------------------------------------------------------|
+| Connect-Cmis          | Connects to a CMIS repository                             |
+| Disconnect-Cmis       | Disconnects and clears the session                        |
+| Get-CmisRepository    | Lists all available repositories                          |
+| Set-CmisRepository    | Sets the current repository                               |
+| Set-CmisWorkingFolder | Sets the folder in the repository where you operate in    |
+| Get-CmisWorkingFolder | Gets in which folder you are currently in                 |
+| New-CmisFolder        | Creates a new folder                                      |
+| New-CmisDocument      | Creates a new (empty) document/file                       |
+| Get-CmisObject        | Gets information about all/specific CMIS objects          |
+| Read-CmisObject       | Reads the contents of an object                           |
+| Write-CmisObject      | Writes the content of an object by stream                 |
+| Receive-CmisObject    | Downloads an object with contents                         |
+| Send-CmisObject       | Uploads an object with contents                           |
+| Remove-CmisObject     | Removes an object                                         |
