@@ -29,6 +29,16 @@ namespace CmisCmdlets.Test
         }
 
         [Test]
+        public void ConnectCmdletCanConnectToRepoWithInsecure()
+        {
+            var cmd = String.Format("{0}; ${1}", GetConnectToTestRepoCmd(true),
+                                    CmisCommandBase.SESSION_VAR_NAME);
+            var res = Shell.Execute(cmd);
+            Assert.NotNull(CmisCommandBase.ConnectionParameters);
+            ValidateSession(res, TestRepository);
+        }
+
+        [Test]
         public void ConnectCmdletCanConnectToRepo()
         {
             var cmd = String.Format("{0}; ${1}", GetConnectToTestRepoCmd(),

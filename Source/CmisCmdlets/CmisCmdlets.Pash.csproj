@@ -51,6 +51,7 @@
       <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,11 +70,20 @@
     <Compile Include="CmisPathException.cs" />
     <Compile Include="NewCmisFolder.cs" />
     <Compile Include="GetCmisObjectCommand.cs" />
+    <Compile Include="RemoveCmisObjectCommand.cs" />
+    <Compile Include="NewCmisDocumentCommand.cs" />
+    <Compile Include="MimeTypeMap.cs" />
+    <Compile Include="SetCmisDocumentBaseCommand.cs" />
+    <Compile Include="UpdateCmisDocumentCommand.cs" />
+    <Compile Include="ReadCmisDocumentCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 </Project>

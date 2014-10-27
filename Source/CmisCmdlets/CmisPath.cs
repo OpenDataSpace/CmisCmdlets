@@ -121,6 +121,10 @@ namespace CmisCmdlets
 
         public static string NormalizeSlashes(string path)
         {
+            if (String.IsNullOrEmpty(path))
+            {
+                return "";
+            }
             return WrongSlashSearch.Replace(path, CorrectSlash);
         }
         

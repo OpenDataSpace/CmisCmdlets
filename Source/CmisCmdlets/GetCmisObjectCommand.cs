@@ -82,6 +82,10 @@ namespace CmisCmdlets
         private void WriteTreeList(IList<ITree<IFileableCmisObject>> treeList,
                                    WildcardPattern wildcard)
         {
+            if (treeList == null)
+            {
+                return;
+            }
             foreach (var tree in treeList)
             {
                 if (wildcard.IsMatch(tree.Item.Name))

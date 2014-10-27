@@ -28,7 +28,4 @@ The following cmdlets are provided:
 | New-CmisDocument      | Creates a new (empty) document/file                       |
 | Get-CmisObject        | Gets information about all/specific CMIS objects          |
 | Read-CmisObject       | Reads the contents of an object                           |
-| Write-CmisObject      | Writes the content of an object by stream                 |
-| Receive-CmisObject    | Downloads an object with contents                         |
-| Send-CmisObject       | Uploads an object with contents                           |
 | Remove-CmisObject     | Removes an object                                         |

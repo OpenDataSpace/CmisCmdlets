@@ -63,16 +63,18 @@ namespace CmisCmdlets.Test
 
         protected TestBase()
         {
+            /*
             // Should avoid problems with SSL and tests systems without valid certificate
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
+                */
         }
 
-        protected string GetConnectToTestRepoCmd()
+        protected string GetConnectToTestRepoCmd(bool insecure = false)
         {
-            return String.Format("{0} -url {1} -user {2} -password {3} -repo {4};",
+            return String.Format("{0} -url {1} -user {2} -password {3} -repo {4} {5};",
                                  CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
-                                 TestPassword, TestRepository);
+                                 TestPassword, TestRepository, insecure ? "-Insecure" : "");
         }
 
         public static string NewlineJoin(params string[] strs)

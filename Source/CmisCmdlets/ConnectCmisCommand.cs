@@ -11,6 +11,8 @@ using System;
 using System.Management.Automation;
 using System.Collections;
 using DotCMIS;
+using System.Net;
+using System.Net.Security;
 
 namespace CmisCmdlets
 {
@@ -45,10 +47,16 @@ namespace CmisCmdlets
                    HelpMessage = "OpenCMIS parameters for the Cmis repository")]
         public Hashtable Parameters { get; set; }
 
+        [Parameter]
+        public SwitchParameter Insecure { get; set; }
+
         [Parameter(Mandatory=false,
                    Position = 3,
                    HelpMessage = "Repository name to connect to")]
         public string Repository { get; set; }
+
+        private static RemoteCertificateValidationCallback _acceptInsecureSSLCallback = 
+            (sender, certificate, chain, sslPolicyErrors) => true;
 
         protected override void ProcessRecord()
         {
@@ -64,6 +72,19 @@ namespace CmisCmdlets
             else
             {
                 ConnectionParameters = Utilities.HashtableToStringDict(Parameters);
+            }
+
+            // check if insecure SSLs should be used anyway
+            if (Insecure)
+            {
+                // TODO: improve unsecure SLL handling
+                ServicePointManager.ServerCertificateValidationCallback += 
+                    _acceptInsecureSSLCallback;
+            }
+            else
+            {
+                ServicePointManager.ServerCertificateValidationCallback -= 
+                    _acceptInsecureSSLCallback;
             }
 
             // check if we should directly connect to a specified repository

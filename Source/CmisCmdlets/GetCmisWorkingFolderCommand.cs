@@ -12,12 +12,12 @@ using System.Management.Automation;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.Get, "CmisDirectory")]
+    [Cmdlet(VerbsCommon.Get, "CmisWorkingFolder")]
     public class GetCmisWorkingFolderCommand : CmisCommandBase
     {
         protected override void EndProcessing()
         {
-            WriteObject(GetWorkingFolder());
+            WriteObject(GetWorkingFolder().ToString());
         }
     }
 }

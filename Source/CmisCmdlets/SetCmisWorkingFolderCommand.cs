@@ -14,7 +14,7 @@ using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.Set, "CmisDirectory")]
+    [Cmdlet(VerbsCommon.Set, "CmisWorkingFolder")]
     public class SetCmisWorkingFolderCommand : CmisCommandBase
     {
         [Parameter(Mandatory = true, Position = 0)]

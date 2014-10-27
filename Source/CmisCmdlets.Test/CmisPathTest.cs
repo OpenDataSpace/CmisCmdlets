@@ -28,7 +28,7 @@ namespace CmisCmdlets.Test
             Assert.That(new CmisPath(input).ToString(), Is.EqualTo(expected));
         }
 
-        [TestCase("/foo/bar//", "baz/bam", "/foo/bar/baz/bam")]
+        [TestCase("/foo/bar//", "baz/bam.bu", "/foo/bar/baz/bam.bu")]
         [TestCase(@"\foo", @"bla\blub/baz\\bam", @"/foo/bla/blub/baz\\bam")]
         [TestCase(@"/path/to/somehwhere\", @"\other/path\to/here\", @"/other/path/to/here/")]
         public void PathCombiningWorks(string a, string b, string expected)
