@@ -27,5 +27,7 @@ The following cmdlets are provided:
 | New-CmisFolder        | Creates a new folder                                      |
 | New-CmisDocument      | Creates a new (empty) document/file                       |
 | Get-CmisObject        | Gets information about all/specific CMIS objects          |
-| Read-CmisObject       | Reads the contents of an object                           |
+| Read-CmisDocument     | Reads the contents of a document                          |
+| Update-CmisObject     | Updates an object											|
 | Remove-CmisObject     | Removes an object                                         |
+| Get-CmisProperty      | Get the available properties, or a specific one           |

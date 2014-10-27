@@ -73,9 +73,10 @@
     <Compile Include="RemoveCmisObjectCommand.cs" />
     <Compile Include="NewCmisDocumentCommand.cs" />
     <Compile Include="MimeTypeMap.cs" />
-    <Compile Include="SetCmisDocumentBaseCommand.cs" />
-    <Compile Include="UpdateCmisDocumentCommand.cs" />
     <Compile Include="ReadCmisDocumentCommand.cs" />
+    <Compile Include="CmisContentCommandBase.cs" />
+    <Compile Include="UpdateCmisObjectCommand.cs" />
+    <Compile Include="GetCmisPropertyCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

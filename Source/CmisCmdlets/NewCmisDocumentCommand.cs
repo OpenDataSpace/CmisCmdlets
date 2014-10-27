@@ -15,7 +15,7 @@ using System.Text;
 namespace CmisCmdlets
 {
     [Cmdlet(VerbsCommon.New, "CmisDocument", DefaultParameterSetName = "FromFile")]
-    public class NewCmisDocumentCommand : SetCmisDocumentBaseCommand
+    public class NewCmisDocumentCommand : CmisContentCommandBase
     {
         [Parameter(Position = 0)]
         public string Path { get; set; }

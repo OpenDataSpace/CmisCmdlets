@@ -37,7 +37,11 @@ namespace CmisCmdlets
 
         private static readonly long _pipelineMaxSize = 1024 * 1024; // 1MB directly to pipeline okay
 
-        private static List<string> _plainMimeTypes = new List<string>();
+        private static List<string> _plainMimeTypes = new List<string>()
+        {
+            "text/plain",
+            "text/html"
+        };
 
 
         protected override void ProcessRecord()
@@ -51,7 +55,8 @@ namespace CmisCmdlets
             var size = (long) doc.ContentStreamLength;
 
             // Do some security checks firsat if we should write the output to pipeline
-            var msg = "The content is not plain text, write to pipeline anyway?";
+            var msg = String.Format("The content is not plain text, but of type {0}. Do you want to"
+                                    + "write it to pipeline anyway?", doc.ContentStreamMimeType);
             if (writeToPipeline && !IsPlaintextType(doc.ContentStreamMimeType) && !Force &&
                 !ShouldContinue(msg, "Document Content Warning"))
             {

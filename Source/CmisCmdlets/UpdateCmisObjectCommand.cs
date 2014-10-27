@@ -16,7 +16,7 @@ using DotCMIS.Exceptions;
 namespace CmisCmdlets
 {
     [Cmdlet(VerbsData.Update, "CmisDocument", DefaultParameterSetName = "FromFile")]
-    public class UpdateCmisDocumentCommand : SetCmisDocumentBaseCommand
+    public class UpdateCmisObjectCommand : CmisContentCommandBase
     {
         [Parameter(Position = 0, ParameterSetName = "FromContent")]
         [Parameter(Position = 0, ParameterSetName = "FromFile")]

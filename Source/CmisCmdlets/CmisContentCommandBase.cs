@@ -16,7 +16,7 @@ using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
-    public class SetCmisDocumentBaseCommand : CmisCommandBase
+    public class CmisContentCommandBase : CmisCommandBase
     {
         protected string ContentInternal;
         protected string LocalFileInternal;
