@@ -8,14 +8,116 @@
 // not distributed with this file, You can obtain one at
 //  http://mozilla.org/MPL/2.0/.
 using System;
+using System.Linq;
 using NUnit.Framework;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets.Test
 {
     [TestFixture]
     public class GetCmisObjectTests : TestBase
     {
+        public static readonly string GetCmisObjectCmd = "Get-CmisObject ";
 
+        [TestCase("/notexisting/path/")]
+        [TestCase("/notexisting_file")]
+        public void GetObjectOfNonExistingPathThrows(string path)
+        {
+            Assert.Throws<CmisObjectNotFoundException>(delegate {
+                Shell.Execute(GetCmisObjectCmd + path);
+            });
+        }
+
+        [Test]
+        public void GetObjectFromFolderWihoutTrailingSlashReturnsDir()
+        {
+            var folder = CmisHelper.CreateTempFolder("/__tempFolder");
+            CmisHelper.CreateTempDocument("/__tempFolder/foo");
+            CmisHelper.CreateTempDocument("/__tempFolder/bar");
+
+            var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder");
+            Assert.That(res.Count, Is.EqualTo(1));
+            Assert.That(res.First(), Is.EqualTo(folder));
+        }
+
+        [TestCase("/__tempFolder/")] // by using a trailing slash in path
+        [TestCase("/__tempFolder -RecursionDepth 1")] // by defining recursion depth
+        public void GetObjectFromFolderCanReturnChildren(string parameters)
+        {
+            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder");
+            var doc1 = CmisHelper.CreateTempDocument("/__tempFolder/foo");
+            var doc2 = CmisHelper.CreateTempDocument("/__tempFolder/bar");
+             CmisHelper.CreateTempDocument("/__tempFolder/folder/baz");
+
+            var res = Shell.Execute(GetCmisObjectCmd + parameters);
+            Assert.That(res.Count, Is.EqualTo(3));
+            Assert.That(res, Contains.Item(folder));
+            Assert.That(res, Contains.Item(doc1));
+            Assert.That(res, Contains.Item(doc2));
+        }
+
+        [Test]
+        public void GetObjectFromFolderWithRecursionLevelReturnsDescendants()
+        {
+            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
+            var doc1 = CmisHelper.CreateTempDocument("/__tempFolder/foo");
+            var doc2 = CmisHelper.CreateTempDocument("/__tempFolder/bar");
+            var grandchild = CmisHelper.CreateTempDocument("/__tempFolder/folder/baz");
+            var grandchildf = CmisHelper.CreateTempFolder("/__tempFolder/folder/other");
+            CmisHelper.CreateTempFolder("/__tempFolder/folder/other/file");
+
+            var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -RecursionDepth 2");
+            Assert.That(res.Count, Is.EqualTo(5));
+            Assert.That(res, Contains.Item(folder));
+            Assert.That(res, Contains.Item(doc1));
+            Assert.That(res, Contains.Item(doc2));
+            Assert.That(res, Contains.Item(grandchild));
+            Assert.That(res, Contains.Item(grandchildf));
+        }
+
+        [Test]
+        public void GetObjectWithNameFilterCanBeEmpty()
+        {
+            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
+            CmisHelper.CreateTempDocument("/foo");
+            CmisHelper.CreateTempDocument("/__tempFolder/bar");
+
+            var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -Name foo");
+            Assert.That(res, Is.Empty);
+        }
+
+        [Test]
+        public void GetObjectWithNameFiltersRecursion()
+        {
+            CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
+            CmisHelper.CreateTempDocument("/bar"); // won't be found, too high in hierarch
+            var baDoc = CmisHelper.CreateTempDocument("/__tempFolder/ba"); // should be found
+            var bazDoc = CmisHelper.CreateTempDocument("/__tempFolder/folder/baz"); // in 2nd level
+            var bariumFolder = CmisHelper.CreateTempFolder("/__tempFolder/folder/barium");
+            CmisHelper.CreateTempDocument("/__tempFolder/folder/barium/baz"); // 3rd level ignored
+
+            var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -Name ba -RecursionDepth 2");
+            Assert.That(res.Count, Is.EqualTo(3));
+            Assert.That(res, Contains.Item(baDoc));
+            Assert.That(res, Contains.Item(bazDoc));
+            Assert.That(res, Contains.Item(bariumFolder));
+        }
+
+        [Test]
+        public void GetObjectWithExactNames()
+        {
+            CmisHelper.CreateTempFolder("/__tempFolder/barium", true);
+            CmisHelper.CreateTempDocument("/ba"); // won't be found, too high in hierarch
+            var baDoc = CmisHelper.CreateTempDocument("/__tempFolder/ba"); // should be found
+            CmisHelper.CreateTempDocument("/__tempFolder/bar"); // should be found
+            CmisHelper.CreateTempDocument("/__tempFolder/barium/baz"); // in 2nd level
+            var baFolder = CmisHelper.CreateTempFolder("/__tempFolder/barium/ba");
+
+            var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -Name ba -Exact -RecursionDepth 2");
+            Assert.That(res.Count, Is.EqualTo(2));
+            Assert.That(res, Contains.Item(baDoc));
+            Assert.That(res, Contains.Item(baFolder));
+        }
     }
 }
 

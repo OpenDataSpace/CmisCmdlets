@@ -168,6 +168,11 @@ namespace CmisCmdlets.Test
 			return _cmisNav.Get(path);
         }
 
+        public IDocument CreateTempDocument(CmisPath path)
+        {
+            return CreateTempDocument(path, null);
+        }
+
         public IDocument CreateTempDocument(CmisPath path, ContentStream stream)
         {
             return CreateTempDocument(path, stream, null);
