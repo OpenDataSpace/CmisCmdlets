@@ -49,7 +49,7 @@ namespace CmisCmdlets.Test
     public class CmisTestHelper
     {
         private CmisNavigation _cmisNav;
-        private List<ICmisObject> _createdObjects;
+        private List<object> _createdObjects;
         private ISession _session;
         
         public CmisObjectExistsConstraint Exists
@@ -65,7 +65,7 @@ namespace CmisCmdlets.Test
         public CmisTestHelper(ISession session)
         {
             _session = session;
-            _createdObjects = new List<ICmisObject>();
+            _createdObjects = new List<object>();
             _cmisNav = new CmisNavigation(session);
         }
 
@@ -74,9 +74,18 @@ namespace CmisCmdlets.Test
             // delete in reverse order makes sure to delete hierarchies correctly
             for (int i = _createdObjects.Count -1; i >= 0; i--)
             {
+                var tmpObj = _createdObjects[i];
+                ICmisObject obj = tmpObj as ICmisObject;
+                if (obj == null)
+                {
+                    if (!_cmisNav.TryGet(tmpObj.ToString(), out obj))
+                    {
+                        continue;
+                    }
+                }
                 try
                 {
-                    _createdObjects[i].Delete(true);
+                    obj.Delete(true);
                 }
                 catch (CmisObjectNotFoundException) {}
             }
@@ -86,6 +95,11 @@ namespace CmisCmdlets.Test
         public void RegisterTempObject(params ICmisObject[] objs)
         {
             _createdObjects.AddRange(objs);
+        }
+
+        public void RegisterTempObject(params string[] paths)
+        {
+            _createdObjects.AddRange(paths);
         }
 
         public void ForgetTempObjects()
@@ -109,6 +123,11 @@ namespace CmisCmdlets.Test
             var doc = _cmisNav.CreateDocument(path, stream, properties);
             _createdObjects.Add(doc);
             return doc;
+        }
+
+        public IFolder CreateTempFolder(CmisPath path)
+        {
+            return CreateTempFolder(path, false);
         }
 
         public IFolder CreateTempFolder(CmisPath path, bool recursive)
