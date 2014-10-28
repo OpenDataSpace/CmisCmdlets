@@ -45,13 +45,13 @@ namespace CmisCmdlets
         protected override void EndProcessing()
         {
             var path = new CmisPath(Path);
-            var stream = GetContentStream();
             if (LocalFile != null && path.HasTrailingSlash())
             {
                 path.Combine(System.IO.Path.GetFileName(LocalFile));
             }
             var nav = new CmisNavigation(CmisSession, WorkingFolder);
             var props = Utilities.HashtableToDict(Properties);
+            var stream = GetContentStream();
             try
             {
                 WriteObject(nav.CreateDocument(path, stream, props));

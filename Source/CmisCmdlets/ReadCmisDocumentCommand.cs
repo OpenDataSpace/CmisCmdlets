@@ -35,8 +35,10 @@ namespace CmisCmdlets
         public SwitchParameter Force { get; set; }
 
 
-        private static readonly long _pipelineMaxSize = 1024 * 1024; // 1MB directly to pipeline okay
+        // 0,1MB directly to pipeline okay without questions
+        private static readonly long _pipelineMaxSize = 1024 * 100;
 
+        // only content of the following mimetypes will be displayed without further questions
         private static List<string> _plainMimeTypes = new List<string>()
         {
             "text/plain",

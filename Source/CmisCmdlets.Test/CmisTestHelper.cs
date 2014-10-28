@@ -14,6 +14,7 @@ using DotCMIS.Exceptions;
 using DotCMIS.Data.Impl;
 using NUnit.Framework.Constraints;
 using System.Text;
+using System.IO;
 
 namespace CmisCmdlets.Test
 {
@@ -178,8 +179,21 @@ namespace CmisCmdlets.Test
             return CreateTempDocument(path, stream, null);
         }
 
+        public IDocument CreateTempDocument(CmisPath path, string content, string mimeType) 
+        {
+            var bytes = Encoding.UTF8.GetBytes(content);
+            var contentStream = new ContentStream();
+            contentStream.MimeType = mimeType;
+            contentStream.Length = bytes.Length;
+            using (var memoryStream = new MemoryStream(bytes))
+            {
+                contentStream.Stream = memoryStream;
+                return CreateTempDocument(path, contentStream, null);
+            }
+        }
+
         public IDocument CreateTempDocument(CmisPath path, ContentStream stream,
-                                        IDictionary<string, object> properties) 
+                                            IDictionary<string, object> properties) 
         {
             var doc = _cmisNav.CreateDocument(path, stream, properties);
             _createdObjects.Add(doc);

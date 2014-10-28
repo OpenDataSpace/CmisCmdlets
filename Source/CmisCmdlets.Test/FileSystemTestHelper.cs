@@ -11,12 +11,27 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using NUnit.Framework.Constraints;
+using NUnit.Framework;
 
 namespace CmisCmdlets.Test
 {
     public class FileSystemTestHelper
     {
         private List<string> _createdFiles;
+
+#region Constraints for tests
+        public EqualConstraint IsContentOf(string filename)
+        {
+            return IsContentOf(filename, Encoding.UTF8);
+        }
+
+        public EqualConstraint IsContentOf(string filename, Encoding encoding)
+        {
+            var content = File.ReadAllText(filename, encoding);
+            return Is.EqualTo(content);
+        }
+#endregion
 
         public FileSystemTestHelper()
         {

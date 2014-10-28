@@ -78,7 +78,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetObjectWithNameFilterCanBeEmpty()
         {
-            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
+            CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
             CmisHelper.CreateTempDocument("/foo");
             CmisHelper.CreateTempDocument("/__tempFolder/bar");
 
