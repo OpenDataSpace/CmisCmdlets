@@ -11,6 +11,7 @@ using System;
 using System.Management.Automation;
 using DotCMIS.Exceptions;
 using System.Text;
+using System.Collections;
 
 namespace CmisCmdlets
 {
@@ -38,6 +39,9 @@ namespace CmisCmdlets
             set { MimeTypeInternal = value; }
         }
 
+        [Parameter(Position = 3, Mandatory = false)]
+        public Hashtable Properties { get; set; }
+
         protected override void EndProcessing()
         {
             var path = new CmisPath(Path);
@@ -46,10 +50,11 @@ namespace CmisCmdlets
             {
                 path.Combine(System.IO.Path.GetFileName(LocalFile));
             }
+            var nav = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            var props = Utilities.HashtableToDict(Properties);
             try
             {
-                var nav = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
-                WriteObject(nav.CreateDocument(path, stream));
+                WriteObject(nav.CreateDocument(path, stream, props));
             }
             catch (CmisBaseException e)
             {

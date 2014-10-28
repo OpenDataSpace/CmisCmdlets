@@ -9,14 +9,19 @@
 //  http://mozilla.org/MPL/2.0/.
 using System;
 using System.Management.Automation;
+using DotCMIS.Client;
+using System.Collections.Generic;
 
 namespace CmisCmdlets
 {
     [Cmdlet(VerbsCommon.Remove, "CmisObject")]
     public class RemoveCmisObjectCommand : CmisCommandBase
     {
-        [Parameter(Position = 0, ValueFromPipeline = true)]
+        [Parameter(Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
         public string[] Path { get; set; }
+
+        [Parameter(Position = 0, ValueFromPipeline = true, ParameterSetName = "ByObject")]
+        public ICmisObject[] Object { get; set; }
     
         [Parameter]
         public SwitchParameter Recursive { get; set; }
@@ -24,16 +29,34 @@ namespace CmisCmdlets
         protected override void ProcessRecord()
         {
             var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
-            foreach (var path in Path)
+            if (Path != null)
             {
-                var fails = navigation.Delete(path, Recursive.IsPresent);
-                foreach (var fail in fails)
+                foreach (var path in Path)
                 {
-                    var ex = new Exception(String.Format("Failed to delete CMIS object '{0}'",
-                                                         path));
-                    WriteError(new ErrorRecord(ex, "DeleteFailed", ErrorCategory.NotSpecified,
-                                               fail));
+                    WriteFailErrors(navigation.Delete(path, Recursive.IsPresent));
                 }
+            }
+            else
+            {
+                foreach (var obj in Object)
+                {
+                    WriteFailErrors(navigation.Delete(obj, Recursive.IsPresent));
+                }
+            }
+        }
+
+        private void WriteFailErrors(IList<string> fails)
+        {
+            if (fails == null)
+            {
+                return;
+            }
+            foreach (var fail in fails)
+            {
+                var ex = new Exception(String.Format("Failed to delete CMIS object '{0}'",
+                                                     fail));
+                WriteError(new ErrorRecord(ex, "DeleteFailed", ErrorCategory.NotSpecified,
+                                           fail));
             }
         }
     }

@@ -10,6 +10,7 @@
 using System;
 using System.Management.Automation;
 using DotCMIS.Exceptions;
+using System.Collections;
 
 namespace CmisCmdlets
 {
@@ -22,6 +23,9 @@ namespace CmisCmdlets
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Recursive { get; set; }
 
+        [Parameter(Position = 1, Mandatory = false)]
+        public Hashtable Properties { get; set; }
+
         protected override void ProcessRecord()
         {
             var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
@@ -29,7 +33,8 @@ namespace CmisCmdlets
             {
                 try
                 {
-                    WriteObject(navigation.CreateFolder(p, Recursive.IsPresent));
+                    var props = Utilities.HashtableToDict(Properties);
+                    WriteObject(navigation.CreateFolder(p, Recursive.IsPresent, props));
                 }
                 catch (CmisBaseException e)
                 {

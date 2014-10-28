@@ -36,6 +36,12 @@ namespace CmisCmdlets
 
         public IDocument CreateDocument(CmisPath path, ContentStream stream)
         {
+            return CreateDocument(path, stream, null);
+        }
+
+        public IDocument CreateDocument(CmisPath path, ContentStream stream,
+                                        IDictionary<string, object> properties)
+        {
             var components = path.GetComponents();
             var name = components[1];
             if (name.Length == 0)
@@ -44,15 +50,22 @@ namespace CmisCmdlets
             }
             var folder = GetFolder(components[0]);
 
-            var props = new Dictionary<string, object>()
+            var allProps = new Dictionary<string, object>()
             {
                 { PropertyIds.ObjectTypeId, "cmis:document" },
                 { PropertyIds.Name, name }
             };
-            return folder.CreateDocument(props, stream, VersioningState.Major);
+            Utilities.UpdateDictionary(allProps, properties);
+            return folder.CreateDocument(allProps, stream, VersioningState.Major);
         }
 
         public IFolder CreateFolder(CmisPath path, bool recursive)
+        {
+            return CreateFolder(path, recursive, null);
+        }
+
+        public IFolder CreateFolder(CmisPath path, bool recursive,
+                                    IDictionary<string, object> properties)
         {
             path = path.WithoutTrailingSlash();
 
@@ -71,14 +84,15 @@ namespace CmisCmdlets
             var components = path.GetComponents();
             var dirname = components[0];
             var basename = components[1];
-            IFolder parent = recursive ? CreateFolder(dirname, true) : GetFolder(dirname);
+            IFolder parent = recursive ? CreateFolder(dirname, true, null) : GetFolder(dirname);
 
-            var props = new Dictionary<string, object>()
+            var allProps = new Dictionary<string, object>()
             {
                 { PropertyIds.ObjectTypeId, "cmis:folder" },
                 { PropertyIds.Name, basename }
             };
-            return parent.CreateFolder(props);
+            Utilities.UpdateDictionary(allProps, properties);
+            return parent.CreateFolder(allProps);
         }
 
         public bool TryGet(CmisPath cmisPath, out ICmisObject obj)
@@ -138,25 +152,23 @@ namespace CmisCmdlets
         public IList<string> Delete(CmisPath cmisPath, bool recursive)
         {
             ICmisObject obj;
-            if (TryGet(cmisPath, out obj))
+            if (!TryGet(cmisPath, out obj))
             {
-                if (recursive && obj is IFolder)
-                {
-                    return ((IFolder)obj).DeleteTree(false, UnfileObject.Delete, true);
-                }
-                try
-                {
-                    obj.Delete(false);
-                    return null;
-                }
-                catch (CmisBaseException)
-                {
-                }
+                // fail otherwise
+                return new string[] { _curDir.Combine(cmisPath).ToString() };
             }
-            // fail otherwise
-            return new string[] { _curDir.Combine(cmisPath).ToString() };
+            return Delete(obj, recursive);
         }
 
+        public IList<string> Delete(ICmisObject obj, bool recursive)
+        {
+            if (recursive && obj is IFolder)
+            {
+                return ((IFolder)obj).DeleteTree(false, UnfileObject.Delete, true);
+            }
+            obj.Delete(false);
+            return null;
+        }
     }
 }
 

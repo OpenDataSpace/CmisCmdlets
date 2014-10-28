@@ -8,14 +8,16 @@
 // not distributed with this file, You can obtain one at
 //  http://mozilla.org/MPL/2.0/.
 using System;
+using System.Linq;
 using System.Management.Automation;
 using System.ComponentModel.DataAnnotations;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
+using System.Collections;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsData.Update, "CmisDocument", DefaultParameterSetName = "FromFile")]
+    [Cmdlet(VerbsData.Update, "CmisObject", DefaultParameterSetName = "FromFile")]
     public class UpdateCmisObjectCommand : CmisContentCommandBase
     {
         [Parameter(Position = 0, ParameterSetName = "FromContent")]
@@ -47,28 +49,39 @@ namespace CmisCmdlets
             set { MimeTypeInternal = value; }
         }
 
+        [Parameter(Position = 3, Mandatory = false)]
+        public Hashtable Properties { get; set; }
 
         protected override void EndProcessing()
         {
-            IDocument doc;
-            if (Object == null)
+            var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            ICmisObject obj = (Object != null) ? Object : navigation.Get(Path);
+
+            if (Properties != null)
             {
-                doc = new CmisNavigation(GetCmisSession(), GetWorkingFolder()).GetDocument(Path);
+                var props = Utilities.HashtableToDict(Properties);
+                obj = obj.UpdateProperties(props);
             }
-            else
+            // check if we should update content
+            if (LocalFile == null && Content == null)
             {
-                doc = Object as IDocument;
-                if (doc == null)
-                {
-                    var ex = new CmisObjectNotFoundException("The provided object is not a Document");
-                    ThrowTerminatingError(new ErrorRecord(ex, "UpdateObjNotDocument",
-                                                          ErrorCategory.InvalidArgument, Object));
-                }
+                WriteObject(obj);
+                return;
             }
+
+            // otherwise the object must be a document
+            var doc = Object as IDocument;
+            if (doc == null)
+            {
+                var ex = new CmisObjectNotFoundException("The provided object is not a Document");
+                ThrowTerminatingError(new ErrorRecord(ex, "UpdateObjNotDocument",
+                                                      ErrorCategory.InvalidArgument, Object));
+            }
+
             var stream = GetContentStream();
             try
             {
-                doc.SetContentStream(stream, true);
+                WriteObject(doc.SetContentStream(stream, true));
             }
             finally
             {
