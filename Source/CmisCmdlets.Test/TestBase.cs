@@ -17,6 +17,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using NUnit.Framework;
 using DotCMIS.Client;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets.Test
 {
@@ -59,6 +60,44 @@ namespace CmisCmdlets.Test
                 }
                 return _shell;
             }
+        }
+
+        private ISession _cmisSession;
+        public ISession CmisSession
+        {
+            get
+            {
+                if (_cmisSession == null)
+                {
+                    _cmisSession = ConnectionFactory.ConnectAtomPub(TestURL, TestUser, TestPassword,
+                                                                    TestRepository);
+                }
+                return _cmisSession;
+            }
+
+            set
+            {
+                _cmisSession = value;
+            }
+        }
+
+        private CmisTestHelper _cmisHelper;
+        public CmisTestHelper CmisHelper
+        {
+            get
+            {
+                if (_cmisHelper == null)
+                {
+                    _cmisHelper = new CmisTestHelper(CmisSession);
+                }
+                return _cmisHelper;
+            }
+        }
+
+        [TearDown]
+        public virtual void TearDown()
+        {
+            CmisHelper.CleanUp();
         }
 
         protected TestBase()

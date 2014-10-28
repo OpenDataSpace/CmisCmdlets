@@ -31,8 +31,41 @@ namespace CmisCmdlets.Test
             var res = Shell.Execute(
                 GetConnectToTestRepoCmd(),
                 CmdletName(typeof(GetCmisWorkingFolderCommand))
-            );
+                );
             Assert.That(res.First(), Is.EqualTo("/"));
+        }
+
+        [Test]
+        public void SetWFThrowsWhenNotExisting()
+        {
+            Assert.Throws<RuntimeException>(delegate {
+                Shell.Execute(
+                    CmdletName(typeof(GetCmisWorkingFolderCommand)),
+                    CmdletName(typeof(SetCmisWorkingFolderCommand)) + " __nonExisting"
+                );
+            });
+        }
+
+        [Test]
+        public void SetWFThrowsWhenNotConnected()
+        {
+            Assert.Throws<RuntimeException>(delegate {
+                Shell.Execute(
+                    CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /"
+                );
+            });
+        }
+
+        [Test, Ignore]
+        public void SetWFToRootWorks()
+        {
+            var res = Shell.Execute(
+                GetConnectToTestRepoCmd(),
+                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /__subdir",
+                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /",
+                CmdletName(typeof(GetCmisWorkingFolderCommand))
+            );
+            Assert.That(res, Is.EquivalentTo(new [] { "/", "/"}));
         }
     }
 }
