@@ -63,11 +63,9 @@ namespace CmisCmdlets.Test
 
         protected TestBase()
         {
-            /*
             // Should avoid problems with SSL and tests systems without valid certificate
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
-                */
         }
 
         protected string GetConnectToTestRepoCmd(bool insecure = false)

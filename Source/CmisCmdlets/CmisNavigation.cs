@@ -166,8 +166,28 @@ namespace CmisCmdlets
             {
                 return ((IFolder)obj).DeleteTree(false, UnfileObject.Delete, true);
             }
-            obj.Delete(false);
+            try
+            {
+                obj.Delete(false);
+            }
+            catch (CmisBaseException)
+            {
+                return new string[] { GetCmisObjectPath(obj) };
+            }
             return null;
+        }
+
+        private string GetCmisObjectPath(ICmisObject obj)
+        {
+            if (obj is IFolder)
+            {
+                return ((IFolder)obj).Path;
+            }
+            else if (obj is IDocument)
+            {
+                return ((IDocument)obj).Paths[0];
+            }
+            return "unknown";
         }
     }
 }

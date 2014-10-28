@@ -110,6 +110,21 @@ namespace CmisCmdlets.Test
 
         [TestCase(true)]
         [TestCase(false)]
+        public void DeleteDocumentByObject(bool recursive)
+        {
+            var doc = _cmisNav.CreateDocument("__ddDoc", null);
+            _createdObjects.Add(doc);
+
+
+            var fails = _cmisNav.Delete(doc, recursive);
+            ICmisObject obj;
+            Assert.That(fails, Is.Null);
+            Assert.That(_cmisNav.TryGet("__ddDoc", out obj), Is.False);
+            _createdObjects.Clear();
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
         public void DeleteEmptyFolder(bool recursive)
         {
             var folder = _cmisNav.CreateFolder("__defFolder", false);
@@ -117,7 +132,9 @@ namespace CmisCmdlets.Test
 
             var fails = _cmisNav.Delete("__defFolder", recursive);
             Assert.That(fails, Is.Null);
+
             ICmisObject obj;
+            _session.Clear(); // make sure the cache is empty for this test
             Assert.That(_cmisNav.TryGet("__defFolder", out obj), Is.False,
                         "empty folder still exists");
 
@@ -135,6 +152,8 @@ namespace CmisCmdlets.Test
 
             var fails = _cmisNav.Delete("__dnefwrFolder", true);
             Assert.That(fails, Is.Null);
+
+            _session.Clear(); // make sure the cache is empty for this test
             ICmisObject obj;
             Assert.That(_cmisNav.TryGet("__dnefwrFolder/subdir", out obj), Is.False,
                         "subdir still exists");
@@ -213,10 +232,10 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetDocument()
         {
-            var obj = _cmisNav.CreateDocument("_gdDoc", null);
+            var obj = _cmisNav.CreateDocument("__gdDoc", null);
             _createdObjects.Add(obj);
-            var doc = _cmisNav.GetDocument("__gdDoc");
-            Assert.That(doc.Paths[0], Contains.Item("/__gdDoc"));
+            var doc = _cmisNav.GetDocument("/__gdDoc");
+            Assert.That(doc.Paths, Contains.Item("/__gdDoc"));
             Assert.That(doc.Name, Is.EqualTo("__gdDoc"));
         }
 
