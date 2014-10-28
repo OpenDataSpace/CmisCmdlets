@@ -17,11 +17,17 @@ namespace CmisCmdlets.Test
     [TestFixture]
     public class CmisWorkingFolderTests : TestBase
     {
+        public static readonly string GetCmisWorkingFolderCmd =
+            CmdletName(typeof(GetCmisWorkingFolderCommand)) + " ";
+
+        public static readonly string SetCmisWorkingFolderCmd =
+            CmdletName(typeof(GetCmisWorkingFolderCommand)) + " ";
+
         [Test]
         public void GetWFThrowsIfNotConnected()
         {
             Assert.Throws<RuntimeException>(delegate {
-                Shell.Execute(CmdletName(typeof(GetCmisWorkingFolderCommand)));
+                Shell.Execute(GetCmisWorkingFolderCmd);
             });
         }
 
@@ -30,7 +36,7 @@ namespace CmisCmdlets.Test
         {
             var res = Shell.Execute(
                 GetConnectToTestRepoCmd(),
-                CmdletName(typeof(GetCmisWorkingFolderCommand))
+                GetCmisWorkingFolderCmd
                 );
             Assert.That(res.First(), Is.EqualTo("/"));
         }
@@ -40,8 +46,7 @@ namespace CmisCmdlets.Test
         {
             Assert.Throws<RuntimeException>(delegate {
                 Shell.Execute(
-                    CmdletName(typeof(GetCmisWorkingFolderCommand)),
-                    CmdletName(typeof(SetCmisWorkingFolderCommand)) + " __nonExisting"
+                    SetCmisWorkingFolderCmd + "__nonExisting"
                 );
             });
         }
@@ -51,7 +56,7 @@ namespace CmisCmdlets.Test
         {
             Assert.Throws<RuntimeException>(delegate {
                 Shell.Execute(
-                    CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /"
+                    SetCmisWorkingFolderCmd + "/"
                 );
             });
         }
@@ -63,14 +68,14 @@ namespace CmisCmdlets.Test
             CmisHelper.CreateTempFolder("/__subdir2", false);
             var res = Shell.Execute(
                 GetConnectToTestRepoCmd(),
-                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /__subdir1",
-                CmdletName(typeof(GetCmisWorkingFolderCommand)),
-                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " foo",
-                CmdletName(typeof(GetCmisWorkingFolderCommand)),
-                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " ../../__subdir2",
-                CmdletName(typeof(GetCmisWorkingFolderCommand)),
-                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /",
-                CmdletName(typeof(GetCmisWorkingFolderCommand))
+                SetCmisWorkingFolderCmd + "/__subdir1",
+                GetCmisWorkingFolderCmd,
+                SetCmisWorkingFolderCmd + "foo",
+                GetCmisWorkingFolderCmd,
+                SetCmisWorkingFolderCmd + "../../__subdir2",
+                GetCmisWorkingFolderCmd,
+                SetCmisWorkingFolderCmd + "/",
+                GetCmisWorkingFolderCmd
             );
             Assert.That(res, Is.EquivalentTo(new [] {
                 "/__subdir1", "/__subdir1",

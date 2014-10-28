@@ -15,7 +15,7 @@ using System.Collections;
 namespace CmisCmdlets
 {
     [Cmdlet(VerbsCommon.New, "CmisFolder")]
-    public class NewCmisFolder : CmisCommandBase
+    public class NewCmisFolderCommand : CmisCommandBase
     {
         [Parameter(ValueFromPipelineByPropertyName = true, Position = 0)]
         public string[] Path { get; set; }
