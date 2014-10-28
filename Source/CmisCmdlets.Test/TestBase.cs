@@ -94,10 +94,30 @@ namespace CmisCmdlets.Test
             }
         }
 
+        private FileSystemTestHelper _fileSystemHelper;
+        public FileSystemTestHelper FileSystemHelper
+        {
+            get
+            {
+                if (_fileSystemHelper == null)
+                {
+                    _fileSystemHelper = new FileSystemTestHelper();
+                }
+                return _fileSystemHelper;
+            }
+        }
+
         [TearDown]
         public virtual void TearDown()
         {
-            CmisHelper.CleanUp();
+            if (_cmisHelper != null)
+            {
+                _cmisHelper.CleanUp();
+            }
+            if (_fileSystemHelper != null)
+            {
+                _fileSystemHelper.CleanUp();
+            }
         }
 
         protected TestBase()

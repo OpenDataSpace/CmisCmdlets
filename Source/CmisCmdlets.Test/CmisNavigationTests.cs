@@ -196,7 +196,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void CreateDocument()
         {
-            var content = Encoding.ASCII.GetBytes("Test Content!");
+            var content = Encoding.UTF8.GetBytes("Test Content!");
             var stream = new ContentStream();
             stream.FileName = "mycontent.txt";
             stream.MimeType = "text/plain";
@@ -208,18 +208,7 @@ namespace CmisCmdlets.Test
 
             Assert.That(obj.Paths, Contains.Item("/__cdDoc"));
             Assert.That(obj.Name, Is.EqualTo("__cdDoc"));
-            var resultStream = obj.GetContentStream();
-            /* FIXME
-             * FileName will be the same as Name property, Length will be null. Don't know why
-             * Assert.That(resultStream.FileName, Is.EqualTo(stream.FileName));
-             * Assert.That(resultStream.Length, Is.EqualTo(stream.Length));
-            */
-            Assert.That(obj.ContentStreamLength, Is.EqualTo(obj.ContentStreamLength));
-            Assert.That(resultStream.MimeType, Is.EqualTo(stream.MimeType));
-
-            byte[] resultBytes = new byte[(int) obj.ContentStreamLength];
-            resultStream.Stream.Read(resultBytes, 0, (int) obj.ContentStreamLength);
-            Assert.That(resultBytes, Is.EquivalentTo(content));
+            Assert.That(obj, CmisHelper.HasContent(content, stream.MimeType));
         }
 
         [Test]

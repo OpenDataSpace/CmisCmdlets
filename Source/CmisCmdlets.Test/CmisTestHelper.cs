@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using DotCMIS.Exceptions;
 using DotCMIS.Data.Impl;
 using NUnit.Framework.Constraints;
+using System.Text;
 
 namespace CmisCmdlets.Test
 {
@@ -46,12 +47,55 @@ namespace CmisCmdlets.Test
         }
     }
 
+    public class CmisObjectContentConstraint : Constraint
+    {
+        private byte[] _content;
+        private string _mimetype;
+
+        public CmisObjectContentConstraint(byte[] content, string mimetype)
+        {
+            _content = content;
+            _mimetype = mimetype;
+        }
+
+        public override bool Matches(object actual)
+        {
+            var doc = actual as IDocument;
+            if (doc == null)
+            {
+                return false;
+            }
+            if (doc.ContentStreamLength != _content.Length)
+            {
+                return false;
+            }
+            if (!doc.ContentStreamMimeType.Equals(_mimetype))
+            {
+                return false;
+            }
+            var contentStream = doc.GetContentStream();
+            if (contentStream.MimeType.Equals(_mimetype))
+            {
+                return false;
+            }
+            var buffer = new byte[_content.Length];
+            contentStream.Stream.Read(buffer, 0, _content.Length);
+            return _content.Equals(buffer);
+        }
+
+        public override void WriteDescriptionTo(MessageWriter writer)
+        {
+            writer.WriteLine("Checks if the CMIS document has the designated content");
+        }
+    }
+
     public class CmisTestHelper
     {
         private CmisNavigation _cmisNav;
         private List<object> _createdObjects;
         private ISession _session;
-        
+
+#region Constraint helpers
         public CmisObjectExistsConstraint Exists
         {
             get { return new CmisObjectExistsConstraint(_session, true); }
@@ -61,6 +105,18 @@ namespace CmisCmdlets.Test
         {
             get { return new CmisObjectExistsConstraint(_session, true); }
         }
+
+        
+        public CmisObjectContentConstraint HasContent(string expected, string mimeType)
+        {
+            return HasContent(Encoding.UTF8.GetBytes(expected), mimeType);
+        }
+
+        public CmisObjectContentConstraint HasContent(byte[] content, string mimeType)
+        {
+            return new CmisObjectContentConstraint(content, mimeType);
+        }
+#endregion
 
         public CmisTestHelper(ISession session)
         {
