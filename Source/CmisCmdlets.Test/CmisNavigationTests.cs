@@ -44,7 +44,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void CreateExistingFolderWithoutRecursiveThrows()
         {
-            CmisHelper.CreateFolder("__cefwrtFolder", false);
+            CmisHelper.CreateTempFolder("__cefwrtFolder", false);
             Assert.Throws<CmisConstraintException>(delegate
                                                              {
                 _cmisNav.CreateFolder("__cefwrtFolder", false);
@@ -54,7 +54,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void CreateExistingFolderWithRecursiveWorks()
         {
-            var cmisF = CmisHelper.CreateFolder("__cefwrwFolder", false);
+            var cmisF = CmisHelper.CreateTempFolder("__cefwrwFolder", false);
             var otherF = _cmisNav.CreateFolder("__cefwrwFolder", true);
             Assert.That(otherF, Is.EqualTo(cmisF));
         }
@@ -70,7 +70,7 @@ namespace CmisCmdlets.Test
         [TestCase(false)]
         public void DeleteDocument(bool recursive)
         {
-            CmisHelper.CreateDocument("__ddDoc", null);
+            CmisHelper.CreateTempDocument("__ddDoc", null);
 
             var fails = _cmisNav.Delete("__ddDoc", recursive);
             ICmisObject obj;
@@ -83,7 +83,7 @@ namespace CmisCmdlets.Test
         [TestCase(false)]
         public void DeleteDocumentByObject(bool recursive)
         {
-            var doc = CmisHelper.CreateDocument("__ddDoc", null);
+            var doc = CmisHelper.CreateTempDocument("__ddDoc", null);
 
             var fails = _cmisNav.Delete(doc, recursive);
             ICmisObject obj;
@@ -96,7 +96,7 @@ namespace CmisCmdlets.Test
         [TestCase(false)]
         public void DeleteEmptyFolder(bool recursive)
         {
-            CmisHelper.CreateFolder("__defFolder", false);
+            CmisHelper.CreateTempFolder("__defFolder", false);
 
             var fails = _cmisNav.Delete("__defFolder", recursive);
             Assert.That(fails, Is.Null);
@@ -112,8 +112,8 @@ namespace CmisCmdlets.Test
         [Test]
         public void DeleteNonEmptyFolderWithRecursion()
         {
-            CmisHelper.CreateFolder("__dnefwrFolder/subdir", true);
-            CmisHelper.CreateDocument("__dnefwrFolder/testfile", null);
+            CmisHelper.CreateTempFolder("__dnefwrFolder/subdir", true);
+            CmisHelper.CreateTempDocument("__dnefwrFolder/testfile", null);
 
             var fails = _cmisNav.Delete("__dnefwrFolder", true);
             Assert.That(fails, Is.Null);
@@ -132,7 +132,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void DeleteNonEmptyFolderWithoutRecursionThrows()
         {
-            CmisHelper.CreateFolder("__dnefwrtFolder/subdir", true);
+            CmisHelper.CreateTempFolder("__dnefwrtFolder/subdir", true);
 
             var fails = _cmisNav.Delete("__dnefwrtFolder", false);
             Assert.That(fails, Is.EquivalentTo(new string[] { "/__dnefwrtFolder" }));
@@ -149,7 +149,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetObjectFromFolder()
         {
-            CmisHelper.CreateFolder("__goffFolder", false);
+            CmisHelper.CreateTempFolder("__goffFolder", false);
             var folder = _cmisNav.Get("__goffFolder");
             Assert.That(folder.Name, Is.EqualTo("__goffFolder"));
         }
@@ -174,7 +174,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetFolder()
         {
-            CmisHelper.CreateFolder("__gfFolder", false);
+            CmisHelper.CreateTempFolder("__gfFolder", false);
             var folder = _cmisNav.GetFolder("__gfFolder");
             Assert.That(folder.Path, Is.EqualTo("/__gfFolder"));
         }
@@ -182,7 +182,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetFolderFromDocThrows()
         {
-            CmisHelper.CreateDocument("__gffdtDoc", null);
+            CmisHelper.CreateTempDocument("__gffdtDoc", null);
             Assert.Throws<CmisObjectNotFoundException>(delegate {
                 _cmisNav.GetFolder("__gffdtDoc");
             });
@@ -191,7 +191,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetDocument()
         {
-            CmisHelper.CreateDocument("__gdDoc", null);
+            CmisHelper.CreateTempDocument("__gdDoc", null);
             var doc = _cmisNav.GetDocument("/__gdDoc");
             Assert.That(doc.Paths, Contains.Item("/__gdDoc"));
             Assert.That(doc.Name, Is.EqualTo("__gdDoc"));
@@ -200,7 +200,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void GetDocumentFromFolderThrows()
         {
-            CmisHelper.CreateFolder("__gdffFolder", false);
+            CmisHelper.CreateTempFolder("__gdffFolder", false);
 
             Assert.Throws<CmisObjectNotFoundException>(delegate {
                 _cmisNav.GetDocument("__gdffFolder");
@@ -239,7 +239,7 @@ namespace CmisCmdlets.Test
         [Test]
         public void CreateExistingDocumentThrows()
         {
-            CmisHelper.CreateDocument("__cedtDoc", null);
+            CmisHelper.CreateTempDocument("__cedtDoc", null);
             Assert.Throws<CmisConstraintException>(delegate {
                 _cmisNav.CreateDocument("__cedtDoc", null);
             });

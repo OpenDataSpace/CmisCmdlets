@@ -50,17 +50,17 @@ namespace CmisCmdlets.Test
             _createdObjects.Clear();
         }
 
-        public ICmisObject Get(CmisPath folder)
+        public ICmisObject Get(CmisPath path)
         {
-            return _cmisNav.Get(folder);
+			return _cmisNav.Get(path);
         }
 
-        public IDocument CreateDocument(CmisPath path, ContentStream stream)
+        public IDocument CreateTempDocument(CmisPath path, ContentStream stream)
         {
-            return CreateDocument(path, stream, null);
+            return CreateTempDocument(path, stream, null);
         }
 
-        public IDocument CreateDocument(CmisPath path, ContentStream stream,
+        public IDocument CreateTempDocument(CmisPath path, ContentStream stream,
                                         IDictionary<string, object> properties) 
         {
             var doc = _cmisNav.CreateDocument(path, stream, properties);
@@ -68,12 +68,12 @@ namespace CmisCmdlets.Test
             return doc;
         }
 
-        public IFolder CreateFolder(CmisPath path, bool recursive)
+        public IFolder CreateTempFolder(CmisPath path, bool recursive)
         {
-            return CreateFolder(path, recursive, null);
+            return CreateTempFolder(path, recursive, null);
         }
 
-        public IFolder CreateFolder(CmisPath path, bool recursive,
+        public IFolder CreateTempFolder(CmisPath path, bool recursive,
                                     IDictionary<string, object> properties) 
         {
             path = path.WithoutTrailingSlash();
@@ -88,7 +88,7 @@ namespace CmisCmdlets.Test
             var comps = path.GetComponents();
             if (recursive)
             {
-                CreateFolder(comps[0], true, null);
+                CreateTempFolder(comps[0], true, null);
             }
             var folder = _cmisNav.CreateFolder(path, false, properties);
             _createdObjects.Add(folder);
