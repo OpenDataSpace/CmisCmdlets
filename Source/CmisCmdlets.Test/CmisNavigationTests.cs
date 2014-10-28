@@ -45,8 +45,7 @@ namespace CmisCmdlets.Test
         public void CreateExistingFolderWithoutRecursiveThrows()
         {
             CmisHelper.CreateTempFolder("__cefwrtFolder", false);
-            Assert.Throws<CmisConstraintException>(delegate
-                                                             {
+            Assert.Throws<CmisConstraintException>(delegate {
                 _cmisNav.CreateFolder("__cefwrtFolder", false);
             });
         }
@@ -73,9 +72,8 @@ namespace CmisCmdlets.Test
             CmisHelper.CreateTempDocument("__ddDoc", null);
 
             var fails = _cmisNav.Delete("__ddDoc", recursive);
-            ICmisObject obj;
             Assert.That(fails, Is.Null);
-            Assert.That(_cmisNav.TryGet("__ddDoc", out obj), Is.False);
+            Assert.That("__ddDoc", CmisHelper.DoesNotExist);
             CmisHelper.ForgetTempObjects();
         }
 
@@ -86,9 +84,8 @@ namespace CmisCmdlets.Test
             var doc = CmisHelper.CreateTempDocument("__ddDoc", null);
 
             var fails = _cmisNav.Delete(doc, recursive);
-            ICmisObject obj;
             Assert.That(fails, Is.Null);
-            Assert.That(_cmisNav.TryGet("__ddDoc", out obj), Is.False);
+            Assert.That("__ddDoc", CmisHelper.DoesNotExist);
             CmisHelper.ForgetTempObjects();
         }
 
@@ -100,12 +97,7 @@ namespace CmisCmdlets.Test
 
             var fails = _cmisNav.Delete("__defFolder", recursive);
             Assert.That(fails, Is.Null);
-
-            ICmisObject obj;
-            CmisSession.Clear(); // make sure the cache is empty for this test
-            Assert.That(_cmisNav.TryGet("__defFolder", out obj), Is.False,
-                        "empty folder still exists");
-
+            Assert.That("__defFolder", CmisHelper.DoesNotExist);
             CmisHelper.ForgetTempObjects();
         }
 
@@ -117,15 +109,9 @@ namespace CmisCmdlets.Test
 
             var fails = _cmisNav.Delete("__dnefwrFolder", true);
             Assert.That(fails, Is.Null);
-
-            CmisSession.Clear(); // make sure the cache is empty for this test
-            ICmisObject obj;
-            Assert.That(_cmisNav.TryGet("__dnefwrFolder/subdir", out obj), Is.False,
-                        "subdir still exists");
-            Assert.That(_cmisNav.TryGet("__dnefwrFolder/testfile", out obj), Is.False,
-                        "testfile still exists");
-            Assert.That(_cmisNav.TryGet("__dnefwrFolder", out obj), Is.False,
-                        "main dir still exists");
+            Assert.That("__dnefwrFolder/subdir", CmisHelper.DoesNotExist);
+            Assert.That("__dnefwrFolder/testfile", CmisHelper.DoesNotExist);
+            Assert.That("__dnefwrFolder", CmisHelper.DoesNotExist);
             CmisHelper.ForgetTempObjects();
         }
 

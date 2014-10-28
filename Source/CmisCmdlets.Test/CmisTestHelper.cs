@@ -12,16 +12,59 @@ using DotCMIS.Client;
 using System.Collections.Generic;
 using DotCMIS.Exceptions;
 using DotCMIS.Data.Impl;
+using NUnit.Framework.Constraints;
 
 namespace CmisCmdlets.Test
 {
+    public class CmisObjectExistsConstraint : Constraint
+    {
+        private ISession _session;
+        private bool _shouldExist;
+
+        public CmisObjectExistsConstraint(ISession session, bool shouldExist)
+        {
+            _session = session;
+            _shouldExist = shouldExist;
+        }
+
+        public override bool Matches(object actual)
+        {
+            _session.Clear();
+            try
+            {
+                return _session.GetObjectByPath((string)actual) != null ? _shouldExist : !_shouldExist;
+            }
+            catch(CmisBaseException)
+            {
+                return !_shouldExist;
+            }
+        }
+
+        public override void WriteDescriptionTo(MessageWriter writer)
+        {
+            writer.WriteLine("Checks if the CMIS object designated by a given path exists");
+        }
+    }
+
     public class CmisTestHelper
     {
         private CmisNavigation _cmisNav;
         private List<ICmisObject> _createdObjects;
+        private ISession _session;
+        
+        public CmisObjectExistsConstraint Exists
+        {
+            get { return new CmisObjectExistsConstraint(_session, true); }
+        }
+
+        public CmisObjectExistsConstraint DoesNotExist
+        {
+            get { return new CmisObjectExistsConstraint(_session, true); }
+        }
 
         public CmisTestHelper(ISession session)
         {
+            _session = session;
             _createdObjects = new List<ICmisObject>();
             _cmisNav = new CmisNavigation(session);
         }
