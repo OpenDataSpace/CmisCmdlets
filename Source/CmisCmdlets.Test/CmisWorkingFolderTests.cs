@@ -56,16 +56,28 @@ namespace CmisCmdlets.Test
             });
         }
 
-        [Test, Ignore]
-        public void SetWFToRootWorks()
+        [Test]
+        public void SetWFWorks()
         {
+            CmisHelper.CreateTempFolder("/__subdir1/foo", true);
+            CmisHelper.CreateTempFolder("/__subdir2", false);
             var res = Shell.Execute(
                 GetConnectToTestRepoCmd(),
-                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /__subdir",
+                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /__subdir1",
+                CmdletName(typeof(GetCmisWorkingFolderCommand)),
+                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " foo",
+                CmdletName(typeof(GetCmisWorkingFolderCommand)),
+                CmdletName(typeof(SetCmisWorkingFolderCommand)) + " ../../__subdir2",
+                CmdletName(typeof(GetCmisWorkingFolderCommand)),
                 CmdletName(typeof(SetCmisWorkingFolderCommand)) + " /",
                 CmdletName(typeof(GetCmisWorkingFolderCommand))
             );
-            Assert.That(res, Is.EquivalentTo(new [] { "/", "/"}));
+            Assert.That(res, Is.EquivalentTo(new [] {
+                "/__subdir1", "/__subdir1",
+                "/__subdir1/foo", "/__subdir1/foo",
+                "/__subdir2", "/__subdir2",
+                "/", "/"
+            }));
         }
     }
 }
