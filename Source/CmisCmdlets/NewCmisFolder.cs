@@ -28,7 +28,7 @@ namespace CmisCmdlets
 
         protected override void ProcessRecord()
         {
-            var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            var navigation = new CmisNavigation(CmisSession, WorkingFolder);
             foreach (string p in Path)
             {
                 try

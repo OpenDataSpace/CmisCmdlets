@@ -50,7 +50,7 @@ namespace CmisCmdlets
             {
                 path.Combine(System.IO.Path.GetFileName(LocalFile));
             }
-            var nav = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            var nav = new CmisNavigation(CmisSession, WorkingFolder);
             var props = Utilities.HashtableToDict(Properties);
             try
             {

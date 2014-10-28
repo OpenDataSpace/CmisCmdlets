@@ -42,31 +42,67 @@ namespace CmisCmdlets
             }
         }
 
-        public void SetCmisSession(ISession session)
+        private ISession _cmisSession;
+        public ISession CmisSession
         {
-            SessionState.PSVariable.Set(SESSION_VAR_NAME, session);
-            SetCmisDirectory(session == null ? "" : "/"); // reset the directory to root
+            get
+            {
+                if (_cmisSession == null)
+                {
+                    _cmisSession = GetCmisSession();
+                }
+                return _cmisSession;
+            }
         }
 
-        public ISession GetCmisSession()
+        private CmisPath _workingFolder;
+        public CmisPath WorkingFolder
         {
-            var session = SessionState.PSVariable.Get(SESSION_VAR_NAME).Value as ISession;
+            get
+            {
+                if (_workingFolder == null)
+                {
+                    _workingFolder = GetWorkingFolder();
+                }
+                return _workingFolder;
+            }
+        }
+
+        protected void SetWorkingFolder(CmisPath path)
+        {
+            _workingFolder = path;
+            SessionState.PSVariable.Set(DIRECTORY_VAR_NAME, path.ToString());
+        }
+
+        protected void SetCmisSession(ISession session)
+        {
+            _cmisSession = session;
+            SessionState.PSVariable.Set(SESSION_VAR_NAME, _cmisSession);
+            SetWorkingFolder(_cmisSession == null ? "" : "/"); // reset the directory to root
+        }
+
+        private ISession GetCmisSession()
+        {
+            var variable = SessionState.PSVariable.Get(SESSION_VAR_NAME);
+            var session = variable == null ? null : variable.Value as ISession;
+            ValidateSession(session);
+            return session;
+        }
+
+        private void ValidateSession(ISession session)
+        {
             if (session == null)
             {
                 throw new RuntimeException("Session variable not set. " +
                                            "Did you forget to connect and set a repository?");
             }
-            return session;
         }
 
-        public void SetCmisDirectory(string path)
+        private CmisPath GetWorkingFolder()
         {
-            SessionState.PSVariable.Set(DIRECTORY_VAR_NAME, path);
-        }
-
-        public CmisPath GetWorkingFolder()
-        {
-            var dir = SessionState.PSVariable.Get(DIRECTORY_VAR_NAME).Value as string;
+            ValidateSession(CmisSession); // just make sure we're connected
+            var variable = SessionState.PSVariable.Get(DIRECTORY_VAR_NAME);
+            var dir = variable == null ? "" : variable.Value as string;
             return dir == null ? "" : dir;
         }
     }

@@ -49,7 +49,7 @@ namespace CmisCmdlets
             var doc = Document;
             if (doc == null)
             {
-                doc = new CmisNavigation(GetCmisSession(), GetWorkingFolder()).GetDocument(Path);
+                doc = new CmisNavigation(CmisSession, WorkingFolder).GetDocument(Path);
             }
             var writeToPipeline = String.IsNullOrEmpty(Destination);
             var size = (long) doc.ContentStreamLength;

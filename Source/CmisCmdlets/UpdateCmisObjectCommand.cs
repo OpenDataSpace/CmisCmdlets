@@ -54,7 +54,7 @@ namespace CmisCmdlets
 
         protected override void EndProcessing()
         {
-            var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            var navigation = new CmisNavigation(CmisSession, WorkingFolder);
             ICmisObject obj = (Object != null) ? Object : navigation.Get(Path);
 
             if (Properties != null)

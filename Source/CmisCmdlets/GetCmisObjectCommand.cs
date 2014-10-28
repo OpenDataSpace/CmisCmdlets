@@ -33,7 +33,7 @@ namespace CmisCmdlets
         protected override void ProcessRecord()
         {
             var cmisPath = new CmisPath(Path);
-            var navigation = new CmisNavigation(GetCmisSession(), GetWorkingFolder());
+            var navigation = new CmisNavigation(CmisSession, WorkingFolder);
             ICmisObject obj = null;
             try
             {

@@ -27,21 +27,14 @@ namespace TestShell
             LoadCmdletBinary();                                                                                                           
         }                                                                                                                                    
 
-        public Collection<object> Execute(string command)                                                                                    
-        {                                                                                                                                    
-            return Execute(new string[] { command });                                                                                        
-        }                                                                                                                                    
-
-        public Collection<object> Execute(string[] commands)                                                                                 
+        public Collection<object> Execute(params string[] commands)                                                                                 
         {                                                                                                                                    
             Collection<PSObject> results = null;                                                                                             
             Collection<object> resultObjects = new Collection<object>();                                                                     
             using (var pipeline = _runspace.CreatePipeline())                                                                                
-            {                                                                                                                                
-                foreach (var command in commands)                                                                                            
-                {                                                                                                                            
-                    pipeline.Commands.AddScript(command, false);                                                                             
-                }                                                                                                                            
+            {
+                var script = String.Join(";" + Environment.NewLine, commands);
+                pipeline.Commands.AddScript(script, false);                                                                             
                 results = pipeline.Invoke();                                                                                                 
                 if (pipeline.Error.Count > 0)                                                                                                
                 {                                                                                                                            

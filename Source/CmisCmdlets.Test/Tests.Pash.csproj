@@ -62,6 +62,7 @@
     <Compile Include="CmisPathTest.cs" />
     <Compile Include="CmisNavigationTests.cs" />
     <Compile Include="GetCmisObjectTests.cs" />
+    <Compile Include="CmisWorkingFolderTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -23,10 +23,10 @@ namespace CmisCmdlets
         protected override void EndProcessing()
         {
             //make sure it exists
-            var newPath = GetWorkingFolder().Combine(Path);
+            var newPath = WorkingFolder.Combine(Path);
             try
             {
-                new CmisNavigation(GetCmisSession()).GetFolder(Path);
+                new CmisNavigation(CmisSession).GetFolder(Path);
             }
             catch (CmisBaseException ex)
             {
@@ -34,7 +34,7 @@ namespace CmisCmdlets
                                                       ErrorCategory.ObjectNotFound, newPath));
             }
 
-            SetCmisDirectory(newPath.ToString());
+            SetWorkingFolder(newPath);
             WriteObject(newPath.ToString());
         }
     }

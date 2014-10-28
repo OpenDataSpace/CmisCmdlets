@@ -17,7 +17,7 @@ namespace CmisCmdlets
     {
         protected override void EndProcessing()
         {
-            WriteObject(GetWorkingFolder().ToString());
+            WriteObject(WorkingFolder.ToString());
         }
     }
 }
