@@ -59,7 +59,7 @@ namespace CmisCmdlets
             if (!nameIsEmpty)
             {
                 wildcard = Exact.IsPresent ? new WildcardPattern(Name)
-                                           : new WildcardPattern(Name + "*");
+                                      : new WildcardPattern(Name + "*", WildcardOptions.IgnoreCase);
             }
             int depth = RecursionDepth == 0 ? 1 : RecursionDepth;
 

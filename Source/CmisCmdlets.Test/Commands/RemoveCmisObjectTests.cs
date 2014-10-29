@@ -21,12 +21,6 @@ namespace CmisCmdlets.Test.Commands
     {
         public static readonly string RemoveCmisObjectCmd = "Remove-CmisObject ";
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
-        {
-            Shell.SetPreExecutionCommands(GetConnectToTestRepoCmd());
-        }
-
         [Test]
         public void RemoveNonExistingObjectIsError()
         {

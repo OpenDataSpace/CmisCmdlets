@@ -92,7 +92,7 @@ namespace CmisCmdlets.Test.Commands
             CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
             CmisHelper.CreateTempDocument("/bar"); // won't be found, too high in hierarch
             var baDoc = CmisHelper.CreateTempDocument("/__tempFolder/ba"); // should be found
-            var bazDoc = CmisHelper.CreateTempDocument("/__tempFolder/folder/baz"); // in 2nd level
+            var bazDoc = CmisHelper.CreateTempDocument("/__tempFolder/folder/Baz"); // in 2nd level
             var bariumFolder = CmisHelper.CreateTempFolder("/__tempFolder/folder/barium");
             CmisHelper.CreateTempDocument("/__tempFolder/folder/barium/baz"); // 3rd level ignored
 
