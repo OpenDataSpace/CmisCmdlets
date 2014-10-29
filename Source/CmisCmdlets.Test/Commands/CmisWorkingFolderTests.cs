@@ -12,7 +12,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class CmisWorkingFolderTests : TestBase

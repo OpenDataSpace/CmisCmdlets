@@ -14,7 +14,7 @@ using CmisCmdlets;
 using DotCMIS.Client;
 using DotCMIS;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class GetCmisRepositoryTests : TestBase

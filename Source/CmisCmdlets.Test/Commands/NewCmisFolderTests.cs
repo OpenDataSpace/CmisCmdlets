@@ -13,7 +13,7 @@ using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class NewCmisFolderTests : TestBaseWithAutoConnect

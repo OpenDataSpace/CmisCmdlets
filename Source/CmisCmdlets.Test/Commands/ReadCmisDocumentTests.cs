@@ -13,7 +13,7 @@ using NUnit.Framework;
 using DotCMIS.Exceptions;
 using System.Text;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class ReadCmisDocumentTests : TestBaseWithAutoConnect

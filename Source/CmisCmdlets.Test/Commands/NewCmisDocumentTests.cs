@@ -14,7 +14,7 @@ using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Text;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class NewCmisDocumentTests : TestBaseWithAutoConnect

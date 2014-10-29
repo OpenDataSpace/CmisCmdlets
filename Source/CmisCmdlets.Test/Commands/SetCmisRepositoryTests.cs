@@ -10,7 +10,7 @@
 using NUnit.Framework;
 using System;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class SetCmisRepositoryTests : TestBaseWithAutoConnect

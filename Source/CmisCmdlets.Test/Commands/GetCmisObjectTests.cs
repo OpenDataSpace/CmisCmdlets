@@ -12,7 +12,7 @@ using System.Linq;
 using NUnit.Framework;
 using DotCMIS.Exceptions;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class GetCmisObjectTests : TestBaseWithAutoConnect

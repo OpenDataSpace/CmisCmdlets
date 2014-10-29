@@ -13,7 +13,7 @@ using DotCMIS.Client;
 using DotCMIS;
 using System.Management.Automation;
 
-namespace CmisCmdlets.Test
+namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class ConnectCmisTests : TestBase
