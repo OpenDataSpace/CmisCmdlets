@@ -13,65 +13,93 @@ using System.Management.Automation;
 using System.Text;
 using System;
 
+namespace TestShell
+{
+    public class ShellExecutionHasErrorsException : Exception
+    {
+        public Collection<object> Errors { get; set; }
 
-namespace TestShell                                                                                                                               
-{                                                                                                                                            
-    public class TestShellInterface                                                                                                          
-    {                                                                                                                                        
-        private Runspace _runspace;                                                                                                          
+        public ShellExecutionHasErrorsException(Collection<object> errors) : base()
+        {
+            Errors = errors;
+        }
+    }
 
-        public TestShellInterface()                                                                                                          
-        {                                                                                                                                    
-            _runspace = RunspaceFactory.CreateRunspace();                                                                                    
-            _runspace.Open();                                                                                                                
-            LoadCmdletBinary();                                                                                                           
-        }                                                                                                                                    
+    public class TestShellInterface
+    {
+        public Runspace Runspace { get; set; }
+        public Collection<object> LastResults { get; set; }
+        public Collection<object> LastErrors { get; set; }
 
-        public Collection<object> Execute(params string[] commands)                                                                                 
-        {                                                                                                                                    
-            Collection<PSObject> results = null;                                                                                             
-            Collection<object> resultObjects = new Collection<object>();                                                                     
-            using (var pipeline = _runspace.CreatePipeline())                                                                                
+        private string[] _preExecutionCmds;
+        private string[] _postExecutionCmds;
+
+        public TestShellInterface()
+        {
+            Runspace = RunspaceFactory.CreateRunspace();
+            Runspace.Open();
+            LoadCmdletBinary();
+        }
+
+        public void SetPreExecutionCommands(params string[] commands)
+        {
+            _preExecutionCmds = commands;
+        }
+
+        public void SetPostExecutionCommands(params string[] commands)
+        {
+            _postExecutionCmds = commands;
+        }
+
+        public Collection<object> Execute(params string[] commands)
+        {
+            Collection<PSObject> results = null;
+            LastResults = new Collection<object>();
+            LastErrors = new Collection<object>();
+            using (var pipeline = Runspace.CreatePipeline())
             {
-                var script = String.Join(";" + Environment.NewLine, commands);
-                pipeline.Commands.AddScript(script, false);                                                                             
-                results = pipeline.Invoke();                                                                                                 
-                if (pipeline.Error.Count > 0)                                                                                                
-                {                                                                                                                            
-                    var sb = new StringBuilder();                                                                                            
-                    foreach (var error in pipeline.Error.NonBlockingRead())                                                                  
-                    {                                                                                                                        
-                        sb.Append(error.ToString() + Environment.NewLine);                                                                   
-                    }                                                                                                                        
-                    throw new RuntimeException(sb.ToString());                                                                               
-                }                                                                                                                            
-            }                                                                                                                                
-            if (results == null)                                                                                                             
-            {                                                                                                                                
-                return resultObjects;
+                var script = JoinCommands(_preExecutionCmds) +
+                             JoinCommands(commands) +
+                             JoinCommands(_postExecutionCmds);
+                pipeline.Commands.AddScript(script, false);
+                results = pipeline.Invoke();
+                LastErrors = pipeline.Error.NonBlockingRead();
             }
             foreach (var curPSObject in results)
             {
                 if (curPSObject == null)
                 {
-                    resultObjects.Add(null);
+                    LastResults.Add(null);
                 }
                 else
                 {
-                    resultObjects.Add(curPSObject.BaseObject);
+                    LastResults.Add(curPSObject.BaseObject);
                 }
             }
-            return resultObjects;
+            if (LastErrors.Count > 0)
+            {
+                throw new ShellExecutionHasErrorsException(LastErrors);
+            }
+            return LastResults;
         }
 
         public object GetVariableValue(string variableName)
         {
-            object variable = _runspace.SessionStateProxy.GetVariable(variableName);
+            object variable = Runspace.SessionStateProxy.GetVariable(variableName);
             if (variable is PSObject)
             {
                 variable = ((PSObject)variable).BaseObject;
             }
             return variable;
+        }
+
+        private string JoinCommands(string[] cmds)
+        {
+            if (cmds == null)
+            {
+                return "";
+            }
+            return String.Join(";" + Environment.NewLine, cmds);
         }
 
         private void LoadCmdletBinary()
@@ -88,7 +116,7 @@ namespace TestShell
                 {
                     throw new RuntimeException(String.Format(
                         "Failed to import module '{0}'. Didn't you build it?", path), e);
-                }                                            
+                }
             }
             else
             {
