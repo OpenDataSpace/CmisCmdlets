@@ -56,20 +56,22 @@
     <Compile Include="UtilityTests.cs" />
     <Compile Include="TestShellInterface.cs" />
     <Compile Include="ConnectionFactoryTests.cs" />
-    <Compile Include="GetCmisRepositoryTests.cs" />
-    <Compile Include="ConnectCmisTests.cs" />
-    <Compile Include="SetCmisRepositoryTests.cs" />
     <Compile Include="CmisPathTest.cs" />
     <Compile Include="CmisNavigationTests.cs" />
-    <Compile Include="GetCmisObjectTests.cs" />
-    <Compile Include="CmisWorkingFolderTests.cs" />
     <Compile Include="CmisTestHelper.cs" />
-    <Compile Include="NewCmisFolderTests.cs" />
-    <Compile Include="NewCmisDocumentTests.cs" />
     <Compile Include="FileSystemTestHelper.cs" />
-    <Compile Include="ReadCmisDocumentTests.cs" />
-    <Compile Include="RemoveCmisObjectTests.cs" />
-    <Compile Include="TestBaseWithConnection.cs" />
+    <Compile Include="TestBaseWithAutoConnect.cs" />
+    <Compile Include="Commands\ConnectCmisTests.cs" />
+    <Compile Include="Commands\CmisWorkingFolderTests.cs" />
+    <Compile Include="Commands\GetCmisObjectTests.cs">
+      <DependentUpon>CmisWorkingFolderTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\GetCmisRepositoryTests.cs" />
+    <Compile Include="Commands\NewCmisDocumentTests.cs" />
+    <Compile Include="Commands\NewCmisFolderTests.cs" />
+    <Compile Include="Commands\ReadCmisDocumentTests.cs" />
+    <Compile Include="Commands\SetCmisRepositoryTests.cs" />
+    <Compile Include="Commands\RemoveCmisObjectTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -84,5 +86,8 @@
       <Link>TestConfig.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 </Project>
