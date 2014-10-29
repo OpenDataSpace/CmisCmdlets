@@ -68,7 +68,6 @@
     <Compile Include="GetCmisWorkingFolderCommand.cs" />
     <Compile Include="CmisPath.cs" />
     <Compile Include="CmisPathException.cs" />
-    <Compile Include="NewCmisFolder.cs" />
     <Compile Include="GetCmisObjectCommand.cs" />
     <Compile Include="RemoveCmisObjectCommand.cs" />
     <Compile Include="NewCmisDocumentCommand.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="CmisContentCommandBase.cs" />
     <Compile Include="UpdateCmisObjectCommand.cs" />
     <Compile Include="GetCmisPropertyCommand.cs" />
+    <Compile Include="NewCmisFolderCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
