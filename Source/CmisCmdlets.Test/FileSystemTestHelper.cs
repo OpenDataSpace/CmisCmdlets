@@ -50,7 +50,7 @@ namespace CmisCmdlets.Test
 
         public void CleanUp()
         {
-            for (int i = _createdFiles.Count; i >= 0; i--)
+            for (int i = _createdFiles.Count - 1; i >= 0; i--)
             {
                 File.Delete(_createdFiles[i]);
             }

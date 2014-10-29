@@ -13,6 +13,8 @@ using System.Management.Automation;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Security.Cryptography;
+using DotCMIS.Data;
 
 namespace CmisCmdlets
 {
@@ -83,8 +85,19 @@ namespace CmisCmdlets
 
             // TODO: better download mechanism anywhere
             var buffer = new byte[size];
-            var stream = doc.GetContentStream();
-            stream.Stream.Read(buffer, 0, (int)size);
+            IContentStream stream = null;
+            try
+            {
+                stream = doc.GetContentStream();
+                stream.Stream.Read(buffer, 0, (int)size);
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Stream.Close();
+                }
+            }
             if (writeToPipeline)
             {
                 // TODO: support encodings

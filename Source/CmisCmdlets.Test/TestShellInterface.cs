@@ -12,16 +12,18 @@ using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Text;
 using System;
+using System.Linq;
 using NUnit.Framework.Constraints;
 using NUnit.Framework;
+using System.Net.Sockets;
 
 namespace TestShell
 {
     public class ShellExecutionHasErrorsException : Exception
     {
-        public Collection<object> Errors { get; set; }
+        public Collection<ErrorRecord> Errors { get; private set; }
 
-        public ShellExecutionHasErrorsException(Collection<object> errors) : base()
+        public ShellExecutionHasErrorsException(Collection<ErrorRecord> errors) : base()
         {
             Errors = errors;
         }
@@ -31,7 +33,7 @@ namespace TestShell
     {
         public Runspace LastRunspace { get; set; }
         public Collection<object> LastResults { get; set; }
-        public Collection<object> LastErrors { get; set; }
+        public Collection<ErrorRecord> LastErrors { get; set; }
 
         private string[] _preExecutionCmds;
         private string[] _postExecutionCmds;
@@ -63,7 +65,7 @@ namespace TestShell
         {
             Collection<PSObject> results = null;
             LastResults = new Collection<object>();
-            LastErrors = new Collection<object>();
+            LastErrors = new Collection<ErrorRecord>();
 
             using (var pipeline = LastRunspace.CreatePipeline())
             {
@@ -72,7 +74,12 @@ namespace TestShell
                         JoinCommands(_postExecutionCmds);
                 pipeline.Commands.AddScript(script, false);
                 results = pipeline.Invoke();
-                LastErrors = pipeline.Error.NonBlockingRead();
+                LastErrors = new Collection<ErrorRecord>(
+                    (from errObj in pipeline.Error.NonBlockingRead()
+                                where errObj is PSObject
+                                select ((PSObject) errObj).BaseObject as ErrorRecord
+                    ).ToList()
+                );
             }
 
             foreach (var curPSObject in results)

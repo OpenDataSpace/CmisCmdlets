@@ -13,6 +13,7 @@ using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Text;
+using System.IO;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -32,14 +33,12 @@ namespace CmisCmdlets.Test.Commands
             Assert.That("/__emptyDoc", CmisHelper.Exists);
         }
 
-        [TestCase("/notexisting/__emptyDoc")]
-        [TestCase("/notexisting/")] // empty filename
-        [TestCase("/notexisting/.")] // will be interpreted as special . folder
-        [TestCase("/notexisting/bar/..")] // will be interpreted as special .. folder
-        public void CreatingDocumentWithInvalidPathThrows(string path)
+        [TestCase("/notexisting/__emptyDoc", typeof(CmisObjectNotFoundException))]
+        [TestCase("/nonexisting/", typeof(CmisNameConstraintViolationException))] // empty filename
+        public void CreatingDocumentWithInvalidPathThrows(string path, Type exceptionType)
         {
             CmisHelper.RegisterTempObject(path);
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws(exceptionType, delegate {
                 Shell.Execute(NewCmisDocumentCmd + path);
             });
             Assert.That(path, CmisHelper.DoesNotExist);
@@ -64,21 +63,21 @@ namespace CmisCmdlets.Test.Commands
             Assert.That(doc, Is.Not.Null);
             Assert.That(doc.Paths, Contains.Item("/__contentDoc"));
             Assert.That("/__contentDoc", CmisHelper.Exists);
-            Assert.That(doc, CmisHelper.HasContent("baz", "text/html"));
+            Assert.That(doc, CmisHelper.HasContent(NewlineJoin("baz"), "text/html"));
         }
 
         [Test]
         public void CreatingDocumentWithContentByPipeline()
         {
-            CmisHelper.RegisterTempObject("/__contentPipeDoc");
-            var cmd = "'foo','bar' | " +
-                NewCmisDocumentCmd + " /__contentPipeDoc -MimeType 'text/plain'";
+            CmisHelper.RegisterTempObject("/__contentDoc2");
+            var cmd = " 'foo','bar' | " +
+                NewCmisDocumentCmd + " /__contentDoc2 -MimeType 'text/html'";
             var res = Shell.Execute(cmd);
             var doc = res.First() as IDocument;
             Assert.That(doc, Is.Not.Null);
-            Assert.That(doc.Paths, Contains.Item("/__contentPipeDoc"));
-            Assert.That("/__contentPipeDoc", CmisHelper.Exists);
-            Assert.That(doc, CmisHelper.HasContent("foo" + Environment.NewLine + "bar", "text/html"));
+            Assert.That(doc.Paths, Contains.Item("/__contentDoc2"));
+            Assert.That("/__contentDoc2", CmisHelper.Exists);
+            Assert.That(doc, CmisHelper.HasContent(NewlineJoin("foo", "bar"), "text/html"));
         }
 
         [Test]
@@ -92,7 +91,8 @@ namespace CmisCmdlets.Test.Commands
             Assert.That(doc, Is.Not.Null);
             Assert.That(doc.Paths, Contains.Item("/__testContentFile.html"));
             Assert.That("/__testContentFile.html", CmisHelper.Exists);
-            Assert.That(doc, CmisHelper.HasContent(Encoding.UTF8.GetBytes("abcde"), "text/html"));
+            Assert.That(doc, CmisHelper.HasContent(File.ReadAllBytes("__testContentFile.html"),
+                                                   "text/html"));
         }
 
 
@@ -107,7 +107,8 @@ namespace CmisCmdlets.Test.Commands
             Assert.That(doc, Is.Not.Null);
             Assert.That(doc.Paths, Contains.Item("/__otherFilename"));
             Assert.That("/__otherFilename", CmisHelper.Exists);
-            Assert.That(doc, CmisHelper.HasContent(Encoding.UTF8.GetBytes("foobar"), "text/html"));
+            Assert.That(doc, CmisHelper.HasContent(File.ReadAllBytes("__testContentFile.html"),
+                                                   "text/html"));
         }
 
         // TODO: tests with properties

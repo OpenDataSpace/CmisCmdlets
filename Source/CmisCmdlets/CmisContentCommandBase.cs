@@ -48,10 +48,11 @@ namespace CmisCmdlets
                 stream.Length = content.LongLength;
                 stream.MimeType = MimeTypeInternal;
             }
-            else if (LocalFileInternal != null)
+            else if (!String.IsNullOrEmpty(LocalFileInternal))
             {
                 var fileStream = new FileStream(LocalFileInternal, FileMode.Open, FileAccess.Read,
                                                 FileShare.Read);
+                stream = new ContentStream();
                 var ext = System.IO.Path.GetExtension(LocalFileInternal);
                 stream.Stream = fileStream;
                 stream.MimeType = MimeTypeMap.MimeTypeMap.GetMimeType(ext);

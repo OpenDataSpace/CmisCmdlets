@@ -29,7 +29,7 @@ namespace CmisCmdlets.Test.Commands
         }
 
         [Test]
-        public void GetObjectFromFolderWihoutTrailingSlashReturnsDir()
+        public void GetObjectFromFolderWithoutTrailingSlashReturnsDir()
         {
             var folder = CmisHelper.CreateTempFolder("/__tempFolder");
             CmisHelper.CreateTempDocument("/__tempFolder/foo");
@@ -37,23 +37,23 @@ namespace CmisCmdlets.Test.Commands
 
             var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder");
             Assert.That(res.Count, Is.EqualTo(1));
-            Assert.That(res.First(), Is.EqualTo(folder));
+            Assert.That(res.First(), CmisHelper.IsEqualObject(folder));
         }
 
         [TestCase("/__tempFolder/")] // by using a trailing slash in path
         [TestCase("/__tempFolder -RecursionDepth 1")] // by defining recursion depth
         public void GetObjectFromFolderCanReturnChildren(string parameters)
         {
-            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder");
+            var folder = CmisHelper.CreateTempFolder("/__tempFolder/folder", true);
             var doc1 = CmisHelper.CreateTempDocument("/__tempFolder/foo");
             var doc2 = CmisHelper.CreateTempDocument("/__tempFolder/bar");
              CmisHelper.CreateTempDocument("/__tempFolder/folder/baz");
 
             var res = Shell.Execute(GetCmisObjectCmd + parameters);
             Assert.That(res.Count, Is.EqualTo(3));
-            Assert.That(res, Contains.Item(folder));
-            Assert.That(res, Contains.Item(doc1));
-            Assert.That(res, Contains.Item(doc2));
+            Assert.That(res, CmisHelper.ContainsObject(folder));
+            Assert.That(res, CmisHelper.ContainsObject(doc1));
+            Assert.That(res, CmisHelper.ContainsObject(doc2));
         }
 
         [Test]
@@ -68,11 +68,11 @@ namespace CmisCmdlets.Test.Commands
 
             var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -RecursionDepth 2");
             Assert.That(res.Count, Is.EqualTo(5));
-            Assert.That(res, Contains.Item(folder));
-            Assert.That(res, Contains.Item(doc1));
-            Assert.That(res, Contains.Item(doc2));
-            Assert.That(res, Contains.Item(grandchild));
-            Assert.That(res, Contains.Item(grandchildf));
+            Assert.That(res, CmisHelper.ContainsObject(folder));
+            Assert.That(res, CmisHelper.ContainsObject(doc1));
+            Assert.That(res, CmisHelper.ContainsObject(doc2));
+            Assert.That(res, CmisHelper.ContainsObject(grandchild));
+            Assert.That(res, CmisHelper.ContainsObject(grandchildf));
         }
 
         [Test]
@@ -98,9 +98,9 @@ namespace CmisCmdlets.Test.Commands
 
             var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -Name ba -RecursionDepth 2");
             Assert.That(res.Count, Is.EqualTo(3));
-            Assert.That(res, Contains.Item(baDoc));
-            Assert.That(res, Contains.Item(bazDoc));
-            Assert.That(res, Contains.Item(bariumFolder));
+            Assert.That(res, CmisHelper.ContainsObject(baDoc));
+            Assert.That(res, CmisHelper.ContainsObject(bazDoc));
+            Assert.That(res, CmisHelper.ContainsObject(bariumFolder));
         }
 
         [Test]
@@ -115,8 +115,8 @@ namespace CmisCmdlets.Test.Commands
 
             var res = Shell.Execute(GetCmisObjectCmd + "/__tempFolder -Name ba -Exact -RecursionDepth 2");
             Assert.That(res.Count, Is.EqualTo(2));
-            Assert.That(res, Contains.Item(baDoc));
-            Assert.That(res, Contains.Item(baFolder));
+            Assert.That(res, CmisHelper.ContainsObject(baDoc));
+            Assert.That(res, CmisHelper.ContainsObject(baFolder));
         }
     }
 }

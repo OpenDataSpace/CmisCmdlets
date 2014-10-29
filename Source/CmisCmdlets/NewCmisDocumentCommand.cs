@@ -47,7 +47,7 @@ namespace CmisCmdlets
             var path = new CmisPath(Path);
             if (LocalFile != null && path.HasTrailingSlash())
             {
-                path.Combine(System.IO.Path.GetFileName(LocalFile));
+                path = path.Combine(System.IO.Path.GetFileName(LocalFile));
             }
             var nav = new CmisNavigation(CmisSession, WorkingFolder);
             var props = Utilities.HashtableToDict(Properties);
@@ -63,7 +63,10 @@ namespace CmisCmdlets
             }
             finally
             {
-                stream.Stream.Close();
+                if (stream != null)
+                {
+                    stream.Stream.Close();
+                }
             }
         }
     }

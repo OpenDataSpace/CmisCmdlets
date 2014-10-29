@@ -136,7 +136,7 @@ namespace CmisCmdlets.Test
 
         public static string NewlineJoin(params string[] strs)
         {
-            return String.Join(Environment.NewLine, strs);
+            return String.Join(Environment.NewLine, strs) + Environment.NewLine;
         }
         
         public static string CmdletName(Type cmdletType)

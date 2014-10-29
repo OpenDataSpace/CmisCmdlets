@@ -49,7 +49,7 @@ namespace CmisCmdlets
             var nameIsEmpty = String.IsNullOrEmpty(Name);
 
             if (!(obj is IFolder) ||
-                (!cmisPath.HasTrailingSlash() && nameIsEmpty))
+                (!cmisPath.HasTrailingSlash() && nameIsEmpty && RecursionDepth < 1))
             {
                 WriteObject(obj);
                 return;

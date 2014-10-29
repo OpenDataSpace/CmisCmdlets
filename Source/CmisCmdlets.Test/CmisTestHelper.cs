@@ -19,7 +19,97 @@ using System.IO;
 
 namespace CmisCmdlets.Test
 {
-    public class CmisObjectExistsConstraint : Constraint
+    public abstract class CmisBaseConstraint : Constraint
+    {
+        protected string ActualValue { get; set; }
+        protected string ExpectedValue { get; set; }
+
+        
+        public override void WriteDescriptionTo(MessageWriter writer)
+        {
+            writer.WriteLine(ExpectedValue);
+        }
+
+        public override void WriteActualValueTo(MessageWriter writer)
+        {
+            writer.WriteLine(ActualValue);
+        }
+
+        protected bool Problem(string format, object expected, object actual)
+        {
+            return Problem(String.Format(format, expected), String.Format(format, actual));
+        }
+
+        protected bool Problem(string expected, string actual)
+        {
+            ExpectedValue = expected.ToString();
+            ActualValue = actual.ToString();
+            return false;
+        }
+
+        protected bool MatchObject(ICmisObject expected, ICmisObject actual)
+        {
+            if (actual == null)
+            {
+                return Problem("An ICmisObject", "Something else");
+            }
+            if (expected.BaseTypeId != actual.BaseTypeId)
+            {
+                return Problem("Object with BaseTypeId {0}", expected.BaseTypeId,
+                               actual.BaseTypeId);
+            }
+            if (expected.Id != actual.Id)
+            {
+                return Problem("Object with Id \"{0}\"", expected.BaseTypeId,
+                               actual.BaseTypeId);
+            }
+            /*
+             * This would have to be done by hand. Skipping for now
+            if (!expected.Properties.SequenceEqual(actual.Properties))
+            {
+                return Problem("Object with Properties \"{0}\"", expected.Properties,
+                               actual.Properties);
+            }
+            */
+            if (expected is IFolder)
+            {
+                return MatchFolder(expected as IFolder, actual as IFolder);
+            }
+            else if (expected is IDocument)
+            {
+                return MatchDocument(expected as IDocument, actual as IDocument);
+            }
+            return true;
+        }
+
+        protected bool MatchFolder(IFolder expected, IFolder actual)
+        {
+            if (actual == null)
+            {
+                return Problem("An IFolder object", "Something else");
+            }
+            if (!expected.Path.Equals(actual.Path))
+            {
+                return Problem("IFolder with Path {0}", expected.Path, actual.Path);
+            }
+            return true;
+        }
+
+        protected bool MatchDocument(IDocument expected, IDocument actual)
+        {
+            if (actual == null)
+            {
+                return Problem("An IDocument object", "Something else");
+            }
+            if (!expected.Paths.SequenceEqual(actual.Paths))
+            {
+                return Problem("IDocument with Paths {0}", expected.Paths, actual.Paths);
+            }
+            return true;
+        }
+    }
+
+    public class CmisObjectExistsConstraint : CmisBaseConstraint
     {
         private ISession _session;
         private bool _shouldExist;
@@ -32,6 +122,9 @@ namespace CmisCmdlets.Test
 
         public override bool Matches(object actual)
         {
+            ExpectedValue = "Object should" + (_shouldExist ? "" : " not") + " exist.";
+            ActualValue = "Object does" + (_shouldExist ? " not" : "") + " exist.";
+
             _session.Clear();
             try
             {
@@ -42,24 +135,12 @@ namespace CmisCmdlets.Test
                 return !_shouldExist;
             }
         }
-
-        public override void WriteDescriptionTo(MessageWriter writer)
-        {
-            writer.WriteLine("Object should" + (_shouldExist ? "" : " not") + " exist.");
-        }
-
-        public override void WriteActualValueTo(MessageWriter writer)
-        {
-            writer.WriteLine("Object does" + (_shouldExist ? " not" : "") + " exist.");
-        }
     }
 
-    public class CmisObjectContentConstraint : Constraint
+    public class CmisObjectContentConstraint : CmisBaseConstraint
     {
         private byte[] _content;
         private string _mimetype;
-        private string _actual;
-        private string _expected;
 
         public CmisObjectContentConstraint(byte[] content, string mimetype)
         {
@@ -72,44 +153,74 @@ namespace CmisCmdlets.Test
             var doc = actual as IDocument;
             if (doc == null)
             {
-                _expected = "An existing IDocument";
-                _actual = "Object which is not an> IDocument";
-                return false;
-            }
-            if (doc.ContentStreamLength != _content.Length)
-            {
-                _actual = "Content of length " + doc.ContentStreamLength.ToString();
-                _expected = "Content of length " + _content.Length.ToString();
-                return false;
+                return Problem("An existing IDocument", "Object which is not an IDocument");
             }
             if (!doc.ContentStreamMimeType.Equals(_mimetype))
             {
-                _actual = "Content with MimeType \"" + doc.ContentStreamMimeType + "\"";
-                _expected = "Content with MimeType \"" + _mimetype + "\"";
-                return false;
+                return Problem("Content with MimeType \"{0}\"", _mimetype,
+                               doc.ContentStreamMimeType);
             }
             var contentStream = doc.GetContentStream();
             if (!contentStream.MimeType.Equals(_mimetype))
             {
-                _actual = "ContentStream with MimeType \"" + contentStream.MimeType + "\"";
-                _expected = "ContentStream with MimeType \"" + _mimetype + "\"";
-                return false;
+                return Problem("ContentStream with MimeType \"{0}\"", _mimetype,
+                               contentStream.MimeType);
             }
             var buffer = new byte[_content.Length];
             contentStream.Stream.Read(buffer, 0, _content.Length);
-            _actual = "Content: \"" + Encoding.UTF8.GetString(_content) + "\""; 
-            _expected = "Content: \"" + Encoding.UTF8.GetString(buffer) + "\"";
-            return _content.SequenceEqual(buffer);
+            contentStream.Stream.Close();
+            if (!_content.SequenceEqual(buffer))
+            {
+                return Problem("Content: \"{0}\"", Encoding.UTF8.GetString(_content),
+                               Encoding.UTF8.GetString(buffer));
+            }
+            if (doc.ContentStreamLength != _content.Length)
+            {
+                return Problem("Content of length {0}", _content.Length, doc.ContentStreamLength);
+            }
+            return true;
+        }
+    }
+
+    public class CmisObjectEqualityConstraint : CmisBaseConstraint
+    {
+        private ICmisObject _object;
+
+        public CmisObjectEqualityConstraint(ICmisObject obj)
+        {
+            _object = obj;
         }
 
-        public override void WriteDescriptionTo(MessageWriter writer)
+        public override bool Matches(object actual)
         {
-            writer.WriteLine(_expected);
+            return MatchObject(_object, actual as ICmisObject);
+        }
+    }
+
+    public class CmisCollectionContainsObjectConstraint : CmisBaseConstraint
+    {
+        private ICmisObject _object;
+
+        public CmisCollectionContainsObjectConstraint(ICmisObject obj)
+        {
+            _object = obj;
         }
 
-        public override void WriteActualValueTo(MessageWriter writer)
+        public override bool Matches(object actual)
         {
-            writer.WriteLine(_actual);
+            var enumerable = actual as IEnumerable<object>;
+            if (enumerable == null)
+            {
+                return Problem("An IEnumerable<object>", "Something else");
+            }
+            foreach (var obj in enumerable)
+            {
+                if (MatchObject(_object, obj as ICmisObject))
+                {
+                    return true;
+                }
+            }
+            return Problem("An IEnumerable with " + _object.ToString(), "An IEnumerable without it");
         }
     }
 
@@ -139,6 +250,16 @@ namespace CmisCmdlets.Test
         public CmisObjectContentConstraint HasContent(byte[] content, string mimeType)
         {
             return new CmisObjectContentConstraint(content, mimeType);
+        }
+
+        public Constraint IsEqualObject(ICmisObject expected)
+        {
+            return new CmisObjectEqualityConstraint(expected);
+        }
+
+        public Constraint ContainsObject(ICmisObject expected)
+        {
+            return new CmisCollectionContainsObjectConstraint(expected);
         }
 #endregion
 

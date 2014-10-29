@@ -11,10 +11,11 @@ using System;
 using System.Management.Automation;
 using DotCMIS.Client;
 using System.Collections.Generic;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets
 {
-    [Cmdlet(VerbsCommon.Remove, "CmisObject")]
+    [Cmdlet(VerbsCommon.Remove, "CmisObject", DefaultParameterSetName = "ByPath")]
     public class RemoveCmisObjectCommand : CmisCommandBase
     {
         [Parameter(Position = 0, ValueFromPipeline = true, ParameterSetName = "ByPath")]
@@ -53,8 +54,8 @@ namespace CmisCmdlets
             }
             foreach (var fail in fails)
             {
-                var ex = new Exception(String.Format("Failed to delete CMIS object '{0}'",
-                                                     fail));
+                var ex = new CmisRuntimeException(
+                    String.Format("Failed to delete CMIS object '{0}'", fail));
                 WriteError(new ErrorRecord(ex, "DeleteFailed", ErrorCategory.NotSpecified,
                                            fail));
             }
