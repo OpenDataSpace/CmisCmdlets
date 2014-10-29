@@ -26,7 +26,7 @@ namespace CmisCmdlets
             var newPath = WorkingFolder.Combine(Path);
             try
             {
-                new CmisNavigation(CmisSession).GetFolder(Path);
+                new CmisNavigation(CmisSession).GetFolder(newPath);
             }
             catch (CmisBaseException ex)
             {

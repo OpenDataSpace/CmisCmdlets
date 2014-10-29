@@ -36,20 +36,18 @@ namespace CmisCmdlets.Test.Commands
         public void CreateExistingFolderWithoutRecursionFails()
         {
             CmisHelper.CreateTempFolder("/__existingFolder");
-            CmisHelper.CreateTempFolder("/__existingFolder");
 
             Assert.Throws<CmisConstraintException>(delegate {
                 Shell.Execute(NewCmisFolderCmd + "/__existingFolder");
             });
-            Assert.That("/__existingFolder", CmisHelper.DoesNotExist);
-            CmisHelper.ForgetTempObjects();
+            Assert.That("/__existingFolder", CmisHelper.Exists);
         }
 
         [Test]
         public void CreateExistingFolderWithRecursionReturns()
         {
             CmisHelper.CreateTempFolder("/__existingFolder");
-            var res = Shell.Execute(NewCmisFolderCmd + "/__existingFolder");
+            var res = Shell.Execute(NewCmisFolderCmd + "/__existingFolder -Recursive");
             var folder = res.First() as IFolder;
             Assert.That(folder, Is.Not.Null);
             Assert.That(folder.Path, Is.EqualTo("/__existingFolder"));
@@ -79,6 +77,8 @@ namespace CmisCmdlets.Test.Commands
             var folder = res.First() as IFolder;
             Assert.That(folder, Is.Not.Null);
             Assert.That(folder.Path, Is.EqualTo("/__parentFolder/1/2/3"));
+            Assert.That("/__parentFolder/1", CmisHelper.Exists);
+            Assert.That("/__parentFolder/1/2", CmisHelper.Exists);
             Assert.That("/__parentFolder/1/2/3", CmisHelper.Exists);
         }
 
@@ -86,7 +86,7 @@ namespace CmisCmdlets.Test.Commands
         public void CreateRecursiveFoldersWithoutRecursionFails()
         {
             CmisHelper.RegisterTempObject("/_foo/", "/_foo/bar"); //makes sure we clean up
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws<CmisObjectNotFoundException>(delegate {
                 Shell.Execute(NewCmisFolderCmd + "/__foo/bar");
             });
             Assert.That("/__foo", CmisHelper.DoesNotExist);

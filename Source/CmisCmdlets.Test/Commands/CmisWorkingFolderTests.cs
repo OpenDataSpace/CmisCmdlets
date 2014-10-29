@@ -11,14 +11,15 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Management.Automation;
+using DotCMIS.Exceptions;
 
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
     public class CmisWorkingFolderTests : TestBase
     {
-        public static readonly string GetCmisWorkingFolderCmd = "Get-CmisWorkingFolder";
-        public static readonly string SetCmisWorkingFolderCmd = "Set-CmisWorkingFolder";
+        public static readonly string GetCmisWorkingFolderCmd = "Get-CmisWorkingFolder ";
+        public static readonly string SetCmisWorkingFolderCmd = "Set-CmisWorkingFolder ";
 
         [Test]
         public void GetWFThrowsIfNotConnected()
@@ -41,7 +42,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void SetWFThrowsWhenNotExisting()
         {
-            Assert.Throws<RuntimeException>(delegate {
+            Assert.Throws<CmisObjectNotFoundException>(delegate {
                 Shell.Execute(
                     GetConnectToTestRepoCmd(),
                     SetCmisWorkingFolderCmd + "__nonExisting"

@@ -121,7 +121,7 @@ namespace CmisCmdlets.Test
             CmisHelper.CreateTempFolder("__dnefwrtFolder/subdir", true);
 
             var fails = _cmisNav.Delete("__dnefwrtFolder", false);
-            Assert.That(fails, Is.EquivalentTo(new string[] { "/__dnefwrtFolder" }));
+            Assert.That(fails, Is.EquivalentTo(new string[] { "/__dnefwrtFolder/" }));
         }
 
         [TestCase(true)]

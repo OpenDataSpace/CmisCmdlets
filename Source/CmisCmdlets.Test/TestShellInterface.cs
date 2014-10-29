@@ -29,19 +29,12 @@ namespace TestShell
 
     public class TestShellInterface
     {
-        public Runspace Runspace { get; set; }
+        public Runspace LastRunspace { get; set; }
         public Collection<object> LastResults { get; set; }
         public Collection<object> LastErrors { get; set; }
 
         private string[] _preExecutionCmds;
         private string[] _postExecutionCmds;
-
-        public TestShellInterface()
-        {
-            Runspace = RunspaceFactory.CreateRunspace();
-            Runspace.Open();
-            LoadCmdletBinary();
-        }
 
         public void SetPreExecutionCommands(params string[] commands)
         {
@@ -55,18 +48,33 @@ namespace TestShell
 
         public Collection<object> Execute(params string[] commands)
         {
+            if (LastRunspace != null)
+            {
+                LastRunspace.Close();
+            }
+            LastRunspace = RunspaceFactory.CreateRunspace();
+            LastRunspace.Open();
+            LoadCmdletBinary();
+
+            return ExecuteInExistingRunspace(commands);
+        }
+
+        public Collection<object> ExecuteInExistingRunspace(params string[] commands)
+        {
             Collection<PSObject> results = null;
             LastResults = new Collection<object>();
             LastErrors = new Collection<object>();
-            using (var pipeline = Runspace.CreatePipeline())
+
+            using (var pipeline = LastRunspace.CreatePipeline())
             {
                 var script = JoinCommands(_preExecutionCmds) +
-                             JoinCommands(commands) +
-                             JoinCommands(_postExecutionCmds);
+                    JoinCommands(commands) +
+                        JoinCommands(_postExecutionCmds);
                 pipeline.Commands.AddScript(script, false);
                 results = pipeline.Invoke();
                 LastErrors = pipeline.Error.NonBlockingRead();
             }
+
             foreach (var curPSObject in results)
             {
                 if (curPSObject == null)
@@ -78,6 +86,7 @@ namespace TestShell
                     LastResults.Add(curPSObject.BaseObject);
                 }
             }
+
             if (LastErrors.Count > 0)
             {
                 throw new ShellExecutionHasErrorsException(LastErrors);
@@ -87,7 +96,7 @@ namespace TestShell
 
         public object GetVariableValue(string variableName)
         {
-            object variable = Runspace.SessionStateProxy.GetVariable(variableName);
+            object variable = LastRunspace.SessionStateProxy.GetVariable(variableName);
             if (variable is PSObject)
             {
                 variable = ((PSObject)variable).BaseObject;
@@ -115,21 +124,21 @@ namespace TestShell
         {
             bool isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
             string path = new Uri(typeof(CmisCmdlets.CmisCmdlets).Assembly.CodeBase).LocalPath;
-            if (isWindows) //we are likely to run Powershell 2.0 or higher, let's import it as a module
+
+            // with real Powershell we use Import-Module to avoid installation of the SnapIn
+            string cmd = isWindows ? "Import-Module '{0}'" : "Add-PSSnapIn '{0}'";
+            using (var pipeline = LastRunspace.CreatePipeline())
             {
+                pipeline.Commands.AddScript(String.Format(cmd, path));
                 try
                 {
-                    Execute(String.Format("Import-Module {0}", path));
+                    pipeline.Invoke();
                 }
                 catch (MethodInvocationException e)
                 {
                     throw new RuntimeException(String.Format(
                         "Failed to import module '{0}'. Didn't you build it?", path), e);
                 }
-            }
-            else
-            {
-                Execute(String.Format("Add-PSSnapIn '{0}'", path));
             }
         }
     }

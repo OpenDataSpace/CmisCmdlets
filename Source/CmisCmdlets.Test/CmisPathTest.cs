@@ -31,6 +31,7 @@ namespace CmisCmdlets.Test
         [TestCase("/foo/bar//", "baz/bam.bu", "/foo/bar/baz/bam.bu")]
         [TestCase(@"\foo", @"bla\blub/baz\\bam", @"/foo/bla/blub/baz\\bam")]
         [TestCase(@"/path/to/somehwhere\", @"\other/path\to/here\", @"/other/path/to/here/")]
+        [TestCase(@"/path/to", @"../../test/", @"/test/")]
         public void PathCombiningWorks(string a, string b, string expected)
         {
             Assert.That(new CmisPath(a).Combine(b).ToString(), Is.EqualTo(expected));
@@ -38,11 +39,13 @@ namespace CmisCmdlets.Test
 
         [TestCase("//path///to/somewhere/", "/path/to/somewhere/")]
         [TestCase("anydir", "anydir")]
+        [TestCase("./anydir", "./anydir")]
         [TestCase(@"\dir/too/../to/./.some/../../../root\directory", "/root/directory")]
         [TestCase(@"/complicated/./root/..\../path/..", "/")]
         [TestCase(@"../\./no/prob", "../no/prob")]
-        [TestCase(@"./././foo/../okay", "okay")]
+        [TestCase(@"./././foo/../okay", "./okay")]
         [TestCase(@"..\test", "../test")]
+        [TestCase(@"./../.././test", "../../test")]
         public void NormalizationWorks(string ugly, string expected)
         {
             Assert.That(new CmisPath(ugly).ToString(), Is.EqualTo(expected));

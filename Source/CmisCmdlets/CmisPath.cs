@@ -141,7 +141,7 @@ namespace CmisCmdlets
                     // handled separately below
                     continue;
                 }
-                if (part.Equals("..") && newParts.Count > 0)
+                if (part.Equals("..") && newParts.Count > 0 && !newParts.Last().Equals(".."))
                 {
                     newParts.RemoveAt(newParts.Count - 1);
                 }
@@ -173,6 +173,13 @@ namespace CmisCmdlets
                 // makes sure we get a CorrectSlash infront when joining
                 newParts.Insert(0, "");
             }
+            // check if we should prepend a "."
+            else if (parts.Length > 0 && parts[0].Equals(".") &&
+                     newParts.Count > 0 && !newParts[0].Equals(".."))
+            {
+                newParts.Insert(0, ".");
+            }
+
             var newPath = String.Join(CorrectSlash, newParts);
             // check for a trailing slash to preserve
             if (HasTrailingSlash())
