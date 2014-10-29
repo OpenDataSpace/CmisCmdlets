@@ -31,21 +31,19 @@ namespace CmisCmdlets.Test
         [Test]
         public void ConnectCmdletCanConnectToRepoWithInsecure()
         {
-            var cmd = String.Format("{0}; ${1}", GetConnectToTestRepoCmd(true),
-                                    CmisCommandBase.SESSION_VAR_NAME);
-            var res = Shell.Execute(cmd);
-            Assert.NotNull(CmisCommandBase.ConnectionParameters);
-            ValidateSession(res, TestRepository);
+            Shell.Execute(GetConnectToTestRepoCmd(true));
+            Assert.That(CmisCommandBase.ConnectionParameters, Is.Not.Null);
+            ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME)
+                            , TestRepository);
         }
 
         [Test]
         public void ConnectCmdletCanConnectToRepo()
         {
-            var cmd = String.Format("{0}; ${1}", GetConnectToTestRepoCmd(),
-                                    CmisCommandBase.SESSION_VAR_NAME);
-            var res = Shell.Execute(cmd);
-            Assert.NotNull(CmisCommandBase.ConnectionParameters);
-            ValidateSession(res, TestRepository);
+            Shell.Execute(GetConnectToTestRepoCmd());
+            Assert.That(CmisCommandBase.ConnectionParameters, Is.Not.Null);
+            ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME)
+                            , TestRepository);
         }
 
         [Test, Ignore("Currently not parsed by Pash")]
@@ -56,11 +54,11 @@ namespace CmisCmdlets.Test
             parameters[SessionParameter.RepositoryId] = repo.Id;
             var objCode = GetCodeForHashtableDefinition("p", parameters);
             var cmd = String.Format("{0}; {1} -parameters $p; ${2}", objCode,
-                                    CmdletName(typeof(ConnectCmisCommand)), 
-                                    CmisCommandBase.SESSION_VAR_NAME);
-            var res = Shell.Execute(cmd);
-            Assert.NotNull(CmisCommandBase.ConnectionParameters);
-            ValidateSession(res, TestRepository);
+                                    CmdletName(typeof(ConnectCmisCommand)));
+           Shell.Execute(cmd);
+            Assert.That(CmisCommandBase.ConnectionParameters, Is.Not.Null);
+            ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME)
+                            , TestRepository);
         }
 
         [Test]

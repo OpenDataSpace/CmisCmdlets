@@ -17,7 +17,7 @@ using System.Management.Automation;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class RemoveCmisObjectTests : TestBase
+    public class RemoveCmisObjectTests : TestBaseWithAutoConnect
     {
         public static readonly string RemoveCmisObjectCmd = "Remove-CmisObject ";
 
@@ -31,9 +31,7 @@ namespace CmisCmdlets.Test
         public void RemoveNonExistingObjectIsError()
         {
             var ex = Assert.Throws<ShellExecutionHasErrorsException>(delegate {
-                Shell.Execute(
-                    RemoveCmisObjectCmd + "/__notExisting.txt"
-                );
+                Shell.Execute(RemoveCmisObjectCmd + "/__notExisting.txt");
             });
             var errors = ex.Errors;
             Assert.That(errors.Count, Is.EqualTo(1));

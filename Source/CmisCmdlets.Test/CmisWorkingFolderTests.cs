@@ -43,6 +43,7 @@ namespace CmisCmdlets.Test
         {
             Assert.Throws<RuntimeException>(delegate {
                 Shell.Execute(
+                    GetConnectToTestRepoCmd(),
                     SetCmisWorkingFolderCmd + "__nonExisting"
                 );
             });

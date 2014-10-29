@@ -16,7 +16,7 @@ using DotCMIS.Exceptions;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class NewCmisFolderTests : TestBase
+    public class NewCmisFolderTests : TestBaseWithAutoConnect
     {
         public string NewCmisFolderCmd = "New-CmisFolder ";
 
@@ -24,9 +24,8 @@ namespace CmisCmdlets.Test
         public void CreateSimpleFolder()
         {
             CmisHelper.RegisterTempObject("__newFolder");
-            var res = Shell.Execute(
-                NewCmisFolderCmd + "__newFolder"
-                );
+
+            var res = Shell.Execute(NewCmisFolderCmd + "__newFolder");
             var folder = res.First() as IFolder;
             Assert.That(folder, Is.Not.Null);
             Assert.That(folder.Path, Is.EqualTo("/__newFolder"));
@@ -38,6 +37,7 @@ namespace CmisCmdlets.Test
         {
             CmisHelper.CreateTempFolder("/__existingFolder");
             CmisHelper.CreateTempFolder("/__existingFolder");
+
             Assert.Throws<CmisConstraintException>(delegate {
                 Shell.Execute(NewCmisFolderCmd + "/__existingFolder");
             });
@@ -60,9 +60,8 @@ namespace CmisCmdlets.Test
         {
             CmisHelper.CreateTempFolder("/__parentFolder");
             CmisHelper.RegisterTempObject("/__parentFolder/subfolder");
-            var res = Shell.Execute(
-                NewCmisFolderCmd + "/__parentFolder/subfolder"
-                );
+
+            var res = Shell.Execute(NewCmisFolderCmd + "/__parentFolder/subfolder");
             var folder = res.First() as IFolder;
             Assert.That(folder, Is.Not.Null);
             Assert.That(folder.Path, Is.EqualTo("/__parentFolder/subfolder"));
@@ -75,9 +74,8 @@ namespace CmisCmdlets.Test
             CmisHelper.CreateTempFolder("/__parentFolder");
             CmisHelper.RegisterTempObject("/__parentFolder/1", "/__parentFolder/1/2",
                                           "/__parentFolder/1/2/3");
-            var res = Shell.Execute(
-                NewCmisFolderCmd + "/__parentFolder/1/2/3 -Recursive"
-                );
+
+            var res = Shell.Execute(NewCmisFolderCmd + "/__parentFolder/1/2/3 -Recursive");
             var folder = res.First() as IFolder;
             Assert.That(folder, Is.Not.Null);
             Assert.That(folder.Path, Is.EqualTo("/__parentFolder/1/2/3"));

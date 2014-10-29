@@ -13,16 +13,16 @@ using System;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class SetCmisRepositoryTests : TestBase
+    public class SetCmisRepositoryTests : TestBaseWithAutoConnect
     {
+        public static readonly string SetCmisRepositoryCmd = "Set-CmisRepository ";
+
         [Test]
         public void SetCmisRepositoryWithNameWorks()
         {
-            var cmd = String.Format("{0}; {1} {2}; ${3}", GetConnectToTestRepoCmd(),
-                                    CmdletName(typeof(SetCmisRepositoryCommand)), TestRepositoryAlt,
-                                    CmisCommandBase.SESSION_VAR_NAME);
-            var res = Shell.Execute(cmd);
-            ValidateSession(res, TestRepositoryAlt);
+            Shell.Execute(SetCmisRepositoryCmd + TestRepositoryAlt);
+            ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME),
+                            TestRepositoryAlt);
         }
 
         [Test]
@@ -30,11 +30,9 @@ namespace CmisCmdlets.Test
         {
             var parameters = ConnectionFactory.CreateAtomPubParams(TestURL, TestUser, TestPassword);
             var repo = ConnectionFactory.GetRepositoryByName(parameters, TestRepositoryAlt);
-            var cmd = String.Format("{0}; {1} -Id {2}; ${3}", GetConnectToTestRepoCmd(),
-                                    CmdletName(typeof(SetCmisRepositoryCommand)), repo.Id,
-                                    CmisCommandBase.SESSION_VAR_NAME);
-            var res = Shell.Execute(cmd);
-            ValidateSession(res, TestRepositoryAlt);
+            Shell.Execute(SetCmisRepositoryCmd + " -Id " + repo.Id);
+            ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME),
+                            TestRepositoryAlt);
         }
     }
 }

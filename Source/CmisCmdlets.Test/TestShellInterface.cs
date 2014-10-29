@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Text;
 using System;
+using NUnit.Framework.Constraints;
+using NUnit.Framework;
 
 namespace TestShell
 {
@@ -92,6 +94,13 @@ namespace TestShell
             }
             return variable;
         }
+
+#region Constraints for Nunit
+        public EqualConstraint IsValueOfVariable(string variableName)
+        {
+            return Is.EqualTo(GetVariableValue(variableName));
+        }
+#endregion
 
         private string JoinCommands(string[] cmds)
         {

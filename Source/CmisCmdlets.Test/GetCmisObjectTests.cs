@@ -15,7 +15,7 @@ using DotCMIS.Exceptions;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class GetCmisObjectTests : TestBase
+    public class GetCmisObjectTests : TestBaseWithAutoConnect
     {
         public static readonly string GetCmisObjectCmd = "Get-CmisObject ";
 

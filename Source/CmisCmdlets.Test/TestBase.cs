@@ -166,14 +166,9 @@ namespace CmisCmdlets.Test
             return String.Format("{0}://{1}:{2}@{3}", parts[0], user, pw, parts[1]);
         }
 
-        protected void ValidateSession(Collection<object> results, string repoName)
+        protected void ValidateSession(object sessionObject, string repoName)
         {
-            Assert.AreEqual(1, results.Count);
-            ValidateSession(results[0] as ISession, repoName);
-        }
-
-        protected void ValidateSession(ISession session, string repoName)
-        {
+            var session = sessionObject as ISession;
             Assert.NotNull(session);
             Assert.AreEqual(repoName, session.RepositoryInfo.Name);
         }

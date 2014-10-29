@@ -17,7 +17,7 @@ using System.Text;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class NewCmisDocumentTests : TestBase
+    public class NewCmisDocumentTests : TestBaseWithAutoConnect
     {
         public static readonly string NewCmisDocumentCmd = "New-CmisDocument ";
 

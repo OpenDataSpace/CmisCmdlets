@@ -69,6 +69,7 @@
     <Compile Include="FileSystemTestHelper.cs" />
     <Compile Include="ReadCmisDocumentTests.cs" />
     <Compile Include="RemoveCmisObjectTests.cs" />
+    <Compile Include="TestBaseWithConnection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
