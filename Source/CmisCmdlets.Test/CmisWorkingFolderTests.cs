@@ -17,11 +17,8 @@ namespace CmisCmdlets.Test
     [TestFixture]
     public class CmisWorkingFolderTests : TestBase
     {
-        public static readonly string GetCmisWorkingFolderCmd =
-            CmdletName(typeof(GetCmisWorkingFolderCommand)) + " ";
-
-        public static readonly string SetCmisWorkingFolderCmd =
-            CmdletName(typeof(GetCmisWorkingFolderCommand)) + " ";
+        public static readonly string GetCmisWorkingFolderCmd = "Get-CmisWorkingFolder";
+        public static readonly string SetCmisWorkingFolderCmd = "Set-CmisWorkingFolder";
 
         [Test]
         public void GetWFThrowsIfNotConnected()
