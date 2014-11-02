@@ -14,6 +14,8 @@ using System.ComponentModel.DataAnnotations;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Collections;
+using DotCMIS;
+using DotCMIS.Enums;
 
 namespace CmisCmdlets
 {
@@ -50,6 +52,10 @@ namespace CmisCmdlets
         }
 
         [Parameter(Position = 3, Mandatory = false)]
+        public string Name { get; set; }
+
+
+        [Parameter(Position = 4, Mandatory = false)]
         public Hashtable Properties { get; set; }
 
         protected override void EndProcessing()
@@ -57,20 +63,24 @@ namespace CmisCmdlets
             var navigation = new CmisNavigation(CmisSession, WorkingFolder);
             ICmisObject obj = (Object != null) ? Object : navigation.Get(Path);
 
-            if (Properties != null)
+            if (Properties != null || !String.IsNullOrEmpty(Name))
             {
                 var props = Utilities.HashtableToDict(Properties);
+                if (!String.IsNullOrEmpty(Name))
+                {
+                    props[PropertyIds.Name] = Name;
+                }
                 obj = obj.UpdateProperties(props);
             }
             // check if we should update content
-            if (LocalFile == null && Content == null)
+            if (LocalFile == null && !HasContent())
             {
                 WriteObject(obj);
-                return;
+                return; 
             }
 
             // otherwise the object must be a document
-            var doc = Object as IDocument;
+            var doc = obj as IDocument;
             if (doc == null)
             {
                 var ex = new CmisObjectNotFoundException("The provided object is not a Document");
@@ -81,7 +91,8 @@ namespace CmisCmdlets
             var stream = GetContentStream();
             try
             {
-                WriteObject(doc.SetContentStream(stream, true));
+                var result = doc.SetContentStream(stream, true);
+                WriteObject(result == null ? doc : result);
             }
             finally
             {

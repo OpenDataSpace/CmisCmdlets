@@ -128,7 +128,9 @@ namespace CmisCmdlets.Test
             _session.Clear();
             try
             {
-                return _session.GetObjectByPath((string)actual) != null ? _shouldExist : !_shouldExist;
+                var path = (string)actual;
+                path = path.StartsWith("/") ? path : "/" + path;
+                return _session.GetObjectByPath(path) != null ? _shouldExist : !_shouldExist;
             }
             catch(CmisBaseException)
             {
@@ -166,6 +168,10 @@ namespace CmisCmdlets.Test
                 return Problem("ContentStream with MimeType \"{0}\"", _mimetype,
                                contentStream.MimeType);
             }
+            if (doc.ContentStreamLength != _content.Length)
+            {
+                return Problem("Content of length {0}", _content.Length, doc.ContentStreamLength);
+            }
             var buffer = new byte[_content.Length];
             contentStream.Stream.Read(buffer, 0, _content.Length);
             contentStream.Stream.Close();
@@ -173,10 +179,6 @@ namespace CmisCmdlets.Test
             {
                 return Problem("Content: \"{0}\"", Encoding.UTF8.GetString(_content),
                                Encoding.UTF8.GetString(buffer));
-            }
-            if (doc.ContentStreamLength != _content.Length)
-            {
-                return Problem("Content of length {0}", _content.Length, doc.ContentStreamLength);
             }
             return true;
         }
@@ -194,6 +196,40 @@ namespace CmisCmdlets.Test
         public override bool Matches(object actual)
         {
             return MatchObject(_object, actual as ICmisObject);
+        }
+    }
+
+    public class CmisObjectHasPropertyConstraint : CmisBaseConstraint
+    {
+        private string _propertyName;
+        private object _propertyValue;
+
+        public CmisObjectHasPropertyConstraint(string propertyName, object propertyValue)
+        {
+            _propertyName = propertyName;
+            _propertyValue = propertyValue;
+        }
+
+        public override bool Matches(object obj)
+        {
+            var cmisObj = obj as ICmisObject;
+            if (cmisObj == null)
+            {
+                return Problem("A cmis object", "Something else");
+            }
+            foreach (var prop in cmisObj.Properties)
+            {
+                if (!prop.LocalName.Equals(_propertyName))
+                {
+                    continue;
+                }
+                if (!prop.Value.Equals(_propertyValue))
+                {
+                    return Problem("Object with property value {0}", _propertyValue, prop.Value);
+                }
+                return true;
+            }
+            return Problem("Object with the specified property", "Object without that property");
         }
     }
 
@@ -260,6 +296,11 @@ namespace CmisCmdlets.Test
         public Constraint ContainsObject(ICmisObject expected)
         {
             return new CmisCollectionContainsObjectConstraint(expected);
+        }
+
+        public Constraint HasProperty(string propName, object propValue)
+        {
+            return new CmisObjectHasPropertyConstraint(propName, propValue);
         }
 #endregion
 

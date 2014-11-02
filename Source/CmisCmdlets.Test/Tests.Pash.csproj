@@ -73,6 +73,7 @@
     <Compile Include="Commands\SetCmisRepositoryTests.cs" />
     <Compile Include="Commands\RemoveCmisObjectTests.cs" />
     <Compile Include="Commands\GetCmisPropertyTests.cs" />
+    <Compile Include="Commands\UpdateCmisObjectTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

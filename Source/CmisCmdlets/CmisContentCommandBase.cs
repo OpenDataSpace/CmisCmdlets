@@ -61,6 +61,11 @@ namespace CmisCmdlets
             }
             return stream;
         }
+
+        protected bool HasContent()
+        {
+            return _allContent.Length > 0;
+        }
     }
 }
 

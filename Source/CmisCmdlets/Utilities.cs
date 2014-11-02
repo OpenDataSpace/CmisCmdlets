@@ -21,7 +21,7 @@ namespace CmisCmdlets
         {
             if (hashtable == null)
             {
-                return null;
+                return new Dictionary<string, string>();
             }
             return hashtable.Cast<DictionaryEntry>().ToDictionary(
                 kvp => (string) kvp.Key.ToString(), kvp => (string) kvp.Value.ToString()
@@ -32,7 +32,7 @@ namespace CmisCmdlets
         {
             if (hashtable == null)
             {
-                return null;
+                return new Dictionary<string, object>();
             }
             return hashtable.Cast<DictionaryEntry>().ToDictionary(
                 kvp => (string) kvp.Key.ToString(), kvp => (object) kvp.Value
