@@ -12,6 +12,7 @@ using System.Linq;
 using NUnit.Framework;
 using DotCMIS.Exceptions;
 using System.Text;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -23,7 +24,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void ReadingNonExistingDocumentThrows()
         {
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(ReadCmisDocumentCmd + " /doesntExist.tmp");
             });
         }
@@ -32,7 +33,7 @@ namespace CmisCmdlets.Test.Commands
         public void ReadingFolderDocumentThrows()
         {
             CmisHelper.CreateTempFolder("/__testFolder");
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(ReadCmisDocumentCmd + " /__testFolder");
             });
         }
@@ -70,20 +71,6 @@ namespace CmisCmdlets.Test.Commands
             Assert.That("Hello World!", FileSystemHelper.IsContentOf("fromPathToFile.html"));
         }
 
-        [Test, Ignore("Try on windows to check if Pash works as PS with param binding. It should fail")]
-        public void ____ReadingByObjectToFile2()
-        {
-            CmisHelper.RegisterTempObject("__readByObj.tmp");
-            FileSystemHelper.RegisterTempFile("fromObjToFile.html");
-
-            var res = Shell.Execute(
-                "$doc = " + CmdletName(typeof(NewCmisDocumentCommand)) + " /__readByObj.tmp"
-                + " -Content 'Hello World!' -MimeType 'text/html'",
-                "$doc | " + ReadCmisDocumentCmd + " fromObjToFile.html");
-            Assert.That(res, Is.Empty);
-            Assert.That("Hello World!", FileSystemHelper.IsContentOf("fromObjToFile.html"));
-        }
-
         [Test]
         public void ReadingByObjectToFile()
         {
@@ -106,7 +93,7 @@ namespace CmisCmdlets.Test.Commands
             FileSystemHelper.CreateTempFile("__existingFile", "foo");
             CmisHelper.CreateTempDocument("/__readToExistingFile", "bar!", "text/plain");
 
-            Assert.Throws<Exception>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(ReadCmisDocumentCmd + " /__readToExistingFile __existingFile");
             });
         }
@@ -140,7 +127,7 @@ namespace CmisCmdlets.Test.Commands
             CmisHelper.CreateTempDocument("/__binaryMimeType.bin", "binaryStuff!",
                                           "application/octet-stream");
 
-            Assert.Throws<Exception>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(ReadCmisDocumentCmd + " /__binaryMimeType.bin");
             });
         }
@@ -174,7 +161,7 @@ namespace CmisCmdlets.Test.Commands
             var content = GetStringOver100Kb();
             CmisHelper.CreateTempDocument("/__bigfileToPipe.txt", content, "text/plain");
 
-            Assert.Throws<Exception>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(ReadCmisDocumentCmd + " /__bigfileToPipe.txt");
             });
         }

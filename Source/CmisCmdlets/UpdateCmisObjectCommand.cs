@@ -10,7 +10,6 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.ComponentModel.DataAnnotations;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Collections;
@@ -37,15 +36,15 @@ namespace CmisCmdlets
             set { LocalFileInternal = value; }
         }
 
-        [Parameter(Position = 1, ParameterSetName = "FromContent", ValueFromPipeline = true)]
-        [Parameter(Position = 1, ParameterSetName = "FromContentByObject", ValueFromPipeline = true)]
+        [Parameter(Position = 1, ParameterSetName = "FromContent", ValueFromPipeline = true, Mandatory = true)]
+        [Parameter(Position = 1, ParameterSetName = "FromContentByObject", ValueFromPipeline = true, Mandatory = true)]
         public string Content {
             get { return ContentInternal; }
             set { ContentInternal = value; }
         }
 
-        [Parameter(Position = 2, ParameterSetName = "FromContent")]
-        [Parameter(Position = 2, ParameterSetName = "FromContentByObject")]
+        [Parameter(Position = 2, ParameterSetName = "FromContent", Mandatory = true)]
+        [Parameter(Position = 2, ParameterSetName = "FromContentByObject", Mandatory = true)]
         public string MimeType {
             get { return MimeTypeInternal; }
             set { MimeTypeInternal = value; }

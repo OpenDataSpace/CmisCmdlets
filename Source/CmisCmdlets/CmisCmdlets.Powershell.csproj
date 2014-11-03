@@ -9,6 +9,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CmisCmdlets</RootNamespace>
     <AssemblyName>CmisCmdlets</AssemblyName>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,6 +24,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -28,20 +38,43 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotCMIS">
-      <HintPath>..\packages\Apache.DotCMIS.0.6\lib\DotCMIS.dll</HintPath>
+    <Reference Include="DotCMIS, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0377a82433ccbb00, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(ProgramFiles)\Reference Assemblies\Microsoft\WindowsPowerShell\v1.0\System.Management.Automation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="CmisCmdlets.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CmisCommandBase.cs" />
+    <Compile Include="CmisContentCommandBase.cs" />
+    <Compile Include="CmisNavigation.cs" />
+    <Compile Include="CmisPath.cs" />
+    <Compile Include="CmisPathException.cs" />
+    <Compile Include="ConnectCmisCommand.cs" />
+    <Compile Include="ConnectionFactory.cs" />
+    <Compile Include="DisconnectCmisCommand.cs" />
+    <Compile Include="GetCmisObjectCommand.cs" />
+    <Compile Include="GetCmisPropertyCommand.cs" />
+    <Compile Include="GetCmisRepositoryCommand.cs" />
+    <Compile Include="GetCmisWorkingFolderCommand.cs" />
+    <Compile Include="MimeTypeMap.cs" />
+    <Compile Include="NewCmisDocumentCommand.cs" />
+    <Compile Include="NewCmisFolderCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadCmisDocumentCommand.cs" />
+    <Compile Include="RemoveCmisObjectCommand.cs" />
+    <Compile Include="SetCmisRepositoryCommand.cs" />
+    <Compile Include="SetCmisWorkingFolderCommand.cs" />
+    <Compile Include="UpdateCmisObjectCommand.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

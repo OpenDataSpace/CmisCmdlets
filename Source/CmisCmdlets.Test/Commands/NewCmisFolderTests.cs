@@ -12,6 +12,7 @@ using System.Linq;
 using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -37,7 +38,7 @@ namespace CmisCmdlets.Test.Commands
         {
             CmisHelper.CreateTempFolder("/__existingFolder");
 
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(NewCmisFolderCmd + "/__existingFolder");
             });
             Assert.That("/__existingFolder", CmisHelper.Exists);
@@ -86,7 +87,7 @@ namespace CmisCmdlets.Test.Commands
         public void CreateRecursiveFoldersWithoutRecursionFails()
         {
             CmisHelper.RegisterTempObject("/_foo/", "/_foo/bar"); //makes sure we clean up
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(NewCmisFolderCmd + "/__foo/bar");
             });
             Assert.That("/__foo", CmisHelper.DoesNotExist);

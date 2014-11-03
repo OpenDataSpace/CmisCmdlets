@@ -14,6 +14,7 @@ using DotCMIS.Client;
 using DotCMIS;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CmisCmdlets
 {
@@ -51,11 +52,11 @@ namespace CmisCmdlets
             {
                 if (Object == null)
                 {
-                    WriteObject(_existingProperties);
+                    WriteObject(_existingProperties, true);
                 }
                 else
                 {
-                    WriteObject(Object.Properties);
+                    WriteObject(Object.Properties, true);
                 }
                 return;
             }
@@ -63,12 +64,16 @@ namespace CmisCmdlets
             var wildcard = new WildcardPattern(Property + "*", WildcardOptions.IgnoreCase);
             if (Object == null)
             {
-                WriteObject(from pair in _existingProperties where wildcard.IsMatch(pair.Key)
+                WriteObject(from pair in _existingProperties
+                            where wildcard.IsMatch(pair.Key)
                             select pair.Value, true);
-                return;
             }
-            WriteObject(from prop in Object.Properties where wildcard.IsMatch(prop.LocalName)
-                        select prop, true);
+            else
+            {
+                WriteObject(from prop in Object.Properties
+                            where wildcard.IsMatch(prop.LocalName)
+                            select prop, true);
+            }
         }
     }
 }

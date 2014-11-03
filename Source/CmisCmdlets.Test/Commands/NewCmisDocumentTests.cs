@@ -14,6 +14,7 @@ using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Text;
 using System.IO;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -33,12 +34,12 @@ namespace CmisCmdlets.Test.Commands
             Assert.That("/__emptyDoc", CmisHelper.Exists);
         }
 
-        [TestCase("/notexisting/__emptyDoc", typeof(CmisObjectNotFoundException))]
-        [TestCase("/nonexisting/", typeof(CmisNameConstraintViolationException))] // empty filename
+        [TestCase("/notexisting/__emptyDoc")]
+        [TestCase("/nonexisting/")] // empty filename
         public void CreatingDocumentWithInvalidPathThrows(string path, Type exceptionType)
         {
             CmisHelper.RegisterTempObject(path);
-            Assert.Throws(exceptionType, delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(NewCmisDocumentCmd + path);
             });
             Assert.That(path, CmisHelper.DoesNotExist);
@@ -48,7 +49,7 @@ namespace CmisCmdlets.Test.Commands
         public void CreatingDocumentAtExistingPathThrows()
         {
             CmisHelper.CreateTempDocument("__existingFile", null);
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(NewCmisDocumentCmd + "__existingFile");
             });
         }

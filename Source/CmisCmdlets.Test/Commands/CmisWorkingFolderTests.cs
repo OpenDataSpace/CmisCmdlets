@@ -24,7 +24,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void GetWFThrowsIfNotConnected()
         {
-            Assert.Throws<RuntimeException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(GetCmisWorkingFolderCmd);
             });
         }
@@ -42,7 +42,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void SetWFThrowsWhenNotExisting()
         {
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(
                     GetConnectToTestRepoCmd(),
                     SetCmisWorkingFolderCmd + "__nonExisting"
@@ -53,7 +53,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void SetWFThrowsWhenNotConnected()
         {
-            Assert.Throws<RuntimeException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(
                     SetCmisWorkingFolderCmd + "/"
                 );

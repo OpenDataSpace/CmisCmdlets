@@ -9,6 +9,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CmisCmdlets</RootNamespace>
     <AssemblyName>CmisCmdlets</AssemblyName>
+	<CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

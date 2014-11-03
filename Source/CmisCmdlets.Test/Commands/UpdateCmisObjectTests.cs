@@ -15,6 +15,7 @@ using DotCMIS.Client;
 using System.Runtime.ConstrainedExecution;
 using CmisCmdlets;
 using System.IO;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -26,7 +27,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void UpdateNonExistingObjectThrows()
         {
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(UpdateCmisObjectCmd + " __not/existing -Name 'bar'");
             });
         }
@@ -125,7 +126,7 @@ namespace CmisCmdlets.Test.Commands
         {
             CmisHelper.CreateTempFolder("__throwOnUpdate");
 
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(
                     UpdateCmisObjectCmd + "__throwOnUpdate -Content 'foo' -MimeType 'text/plain'"
                 );

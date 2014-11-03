@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using DotCMIS.Exceptions;
+using System.Management.Automation;
 
 namespace CmisCmdlets.Test.Commands
 {
@@ -23,7 +24,7 @@ namespace CmisCmdlets.Test.Commands
         [TestCase("/notexisting_file")]
         public void GetObjectOfNonExistingPathThrows(string path)
         {
-            Assert.Throws<CmisObjectNotFoundException>(delegate {
+            Assert.Throws<CmdletInvocationException>(delegate {
                 Shell.Execute(GetCmisObjectCmd + path);
             });
         }
