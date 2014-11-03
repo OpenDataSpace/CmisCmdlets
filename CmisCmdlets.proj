@@ -4,7 +4,8 @@
   <!--=====================================================================-->
   <Target Name="Build">
     <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
-             Properties="Configuration=Release" />
+             Properties="Configuration=Release"
+			 Targets="DotCMIS" />
     <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
              Condition="'$(OS)' == 'Windows_NT'" />
     <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
