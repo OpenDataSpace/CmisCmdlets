@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CmisCmdlets.Test</RootNamespace>
+    <AssemblyName>CmisCmdlets.Test</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony">
+      <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management.Automation">
+      <HintPath>..\..\Libraries\Pash\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Management">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Utility">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="DotCMIS">
+      <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="UtilityTests.cs" />
+    <Compile Include="TestShellInterface.cs" />
+    <Compile Include="ConnectionFactoryTests.cs" />
+    <Compile Include="CmisPathTest.cs" />
+    <Compile Include="CmisNavigationTests.cs" />
+    <Compile Include="CmisTestHelper.cs" />
+    <Compile Include="FileSystemTestHelper.cs" />
+    <Compile Include="TestBaseWithAutoConnect.cs" />
+    <Compile Include="Commands\ConnectCmisTests.cs" />
+    <Compile Include="Commands\CmisWorkingFolderTests.cs" />
+    <Compile Include="Commands\GetCmisObjectTests.cs">
+      <DependentUpon>CmisWorkingFolderTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\GetCmisRepositoryTests.cs" />
+    <Compile Include="Commands\NewCmisDocumentTests.cs" />
+    <Compile Include="Commands\NewCmisFolderTests.cs" />
+    <Compile Include="Commands\ReadCmisDocumentTests.cs" />
+    <Compile Include="Commands\SetCmisRepositoryTests.cs" />
+    <Compile Include="Commands\RemoveCmisObjectTests.cs" />
+    <Compile Include="Commands\GetCmisPropertyTests.cs" />
+    <Compile Include="Commands\UpdateCmisObjectTests.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\CmisCmdlets\CmisCmdlets.Pash.csproj">
+      <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
+      <Name>CmisCmdlets.Pash</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="..\..\TestConfig.config">
+      <Link>TestConfig.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CmisCmdlets</RootNamespace>
+    <AssemblyName>CmisCmdlets</AssemblyName>
+	<CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Irony">
+      <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management.Automation">
+      <HintPath>..\..\Libraries\Pash\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Management">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.PowerShell.Commands.Utility">
+      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="DotCMIS">
+      <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CmisCommandBase.cs" />
+    <Compile Include="CmisCmdlets.cs" />
+    <Compile Include="ConnectionFactory.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="GetCmisRepositoryCommand.cs" />
+    <Compile Include="ConnectCmisCommand.cs" />
+    <Compile Include="DisconnectCmisCommand.cs" />
+    <Compile Include="SetCmisRepositoryCommand.cs" />
+    <Compile Include="SetCmisWorkingFolderCommand.cs" />
+    <Compile Include="CmisNavigation.cs" />
+    <Compile Include="GetCmisWorkingFolderCommand.cs" />
+    <Compile Include="CmisPath.cs" />
+    <Compile Include="CmisPathException.cs" />
+    <Compile Include="GetCmisObjectCommand.cs" />
+    <Compile Include="RemoveCmisObjectCommand.cs" />
+    <Compile Include="NewCmisDocumentCommand.cs" />
+    <Compile Include="MimeTypeMap.cs" />
+    <Compile Include="ReadCmisDocumentCommand.cs" />
+    <Compile Include="CmisContentCommandBase.cs" />
+    <Compile Include="UpdateCmisObjectCommand.cs" />
+    <Compile Include="GetCmisPropertyCommand.cs" />
+    <Compile Include="NewCmisFolderCommand.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Link>README.md</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+</Project>
