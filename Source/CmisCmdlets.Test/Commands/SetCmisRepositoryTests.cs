@@ -30,7 +30,7 @@ namespace CmisCmdlets.Test.Commands
         {
             var parameters = ConnectionFactory.CreateAtomPubParams(TestURL, TestUser, TestPassword);
             var repo = ConnectionFactory.GetRepositoryByName(parameters, TestRepositoryAlt);
-            Shell.Execute(SetCmisRepositoryCmd + " -Id " + repo.Id);
+            Shell.Execute(SetCmisRepositoryCmd + " -Id '" + repo.Id + "'");
             ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME),
                             TestRepositoryAlt);
         }

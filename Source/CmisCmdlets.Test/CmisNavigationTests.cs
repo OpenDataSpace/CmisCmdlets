@@ -226,9 +226,11 @@ namespace CmisCmdlets.Test
             var obj = _cmisNav.CreateDocument("__cdwcDoc", null);
             CmisHelper.RegisterTempObject(obj);
 
+            var conbtentStream = obj.GetContentStream();
             Assert.That(obj.Paths, Contains.Item("/__cdwcDoc"));
             Assert.That(obj.Name, Is.EqualTo("__cdwcDoc"));
-            Assert.That(obj.GetContentStream(), Is.Null);
+            Assert.That(conbtentStream, Is.Not.Null);
+            Assert.That(conbtentStream.Length, Is.EqualTo(0));
         }
     }
 }
