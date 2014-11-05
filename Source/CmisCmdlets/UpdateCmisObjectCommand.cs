@@ -99,6 +99,7 @@ namespace CmisCmdlets
             }
 
             var stream = GetContentStream();
+            stream.FileName = obj.Name; // important, as may not set
             try
             {
                 var result = doc.SetContentStream(stream, true);
