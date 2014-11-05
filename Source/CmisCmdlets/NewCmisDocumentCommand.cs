@@ -38,9 +38,11 @@ namespace CmisCmdlets
             get { return MimeTypeInternal; }
             set { MimeTypeInternal = value; }
         }
-
+/*
+ TODO: enable support for propertie
         [Parameter(Position = 3, Mandatory = false)]
         public Hashtable Properties { get; set; }
+*/
 
         protected override void EndProcessing()
         {
@@ -50,11 +52,12 @@ namespace CmisCmdlets
                 path = path.Combine(System.IO.Path.GetFileName(LocalFile));
             }
             var nav = new CmisNavigation(CmisSession, WorkingFolder);
-            var props = Utilities.HashtableToDict(Properties);
+//            var props = Utilities.HashtableToDict(Properties);
             var stream = GetContentStream();
             try
             {
-                WriteObject(nav.CreateDocument(path, stream, props));
+//                WriteObject(nav.CreateDocument(path, stream, props));
+                WriteObject(nav.CreateDocument(path, stream, null));
             }
             catch (CmisBaseException e)
             {

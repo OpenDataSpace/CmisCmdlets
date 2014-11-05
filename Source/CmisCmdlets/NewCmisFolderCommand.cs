@@ -23,9 +23,11 @@ namespace CmisCmdlets
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public SwitchParameter Recursive { get; set; }
 
+/*
+ TODO: enable yupport for properties
         [Parameter(Position = 1, Mandatory = false)]
         public Hashtable Properties { get; set; }
-
+*/
         protected override void ProcessRecord()
         {
             var navigation = new CmisNavigation(CmisSession, WorkingFolder);
@@ -33,8 +35,9 @@ namespace CmisCmdlets
             {
                 try
                 {
-                    var props = Utilities.HashtableToDict(Properties);
-                    WriteObject(navigation.CreateFolder(p, Recursive.IsPresent, props));
+//                    var props = Utilities.HashtableToDict(Properties);
+//                    WriteObject(navigation.CreateFolder(p, Recursive.IsPresent, props));
+                    WriteObject(navigation.CreateFolder(p, Recursive.IsPresent, null));
                 }
                 catch (CmisBaseException e)
                 {
