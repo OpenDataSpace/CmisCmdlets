@@ -13,6 +13,7 @@ using System.Management.Automation;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
 using System.Collections;
+using System.Collections.Generic;
 using DotCMIS;
 using DotCMIS.Enums;
 
@@ -53,15 +54,18 @@ namespace CmisCmdlets
         [Parameter(Position = 3, Mandatory = false)]
         public string Name { get; set; }
 
-
+/*
+ TODO: enable support for properties
         [Parameter(Position = 4, Mandatory = false)]
         public Hashtable Properties { get; set; }
+*/
 
         protected override void EndProcessing()
         {
             var navigation = new CmisNavigation(CmisSession, WorkingFolder);
             ICmisObject obj = (Object != null) ? Object : navigation.Get(Path);
 
+/*
             if (Properties != null || !String.IsNullOrEmpty(Name))
             {
                 var props = Utilities.HashtableToDict(Properties);
@@ -71,6 +75,13 @@ namespace CmisCmdlets
                 }
                 obj = obj.UpdateProperties(props);
             }
+ */
+            if (!String.IsNullOrEmpty(Name))
+            {
+                var props = new Dictionary<string, object>() { { PropertyIds.Name, Name } };
+                obj = obj.UpdateProperties(props);
+            }
+
             // check if we should update content
             if (LocalFile == null && !HasContent())
             {
