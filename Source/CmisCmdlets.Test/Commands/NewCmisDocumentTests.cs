@@ -36,7 +36,7 @@ namespace CmisCmdlets.Test.Commands
 
         [TestCase("/notexisting/__emptyDoc")]
         [TestCase("/nonexisting/")] // empty filename
-        public void CreatingDocumentWithInvalidPathThrows(string path, Type exceptionType)
+        public void CreatingDocumentWithInvalidPathThrows(string path)
         {
             CmisHelper.RegisterTempObject(path);
             Assert.Throws<CmdletInvocationException>(delegate {
