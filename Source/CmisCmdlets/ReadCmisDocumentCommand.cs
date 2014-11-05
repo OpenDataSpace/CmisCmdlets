@@ -84,12 +84,32 @@ namespace CmisCmdlets
             }
 
             // TODO: better download mechanism anywhere
-            var buffer = new byte[size];
+            byte[] stringBuffer = null;
+            Stream outputStream;
+            if (writeToPipeline)
+            {
+                stringBuffer = new byte[size];
+                outputStream = new MemoryStream(stringBuffer);
+            }
+            else
+            {
+                outputStream = new FileStream(Destination, FileMode.Create);
+            }
+
             IContentStream stream = null;
             try
             {
+                var buffer = new byte[8 * 1024];
+                int offset = 0;
+                int bytesRead = 0;
                 stream = doc.GetContentStream();
-                stream.Stream.Read(buffer, 0, (int)size);
+
+                while ((bytesRead = stream.Stream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    outputStream.Write(buffer, 0, bytesRead);
+                    offset += bytesRead;
+                }
+                outputStream.Flush();
             }
             finally
             {
@@ -97,14 +117,14 @@ namespace CmisCmdlets
                 {
                     stream.Stream.Close();
                 }
+                outputStream.Close();
             }
+
             if (writeToPipeline)
             {
                 // TODO: support encodings
-                WriteObject(Encoding.UTF8.GetString(buffer));
-                return;
+                WriteObject(Encoding.UTF8.GetString(stringBuffer));
             }
-            File.WriteAllBytes(Destination, buffer);
         }
 
         private bool IsPlaintextType(string mimetype)
