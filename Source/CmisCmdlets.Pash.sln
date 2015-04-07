@@ -5,7 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmdlets.Pash", "Cmdlets\Cmd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Pash", "Cmdlets.Test\Tests.Pash.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.Pash", "Provider.Pash\Provider.Pash.csproj", "{6C68931A-5533-4709-B382-AE31B069D848}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.Pash", "Provider\Provider.Pash.csproj", "{6C68931A-5533-4709-B382-AE31B069D848}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{B1CD36BA-E449-492F-8B93-A462FCF2A42D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{6C68931A-5533-4709-B382-AE31B069D848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C68931A-5533-4709-B382-AE31B069D848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C68931A-5533-4709-B382-AE31B069D848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Release|Any CPU.ActiveCfg = Release|Any CPU

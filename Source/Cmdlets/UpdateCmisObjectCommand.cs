@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DotCMIS;
 using DotCMIS.Enums;
+using Cmis.Utility;
 
 namespace CmisCmdlets
 {

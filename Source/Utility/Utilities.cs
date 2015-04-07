@@ -12,7 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace CmisCmdlets
+namespace Cmis.Utility
 {
     public class Utilities
     {

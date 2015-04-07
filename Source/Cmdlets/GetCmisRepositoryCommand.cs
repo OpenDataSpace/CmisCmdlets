@@ -10,6 +10,7 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
+using Cmis.Utility;
 
 namespace CmisCmdlets
 {

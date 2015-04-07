@@ -9,6 +9,7 @@
 //  http://mozilla.org/MPL/2.0/.
 using NUnit.Framework;
 using System;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test.Commands
 {

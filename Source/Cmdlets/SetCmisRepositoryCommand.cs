@@ -11,6 +11,7 @@ using System;
 using System.Management.Automation;
 using DotCMIS.Client;
 using DotCMIS;
+using Cmis.Utility;
 
 namespace CmisCmdlets
 {

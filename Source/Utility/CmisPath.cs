@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using DotCMIS.Enums;
 
-namespace CmisCmdlets
+namespace Cmis.Utility
 {
     public class CmisPath
     {

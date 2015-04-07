@@ -13,6 +13,7 @@ using NUnit.Framework;
 using CmisCmdlets;
 using DotCMIS.Client;
 using DotCMIS;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test.Commands
 {

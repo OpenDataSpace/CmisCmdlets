@@ -5,9 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6C68931A-5533-4709-B382-AE31B069D848}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Provider.Pash</RootNamespace>
+    <RootNamespace>CmisProvider</RootNamespace>
     <AssemblyName>Provider.Pash</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <CustomCommands>
       <CustomCommands>
         <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />

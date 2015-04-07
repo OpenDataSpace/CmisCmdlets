@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using System.Configuration;
 using DotCMIS;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {

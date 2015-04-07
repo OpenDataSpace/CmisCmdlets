@@ -14,7 +14,7 @@ using DotCMIS.Client;
 using DotCMIS.Client.Impl;
 using DotCMIS;
 
-namespace CmisCmdlets
+namespace Cmis.Utility
 {
     public class ConnectionFactory
     {
@@ -74,6 +74,22 @@ namespace CmisCmdlets
         {
             var fact = SessionFactory.NewInstance();
             return fact.CreateSession(parameters);
+        }
+
+        public static Dictionary<string, string> CreateAtomPubParams(string url, string user, string pw,
+            string repoId = null)
+        {
+            var parameters = new Dictionary<string, string> {
+                {SessionParameter.User, user},
+                {SessionParameter.Password, pw},
+                {SessionParameter.AtomPubUrl, url},
+                {SessionParameter.BindingType, BindingType.AtomPub}
+            };
+            if (!String.IsNullOrEmpty(repoId))
+            {
+                parameters[SessionParameter.RepositoryId] = repoId;
+            }
+            return parameters;
         }
 
         #endregion
@@ -139,22 +155,6 @@ namespace CmisCmdlets
         }
 
         #endregion
-
-        internal static Dictionary<string, string> CreateAtomPubParams(string url, string user, string pw,
-                                                                       string repoId = null)
-        {
-            var parameters = new Dictionary<string, string> {
-                {SessionParameter.User, user},
-                {SessionParameter.Password, pw},
-                {SessionParameter.AtomPubUrl, url},
-                {SessionParameter.BindingType, BindingType.AtomPub}
-            };
-            if (!String.IsNullOrEmpty(repoId))
-            {
-                parameters[SessionParameter.RepositoryId] = repoId;
-            }
-            return parameters;
-        }
     }
 }
 

@@ -16,6 +16,7 @@ using DotCMIS.Data.Impl;
 using NUnit.Framework.Constraints;
 using System.Text;
 using System.IO;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {

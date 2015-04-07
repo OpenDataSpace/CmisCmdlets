@@ -10,6 +10,7 @@
 using System;
 using NUnit.Framework;
 using System.Runtime.ConstrainedExecution;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {

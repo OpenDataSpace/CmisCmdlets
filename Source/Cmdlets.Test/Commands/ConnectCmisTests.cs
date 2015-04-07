@@ -12,6 +12,7 @@ using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS;
 using System.Management.Automation;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test.Commands
 {

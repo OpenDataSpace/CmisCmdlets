@@ -13,6 +13,7 @@ using System.Collections;
 using DotCMIS;
 using System.Net;
 using System.Net.Security;
+using Cmis.Utility;
 
 namespace CmisCmdlets
 {

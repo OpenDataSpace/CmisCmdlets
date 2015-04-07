@@ -16,7 +16,7 @@ using DotCMIS;
 using DotCMIS.Data.Impl;
 using DotCMIS.Enums;
 
-namespace CmisCmdlets
+namespace Cmis.Utility
 {
     public class CmisNavigation
     {

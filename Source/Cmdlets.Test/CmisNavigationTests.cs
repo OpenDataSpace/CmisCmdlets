@@ -17,6 +17,7 @@ using DotCMIS.Data.Impl;
 using System.IO;
 using System.Text;
 using DotCMIS.Binding.Services;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {

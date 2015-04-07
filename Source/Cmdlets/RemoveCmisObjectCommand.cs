@@ -12,6 +12,7 @@ using System.Management.Automation;
 using DotCMIS.Client;
 using System.Collections.Generic;
 using DotCMIS.Exceptions;
+using Cmis.Utility;
 
 namespace CmisCmdlets
 {

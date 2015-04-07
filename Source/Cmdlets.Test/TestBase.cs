@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using NUnit.Framework;
 using DotCMIS.Client;
 using DotCMIS.Exceptions;
+using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {

@@ -10,7 +10,7 @@
 using System;
 using DotCMIS.Exceptions;
 
-namespace CmisCmdlets
+namespace Cmis.Utility
 {
     public class CmisPathException : CmisBaseException
     {
