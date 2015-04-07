@@ -29,9 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="Irony">
       <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
     </Reference>
@@ -48,6 +45,9 @@
     <Reference Include="System.Core" />
     <Reference Include="DotCMIS">
       <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +77,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\CmisCmdlets\CmisCmdlets.Pash.csproj">
+    <ProjectReference Include="..\Cmdlets\Cmdlets.Pash.csproj">
       <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
-      <Name>CmisCmdlets.Pash</Name>
+      <Name>Cmdlets.Pash</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

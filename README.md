@@ -9,6 +9,24 @@ If you want to compile against Pash, make sure you add a compiled Pash version
 to the project. To do this, clone Pash (https://github.com/Pash-Project/Pash)
 and invoke `update_pash.sh /path/to/cloned/Pash`
 
+Then, regardless if you are compiling it against Pash or Powershell, you need
+to init the git submodules via `git submodule init; git submodule update`.
+
+For the tests to work, you need to add a `TestConfig.config` file to the project
+directory with the following contents:
+```
+<?xml version="1.0"?>
+<configuration>
+    <appSettings>
+	    <add key="user" value="cmisTestUser" />
+	    <add key="password" value="testUserPassword" />
+	    <add key="url" value="urlToYourTestCMISRepo" />
+	    <add key="repository" value="nameOfYourTestCmisRepo" />
+	    <add key="repository_alt" value="nameOfYourSecondTestCmisRepo" />
+	</appSettings>
+</configuration>
+```
+
 Then build the project as usual (with your IDE, xbuild or msbuild).
 
 

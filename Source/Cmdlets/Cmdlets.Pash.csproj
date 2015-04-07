@@ -64,24 +64,24 @@
     <Compile Include="CmisCmdlets.cs" />
     <Compile Include="ConnectionFactory.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="GetCmisRepositoryCommand.cs" />
-    <Compile Include="ConnectCmisCommand.cs" />
-    <Compile Include="DisconnectCmisCommand.cs" />
-    <Compile Include="SetCmisRepositoryCommand.cs" />
-    <Compile Include="SetCmisWorkingFolderCommand.cs" />
     <Compile Include="CmisNavigation.cs" />
-    <Compile Include="GetCmisWorkingFolderCommand.cs" />
     <Compile Include="CmisPath.cs" />
     <Compile Include="CmisPathException.cs" />
-    <Compile Include="GetCmisObjectCommand.cs" />
-    <Compile Include="RemoveCmisObjectCommand.cs" />
-    <Compile Include="NewCmisDocumentCommand.cs" />
     <Compile Include="MimeTypeMap.cs" />
-    <Compile Include="ReadCmisDocumentCommand.cs" />
     <Compile Include="CmisContentCommandBase.cs" />
-    <Compile Include="UpdateCmisObjectCommand.cs" />
-    <Compile Include="GetCmisPropertyCommand.cs" />
-    <Compile Include="NewCmisFolderCommand.cs" />
+    <Compile Include="Commands\RemoveCmisObjectCommand.cs" />
+    <Compile Include="Commands\SetCmisRepositoryCommand.cs" />
+    <Compile Include="Commands\SetCmisWorkingFolderCommand.cs" />
+    <Compile Include="Commands\UpdateCmisObjectCommand.cs" />
+    <Compile Include="Commands\ConnectCmisCommand.cs" />
+    <Compile Include="Commands\DisconnectCmisCommand.cs" />
+    <Compile Include="Commands\GetCmisObjectCommand.cs" />
+    <Compile Include="Commands\GetCmisPropertyCommand.cs" />
+    <Compile Include="Commands\GetCmisRepositoryCommand.cs" />
+    <Compile Include="Commands\GetCmisWorkingFolderCommand.cs" />
+    <Compile Include="Commands\NewCmisDocumentCommand.cs" />
+    <Compile Include="Commands\NewCmisFolderCommand.cs" />
+    <Compile Include="Commands\ReadCmisDocumentCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
