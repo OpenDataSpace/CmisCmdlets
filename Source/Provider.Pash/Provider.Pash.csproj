@@ -3,10 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</ProjectGuid>
+    <ProjectGuid>{6C68931A-5533-4709-B382-AE31B069D848}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CmisCmdlets</RootNamespace>
-    <AssemblyName>CmisCmdlets</AssemblyName>
+    <RootNamespace>Provider.Pash</RootNamespace>
+    <AssemblyName>Provider.Pash</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <CustomCommands>
       <CustomCommands>
         <Command type="BeforeBuild" command="xbuild /p:Configuration=Release" workingdir="${SolutionDir}/../Extras/DotCMIS" />
@@ -24,6 +25,7 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -49,40 +51,10 @@
       <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CmisCommandBase.cs" />
-    <Compile Include="CmisCmdlets.cs" />
-    <Compile Include="ConnectionFactory.cs" />
-    <Compile Include="Utilities.cs" />
-    <Compile Include="CmisNavigation.cs" />
-    <Compile Include="CmisPath.cs" />
-    <Compile Include="CmisPathException.cs" />
-    <Compile Include="MimeTypeMap.cs" />
-    <Compile Include="CmisContentCommandBase.cs" />
-    <Compile Include="Commands\RemoveCmisObjectCommand.cs" />
-    <Compile Include="Commands\SetCmisRepositoryCommand.cs" />
-    <Compile Include="Commands\SetCmisWorkingFolderCommand.cs" />
-    <Compile Include="Commands\UpdateCmisObjectCommand.cs" />
-    <Compile Include="Commands\ConnectCmisCommand.cs" />
-    <Compile Include="Commands\DisconnectCmisCommand.cs" />
-    <Compile Include="Commands\GetCmisObjectCommand.cs" />
-    <Compile Include="Commands\GetCmisPropertyCommand.cs" />
-    <Compile Include="Commands\GetCmisRepositoryCommand.cs" />
-    <Compile Include="Commands\GetCmisWorkingFolderCommand.cs" />
-    <Compile Include="Commands\NewCmisDocumentCommand.cs" />
-    <Compile Include="Commands\NewCmisFolderCommand.cs" />
-    <Compile Include="Commands\ReadCmisDocumentCommand.cs" />
+    <Compile Include="CmisProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="..\..\README.md">
-      <Link>README.md</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
 </Project>
