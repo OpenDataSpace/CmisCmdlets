@@ -75,6 +75,7 @@
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
+    <None Include="..\..\Example.ps1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utility\Utility.csproj">
