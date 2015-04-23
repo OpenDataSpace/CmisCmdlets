@@ -6,21 +6,14 @@
     <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
              Properties="Configuration=Release"
 			 Targets="DotCMIS" />
-    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
-             Condition="'$(OS)' == 'Windows_NT'" />
-    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
-             Condition="'$(OS)' != 'Windows_NT'" />
+    <MSBuild Projects="Source\CmisCmdlets.sln" />
   </Target>
 
   <Target Name="Clean">
     <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
              Properties="Configuration=Release"
 	     Targets="Clean" />
-    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
-             Condition="'$(OS)' == 'Windows_NT'"
-             Targets="Clean"/>
-    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
-             Condition="'$(OS)' != 'Windows_NT'"
+    <MSBuild Projects="Source\CmisCmdlets.sln"
              Targets="Clean"/>
   </Target>
 
@@ -28,11 +21,7 @@
     <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
              Properties="Configuration=Release"
 	     Targets="Rebuild" />
-    <MSBuild Projects="Source\CmisCmdlets.Powershell.sln"
-             Condition="'$(OS)' == 'Windows_NT'"
-             Targets="Rebuild"/>
-    <MSBuild Projects="Source\CmisCmdlets.Pash.sln"
-             Condition="'$(OS)' != 'Windows_NT'"
+   <MSBuild Projects="Source\CmisCmdlets.sln"
              Targets="Rebuild"/>
    </Target>
 </Project>

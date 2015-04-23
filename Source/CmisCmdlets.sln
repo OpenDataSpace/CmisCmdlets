@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmdlets.Pash", "Cmdlets\Cmdlets.Pash.csproj", "{DEA884B9-5CFE-4A5E-B33B-24961501F11D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmdlets", "Cmdlets\Cmdlets.csproj", "{DEA884B9-5CFE-4A5E-B33B-24961501F11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Pash", "Cmdlets.Test\Tests.Pash.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cmdlets.Tests", "Cmdlets.Test\Cmdlets.Tests.csproj", "{F7BE7479-B1AE-46A0-BCA0-CC18E8CB7BAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider.Pash", "Provider\Provider.Pash.csproj", "{6C68931A-5533-4709-B382-AE31B069D848}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider", "Provider\Provider.csproj", "{6C68931A-5533-4709-B382-AE31B069D848}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{B1CD36BA-E449-492F-8B93-A462FCF2A42D}"
 EndProject

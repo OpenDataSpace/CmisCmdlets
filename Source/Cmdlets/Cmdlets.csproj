@@ -32,17 +32,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Irony">
-      <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management.Automation">
       <HintPath>..\..\Libraries\Pash\System.Management.Automation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.PowerShell.Commands.Management">
-      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Management.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.PowerShell.Commands.Utility">
-      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="DotCMIS">

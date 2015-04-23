@@ -27,17 +27,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Irony">
-      <HintPath>..\..\Libraries\Pash\Irony.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management.Automation">
       <HintPath>..\..\Libraries\Pash\System.Management.Automation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.PowerShell.Commands.Management">
-      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Management.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.PowerShell.Commands.Utility">
-      <HintPath>..\..\Libraries\Pash\Microsoft.PowerShell.Commands.Utility.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -75,13 +66,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Cmdlets\Cmdlets.Pash.csproj">
-      <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
-      <Name>Cmdlets.Pash</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{B1CD36BA-E449-492F-8B93-A462FCF2A42D}</Project>
       <Name>Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cmdlets\Cmdlets.csproj">
+      <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
+      <Name>Cmdlets</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

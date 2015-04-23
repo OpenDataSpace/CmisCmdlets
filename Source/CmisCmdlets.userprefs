@@ -1,13 +1,75 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Pash Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CmisCmdlets/CmisCommandBase.cs">
+﻿<Properties StartupItem="Cmdlets/Cmdlets.Pash.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Example.ps1">
     <Files>
-      <File FileName="CmisCmdlets/CmisCommandBase.cs" Line="15" Column="44" />
+      <File FileName="Cmdlets.Test/Commands/SetCmisRepositoryTests.cs" Line="19" Column="19" />
+      <File FileName="../TestConfig.config" Line="17" Column="17" />
+      <File FileName="Cmdlets/ConnectCmisCommand.cs" Line="3" Column="3" />
+      <File FileName="../Example.ps1" Line="20" Column="20" />
+      <File FileName="Cmdlets.Test/Commands/RemoveCmisObjectTests.cs" Line="1" Column="1" />
+      <File FileName="Cmdlets/RemoveCmisObjectCommand.cs" Line="1" Column="1" />
+      <File FileName="Cmdlets/SetCmisRepositoryCommand.cs" Line="1" Column="1" />
+      <File FileName="Cmdlets/SetCmisWorkingFolderCommand.cs" Line="1" Column="1" />
+      <File FileName="Cmdlets/UpdateCmisObjectCommand.cs" Line="39" Column="39" />
+      <File FileName="Cmdlets/NewCmisDocumentCommand.cs" Line="35" Column="35" />
+      <File FileName="Cmdlets/CmisContentCommandBase.cs" Line="9" Column="9" />
+      <File FileName="Cmdlets/ReadCmisDocumentCommand.cs" Line="51" Column="51" />
+      <File FileName="Cmdlets/CmisCommandBase.cs" Line="5" Column="5" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Cmdlets.Pash" expanded="True">
+            <Node name="Example.ps1" selected="True" />
+          </Node>
+          <Node name="Tests.Pash" expanded="True">
+            <Node name="Commands" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True">
+          <Node name="Tests.Pash" expanded="True">
+            <Node name="CmisCmdlets" expanded="True">
+              <Node name="Test" expanded="True">
+                <Node name="Commands" expanded="True">
+                  <Node name="UpdateCmisObjectTests" expanded="True">
+                    <Node name="UpdateDocumentContentByPipeline" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/stefan/workspace/CmisCmdlets/Source/Cmdlets/UpdateCmisObjectCommand.cs" line="89" column="1" />
+      <Breakpoint file="/home/stefan/workspace/CmisCmdlets/Source/Cmdlets/UpdateCmisObjectCommand.cs" line="80" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <AuthorInfo Name="Stefan Burnicki" Email="stefan.burnicki@graudata.com" Copyright="2014" Company="GRAU DATA" Trademark="" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../Pash/Source/System.Management/Automation/PSMethod.cs" line="109" offsetX="500" offsetY="2160" expression="newArguments" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/PipelineProcessor.cs" line="116" offsetX="640" offsetY="2300" expression="_commandsToExecute" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/ExecutionVisitor.cs" line="421" offsetX="570" offsetY="8400" expression="pipeline.Commands" liveUpdate="False" />
+    <Watch file="../../Pash/Libraries/Irony/Irony/Parsing/Scanner/Scanner.cs" line="55" offsetX="774" offsetY="1350" expression="Context.FilteredTokens" liveUpdate="False" />
+    <Watch file="../../Pash/Libraries/Irony/Irony/Parsing/Scanner/Scanner.cs" line="55" offsetX="774" offsetY="1350" expression="Context.FilteredTokens" liveUpdate="False" />
+    <Watch file="../../Pash/Libraries/Irony/Irony/Parsing/Scanner/Scanner.cs" line="44" offsetX="798" offsetY="1075" expression="Context.TokenFilters" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/CmdletParameterBinder.cs" line="398" offsetX="1182" offsetY="9925" expression="fieldDescs" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/ExecutionVisitor.cs" line="1332" offsetX="1110" offsetY="33275" expression="scriptBlockAst" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/ExecutionVisitor.cs" line="1211" offsetX="978" offsetY="30250" expression="enumerable" liveUpdate="False" />
+    <Watch file="../../Pash/Source/Microsoft.PowerShell.Commands.Utility/ConsoleColorCmdlet.cs" line="21" offsetX="785" offsetY="500" expression="Console" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/TabExpansionProvider.cs" line="91" offsetX="502" offsetY="2520" expression="expansions" liveUpdate="False" />
+    <Watch file="../../Pash/Source/Microsoft.PowerShell.Commands.Utility/AddTypeCommand.cs" line="159" offsetX="570" offsetY="3950" expression="results.Errors" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/LocalPipeline.cs" line="168" offsetX="906" offsetY="4175" expression="_errorStream" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/LocalPipeline.cs" line="48" offsetX="702" offsetY="1175" expression="Error" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/ExecutionVisitor.cs" line="1509" offsetX="1134" offsetY="37700" expression="subVisitor" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/ExecutionVisitor.cs" line="438" offsetX="816" offsetY="9177" expression="_pipelineCommandRuntime" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/CmdletParameterBinder.cs" line="280" offsetX="896" offsetY="6975" expression="parameterSet.Parameters" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Pash/Implementation/CmdletParameterBinder.cs" line="89" offsetX="1016" offsetY="2200" expression="ActiveOrDefaultParameterSet" liveUpdate="False" />
+    <Watch file="../../Pash/Source/System.Management/Automation/CmdletProviderIntrinsicsBase.cs" line="33" offsetX="1268" offsetY="800" expression="Globber" liveUpdate="False" />
+    <Watch file="../../Pash/Source/ReferenceTests/Providers/NavigationCmdletProviderTests.cs" line="22" offsetX="664" offsetY="378" expression="expected" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
