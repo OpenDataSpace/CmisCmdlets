@@ -130,7 +130,7 @@ namespace TestShell
         private void LoadCmdletBinary()
         {
             bool isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
-            string path = new Uri(typeof(CmisCmdlets.CmisCmdlets).Assembly.CodeBase).LocalPath;
+            string path = new Uri(typeof(CmisCmdlets.CmisCommandBase).Assembly.CodeBase).LocalPath;
 
             // with real Powershell we use Import-Module to avoid installation of the SnapIn
             string cmd = isWindows ? "Import-Module '{0}'" : "Add-PSSnapIn '{0}'";
