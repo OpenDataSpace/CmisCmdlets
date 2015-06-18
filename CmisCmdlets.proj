@@ -3,7 +3,7 @@
 
   <!--=====================================================================-->
   <Target Name="Build">
-    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS\DotCMIS.csproj"
              Properties="Configuration=Release"
 	     Targets="DotCMIS" />
     <MSBuild Projects="Extras\PSTesting\PSTesting.sln" />
@@ -11,7 +11,7 @@
   </Target>
 
   <Target Name="Clean">
-    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS\DotCMIS.csproj"
              Properties="Configuration=Release"
 	     Targets="Clean" />
     <MSBuild Projects="Extras\PSTesting\PSTesting.sln"
@@ -21,7 +21,7 @@
   </Target>
 
   <Target Name="Rebuild">
-    <MSBuild Projects="Extras\DotCMIS\DotCMIS.sln" 
+    <MSBuild Projects="Extras\DotCMIS\DotCMIS\DotCMIS.csproj"
              Properties="Configuration=Release"
 	     Targets="Rebuild" />
     <MSBuild Projects="Extras\PSTesting\PSTesting.sln" 
