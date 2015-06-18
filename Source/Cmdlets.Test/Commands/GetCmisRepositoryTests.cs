@@ -49,7 +49,7 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void GetRepositoriesAtomPubWorksAfterConnectCmdlet()
         {
-            var cmd = String.Format("{0} -url {1} -user {2} -password {3}; {4} -name {5}",
+            var cmd = String.Format("{0} -url '{1}' -user '{2}' -password '{3}'; {4} -name {5}",
                                     CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
                                     TestPassword, CmdletName(typeof(GetCmisRepositoryCommand)),
                                     TestRepository);
