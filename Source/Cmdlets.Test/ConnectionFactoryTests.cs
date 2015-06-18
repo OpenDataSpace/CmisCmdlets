@@ -10,14 +10,12 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
-using System.Configuration;
-using DotCMIS;
 using Cmis.Utility;
 
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class ConnectionFactoryTests : TestBase
+    public class ConnectionFactoryTests : CmisTestBase
     {
                 
         [Test]

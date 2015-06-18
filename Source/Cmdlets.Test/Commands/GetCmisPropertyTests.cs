@@ -18,7 +18,7 @@ using DotCMIS.Client;
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
-    public class GetCmisPropertyTests : TestBase
+    public class GetCmisPropertyTests : CmisTestBase
     {
         public static readonly string GetCmisPropertyCmd = "Get-CmisProperty ";
 

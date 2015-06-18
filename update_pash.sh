@@ -15,8 +15,20 @@ libdir="Libraries/Pash"
 
 mkdir -p $libdir
 
+pashdlls="$pashsrc/Source/PashConsole/bin/Release/*.dll"
 # Copy all dlls
-cp $pashsrc/Source/PashConsole/bin/Release/*.dll $libdir/
+cp $pashdlls $libdir/
 
 echo "Updated Pash"
+
+pstesting="Extras/PSTesting"
+if  [ ! -d "$pstesting" ]; then
+	echo "PSTesing not found to update Pash. Did you (re-)initialize and update your git submodules?"
+	exit 1
+fi
+
+pstestinglib="$pstesting/$libdir"
+mkdir -p $pstestinglib
+
+cp $pashdlls $pstestinglib/
 

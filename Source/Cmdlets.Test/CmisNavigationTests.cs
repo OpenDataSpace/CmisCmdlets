@@ -22,12 +22,12 @@ using Cmis.Utility;
 namespace CmisCmdlets.Test
 {
     [TestFixture]
-    public class CmisNavigationTests : TestBase
+    public class CmisNavigationTests : CmisTestBase
     {
         private CmisNavigation _cmisNav;
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
             _cmisNav = new CmisNavigation(CmisSession);
         }
@@ -46,7 +46,7 @@ namespace CmisCmdlets.Test
         public void CreateExistingFolderWithoutRecursiveThrows()
         {
             CmisHelper.CreateTempFolder("__cefwrtFolder", false);
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws<CmisNameConstraintViolationException>(delegate {
                 _cmisNav.CreateFolder("__cefwrtFolder", false);
             });
         }
@@ -216,7 +216,7 @@ namespace CmisCmdlets.Test
         public void CreateExistingDocumentThrows()
         {
             CmisHelper.CreateTempDocument("__cedtDoc", null);
-            Assert.Throws<CmisConstraintException>(delegate {
+            Assert.Throws<CmisNameConstraintViolationException>(delegate {
                 _cmisNav.CreateDocument("__cedtDoc", null);
             });
         }

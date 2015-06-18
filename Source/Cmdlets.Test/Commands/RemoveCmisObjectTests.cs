@@ -11,8 +11,7 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using DotCMIS.Exceptions;
-using TestShell;
-using System.Management.Automation;
+using PSTesting;
 
 namespace CmisCmdlets.Test.Commands
 {

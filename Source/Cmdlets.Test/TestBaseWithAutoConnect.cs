@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace CmisCmdlets.Test
 {
-    public class TestBaseWithAutoConnect : TestBase
+    public class TestBaseWithAutoConnect : CmisTestBase
     {
         public TestBaseWithAutoConnect() : base()
         {

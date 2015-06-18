@@ -17,15 +17,13 @@ using Cmis.Utility;
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
-    public class ConnectCmisTests : TestBase
+    public class ConnectCmisTests : CmisTestBase
     {
         [Test]
         public void ConnectCmdletStoresInfo()
         {
-            var cmd = String.Format("{0} -url {1} -user {2} -password {3}",
-                                    CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
-                                    TestPassword);
-            Shell.Execute(cmd);
+            var connectCmd = GetConnectToTestRepoCmd();
+            Shell.Execute(connectCmd);
             Assert.NotNull(CmisCommandBase.ConnectionParameters);
         }
 
@@ -41,7 +39,8 @@ namespace CmisCmdlets.Test.Commands
         [Test]
         public void ConnectCmdletCanConnectToRepo()
         {
-            Shell.Execute(GetConnectToTestRepoCmd());
+            var connectCmd = GetConnectToTestRepoCmd();
+            Shell.Execute(connectCmd);
             Assert.That(CmisCommandBase.ConnectionParameters, Is.Not.Null);
             ValidateSession(Shell.GetVariableValue(CmisCommandBase.SESSION_VAR_NAME)
                             , TestRepository);
@@ -53,7 +52,7 @@ namespace CmisCmdlets.Test.Commands
             var parameters = ConnectionFactory.CreateAtomPubParams(TestURL, TestUser, TestPassword);
             var repo = ConnectionFactory.GetRepositoryByName(parameters, TestRepository);
             parameters[SessionParameter.RepositoryId] = repo.Id;
-            var objCode = GetCodeForHashtableDefinition("p", parameters);
+            var objCode = "$p = " + HashtableDefinition(parameters);
             var cmd = String.Format("{0}; {1} -parameters $p; ${2}", objCode,
                                     CmdletName(typeof(ConnectCmisCommand)));
            Shell.Execute(cmd);
