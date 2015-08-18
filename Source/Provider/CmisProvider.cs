@@ -149,12 +149,12 @@ namespace CmisProvider
 
         protected override string GetParentPath(string path, string root)
         {
-            return base.GetParentPath(path, root);
+            return new CmisPath(path).Combine("..").ToString();
         }
 
         protected override string MakePath(string parent, string child)
         {
-            return base.MakePath(parent, child);
+            return new CmisPath(parent).Combine(child).ToString();
         }
 
         #endregion
