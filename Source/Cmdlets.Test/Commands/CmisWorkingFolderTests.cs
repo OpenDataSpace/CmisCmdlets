@@ -16,7 +16,7 @@ using DotCMIS.Exceptions;
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
-    public class CmisWorkingFolderTests : CmisTestBase
+    public class CmisWorkingFolderTests : CmdletsTestBase
     {
         public static readonly string GetCmisWorkingFolderCmd = "Get-CmisWorkingFolder ";
         public static readonly string SetCmisWorkingFolderCmd = "Set-CmisWorkingFolder ";

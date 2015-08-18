@@ -12,7 +12,7 @@ using NUnit.Framework.Constraints;
 using DotCMIS.Client;
 using System.Linq;
 
-namespace CmisCmdlets.Tests.Constraints
+namespace CmisUtility.Test.Constraints
 {
     public abstract class CmisBaseConstraint : Constraint
     {

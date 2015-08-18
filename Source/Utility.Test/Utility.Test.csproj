@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Utility.Test</RootNamespace>
+    <AssemblyName>Utility.Test</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="CmisNavigationTests.cs" />
+    <Compile Include="CmisPathTest.cs" />
+    <Compile Include="ConnectionFactoryTests.cs" />
+    <Compile Include="CmisTestBase.cs" />
+    <Compile Include="CmisTestHelper.cs" />
+    <Compile Include="Constraints\CmisBaseConstraint.cs" />
+    <Compile Include="Constraints\CmisCollectionContainsObjectConstraint.cs" />
+    <Compile Include="Constraints\CmisEqualityConstraint.cs" />
+    <Compile Include="Constraints\CmisObjectExistsConstraint.cs" />
+    <Compile Include="Constraints\CmisObjectHasPropertyConstraint.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilityTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DotCMIS">
+      <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
+    </Reference>
+    <Reference Include="PSTesting">
+      <HintPath>..\..\Extras\PSTesting\bin\Debug\PSTesting.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{B1CD36BA-E449-492F-8B93-A462FCF2A42D}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Deployment.LinuxDeployData generateScript="False" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

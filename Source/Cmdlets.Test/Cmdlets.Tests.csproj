@@ -32,23 +32,18 @@
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="PSTesting">
-      <HintPath>..\..\Extras\PSTesting\bin\Debug\PSTesting.dll</HintPath>
-    </Reference>
     <Reference Include="DotCMIS">
       <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PSTesting">
+      <HintPath>..\..\Extras\PSTesting\bin\Debug\PSTesting.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UtilityTests.cs" />
-    <Compile Include="ConnectionFactoryTests.cs" />
-    <Compile Include="CmisPathTest.cs" />
-    <Compile Include="CmisNavigationTests.cs" />
-    <Compile Include="CmisTestHelper.cs" />
     <Compile Include="TestBaseWithAutoConnect.cs" />
     <Compile Include="Commands\ConnectCmisTests.cs" />
     <Compile Include="Commands\CmisWorkingFolderTests.cs" />
@@ -63,12 +58,7 @@
     <Compile Include="Commands\RemoveCmisObjectTests.cs" />
     <Compile Include="Commands\GetCmisPropertyTests.cs" />
     <Compile Include="Commands\UpdateCmisObjectTests.cs" />
-    <Compile Include="CmisTestBase.cs" />
-    <Compile Include="Constraints\CmisBaseConstraint.cs" />
-    <Compile Include="Constraints\CmisObjectExistsConstraint.cs" />
-    <Compile Include="Constraints\CmisEqualityConstraint.cs" />
-    <Compile Include="Constraints\CmisObjectHasPropertyConstraint.cs" />
-    <Compile Include="Constraints\CmisCollectionContainsObjectConstraint.cs" />
+    <Compile Include="CmdletsTestBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,6 +70,10 @@
       <Project>{DEA884B9-5CFE-4A5E-B33B-24961501F11D}</Project>
       <Name>Cmdlets</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utility.Test\Utility.Test.csproj">
+      <Project>{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}</Project>
+      <Name>Utility.Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\TestConfig.config">
@@ -90,6 +84,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Constraints\" />
   </ItemGroup>
 </Project>

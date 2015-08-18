@@ -19,7 +19,7 @@ using System.Text;
 using DotCMIS.Binding.Services;
 using Cmis.Utility;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     [TestFixture]
     public class CmisNavigationTests : CmisTestBase

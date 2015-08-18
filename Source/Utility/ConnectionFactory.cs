@@ -96,7 +96,8 @@ namespace Cmis.Utility
 
         #region internal stuff
 
-        internal static IRepository GetRepositoryByName(IDictionary<string, string> parameters,
+        // TODO: sburnicki change this to internal
+        public static IRepository GetRepositoryByName(IDictionary<string, string> parameters,
                                                         string repoName)
         {
             var repos = GetRepositories(parameters);
@@ -115,7 +116,8 @@ namespace Cmis.Utility
             return correctRepo.First();
         }
 
-        internal static void ParseURL(string url, out string username, out string password,
+        // TODO: sburnicki change this to internal
+        public static void ParseURL(string url, out string username, out string password,
                                       out string rawURL)
         {
             username = "";

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Provider", "Provider\Provid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{B1CD36BA-E449-492F-8B93-A462FCF2A42D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.Test", "Utility.Test\Utility.Test.csproj", "{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1CD36BA-E449-492F-8B93-A462FCF2A42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7EBBD5-F8D6-4C40-8414-1A0D2CFD8ED6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA884B9-5CFE-4A5E-B33B-24961501F11D}.Release|Any CPU.ActiveCfg = Release|Any CPU

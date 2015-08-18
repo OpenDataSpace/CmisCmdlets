@@ -9,11 +9,12 @@
 //  http://mozilla.org/MPL/2.0/.
 using System;
 using NUnit.Framework;
+using System.Configuration;
 using DotCMIS.Client;
 using Cmis.Utility;
 using PSTesting;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     public class CmisTestBase : TestBase
     {
@@ -60,15 +61,12 @@ namespace CmisCmdlets.Test
             }
         }
 
-        protected CmisTestBase() : base(typeof(ConnectCmisCommand), "TestConfig.config", true)
+        protected CmisTestBase() : this(null)
         {
         }
 
-        protected string GetConnectToTestRepoCmd(bool insecure = false)
+        protected CmisTestBase(Type typeInModule) : base(typeInModule, "TestConfig.config", true)
         {
-            return String.Format("{0} -url '{1}' -user '{2}' -password '{3}' -repo '{4}' {5};",
-                                 CmdletName(typeof(ConnectCmisCommand)), TestURL, TestUser,
-                                 TestPassword, TestRepository, insecure ? "-Insecure" : "");
         }
 
         protected string BuildFeaturedUrl(string rawUrl, string user, string pw)

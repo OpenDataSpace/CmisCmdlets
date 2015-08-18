@@ -11,7 +11,7 @@ using NUnit.Framework;
 using System;
 using Cmis.Utility;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     [TestFixture]
     public class CmisPathTest

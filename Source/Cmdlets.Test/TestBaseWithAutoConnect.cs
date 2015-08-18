@@ -9,10 +9,12 @@
 //  http://mozilla.org/MPL/2.0/.
 using System;
 using NUnit.Framework;
+using PSTesting;
+using CmisUtility.Test;
 
 namespace CmisCmdlets.Test
 {
-    public class TestBaseWithAutoConnect : CmisTestBase
+    public class TestBaseWithAutoConnect : CmdletsTestBase
     {
         public TestBaseWithAutoConnect() : base()
         {

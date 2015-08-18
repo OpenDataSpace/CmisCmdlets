@@ -13,7 +13,7 @@ using DotCMIS.Exceptions;
 using System.Linq;
 using System.Text;
 
-namespace CmisCmdlets.Tests.Constraints
+namespace CmisUtility.Test.Constraints
 {
     public class CmisObjectExistsConstraint : CmisBaseConstraint
     {

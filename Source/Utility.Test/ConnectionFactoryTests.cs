@@ -12,12 +12,12 @@ using System;
 using System.Linq;
 using Cmis.Utility;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     [TestFixture]
     public class ConnectionFactoryTests : CmisTestBase
     {
-                
+ 
         [Test]
         public void GetRepositories()
         {

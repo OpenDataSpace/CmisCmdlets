@@ -11,7 +11,7 @@ using System;
 using DotCMIS.Client;
 using System.Collections.Generic;
 
-namespace CmisCmdlets.Tests.Constraints
+namespace CmisUtility.Test.Constraints
 {
     public class CmisCollectionContainsObjectConstraint : CmisBaseConstraint
     {

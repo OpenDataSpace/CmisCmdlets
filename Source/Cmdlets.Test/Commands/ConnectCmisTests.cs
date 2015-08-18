@@ -13,11 +13,12 @@ using DotCMIS.Client;
 using DotCMIS;
 using System.Management.Automation;
 using Cmis.Utility;
+using CmisUtility.Test;
 
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
-    public class ConnectCmisTests : CmisTestBase
+    public class ConnectCmisTests : CmdletsTestBase
     {
         [Test]
         public void ConnectCmdletStoresInfo()

@@ -18,9 +18,9 @@ using System.Text;
 using System.IO;
 using Cmis.Utility;
 using PSTesting;
-using CmisCmdlets.Tests.Constraints;
+using CmisUtility.Test.Constraints;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     public class CmisTestHelper : ITestHelper
     {

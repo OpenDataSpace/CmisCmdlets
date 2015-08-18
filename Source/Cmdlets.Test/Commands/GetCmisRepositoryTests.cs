@@ -18,7 +18,7 @@ using Cmis.Utility;
 namespace CmisCmdlets.Test.Commands
 {
     [TestFixture]
-    public class GetCmisRepositoryTests : CmisTestBase
+    public class GetCmisRepositoryTests : CmdletsTestBase
     {
         [Test]
         public void GetRepositoriesAtomPubWorks()

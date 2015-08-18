@@ -12,7 +12,7 @@ using NUnit.Framework;
 using System.Runtime.ConstrainedExecution;
 using Cmis.Utility;
 
-namespace CmisCmdlets.Test
+namespace CmisUtility.Test
 {
     [TestFixture]
     public class UtilityTests

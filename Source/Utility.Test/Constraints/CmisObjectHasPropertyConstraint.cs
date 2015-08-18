@@ -10,7 +10,7 @@
 using System;
 using DotCMIS.Client;
 
-namespace CmisCmdlets.Tests.Constraints
+namespace CmisUtility.Test.Constraints
 {
     public class CmisObjectHasPropertyConstraint : CmisBaseConstraint
     {
