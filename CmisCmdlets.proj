@@ -4,8 +4,7 @@
   <!--=====================================================================-->
   <Target Name="Build">
     <MSBuild Projects="Extras\DotCMIS\DotCMIS\DotCMIS.csproj"
-             Properties="Configuration=Release"
-	     Targets="DotCMIS" />
+             Properties="Configuration=Release" />
     <MSBuild Projects="Extras\PSTesting\PSTesting.sln" />
     <MSBuild Projects="Source\CmisCmdlets.sln" />
   </Target>

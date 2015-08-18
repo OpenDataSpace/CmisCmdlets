@@ -39,12 +39,19 @@
     <Reference Include="System.Core" />
     <Reference Include="DotCMIS">
       <HintPath>..\..\Extras\DotCMIS\DotCMIS\bin\Release\DotCMIS.dll</HintPath>
-      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CmisProvider.cs" />
+    <Compile Include="CmisDrive.cs" />
+    <Compile Include="CmisDriveParameters.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{B1CD36BA-E449-492F-8B93-A462FCF2A42D}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

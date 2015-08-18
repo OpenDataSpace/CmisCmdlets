@@ -10,17 +10,28 @@
 using System;
 using System.Management.Automation.Provider;
 using System.Management.Automation;
+using System.Collections.Generic;
+using DotCMIS.Client;
+using DotCMIS.Exceptions;
+using Cmis.Utility;
 
 namespace CmisProvider
 {
     [CmdletProvider("Cmis", ProviderCapabilities.Credentials)]
     public class CmisProvider : NavigationCmdletProvider
     {
+
         #region drive related functionality
 
         protected override PSDriveInfo NewDrive(PSDriveInfo drive)
         {
-            return base.NewDrive(drive);
+            var parameters = DynamicParameters as CmisDriveParameters;
+            return new CmisDrive(drive, parameters);
+        }
+
+        protected override object NewDriveDynamicParameters ()
+        {
+            return new CmisDriveParameters();
         }
 
         #endregion
@@ -39,12 +50,19 @@ namespace CmisProvider
 
         protected override bool ItemExists(string path)
         {
-            return base.ItemExists(path);
+            var drive = CurrentDrive();
+            ICmisObject obj;
+            return drive.Navigation.TryGet(drive.NormalizePath(path), out obj);
         }
 
         protected override bool IsValidPath(string path)
         {
-            throw new NotImplementedException();
+            try {
+                new CmisPath(CurrentDrive().NormalizePath(path));
+            } catch (CmisPathException) {
+                return false;
+            }
+            return true;
         }
 
         protected override void GetItem(string path)
@@ -83,7 +101,21 @@ namespace CmisProvider
 
         protected override void GetChildItems(string path, bool recurse)
         {
-            base.GetChildItems(path, recurse);
+            var drive = CurrentDrive();
+            path = drive.NormalizePath(path);
+            IList<ITree<IFileableCmisObject>> descendants;
+            try
+            {
+                var folder = drive.Navigation.GetFolder(path);
+                descendants = folder.GetDescendants(100); // TODO: useful depth
+            }
+            catch (CmisBaseException e)
+            {
+                ThrowTerminatingError(new ErrorRecord(e, "GetChildItemsFailed",
+                    ErrorCategory.ResourceUnavailable, path));
+                return;
+            }
+            WriteTreeList(descendants);
         }
 
         protected override void CopyItem(string path, string copyPath, bool recurse)
@@ -126,6 +158,38 @@ namespace CmisProvider
         }
 
         #endregion
+
+        private void WriteTreeList(IList<ITree<IFileableCmisObject>> treeList)
+        {
+            if (treeList == null)
+            {
+                return;
+            }
+            foreach (var tree in treeList)
+            {
+                WriteObject(tree.Item);
+                if (tree.Children != null)
+                {
+                    WriteTreeList(tree.Children);
+                }
+            }
+        }
+
+        void WriteObject(IFileableCmisObject item)
+        {
+            WriteItemObject(item, item.Paths[0], item is IFolder);
+        }
+
+        private CmisDrive CurrentDrive() {
+            var drive = PSDriveInfo as CmisDrive;
+            if (drive == null)
+            {
+                var msg = "The current drive is not set or not a CmisDrive. " +
+                    "This is an internal problem. Please report this";
+                throw new InvalidOperationException(msg);
+            }
+            return drive;
+        }
     }
 }
 
