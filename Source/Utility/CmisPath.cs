@@ -90,6 +90,11 @@ namespace Cmis.Utility
             return new string[] { basepath, basename };
         }
 
+        public bool IsRoot()
+        {
+            return _path.Length == 0 || _path.Equals(CorrectSlash);
+        }
+
         public CmisPath Clone()
         {
             return new CmisPath(_path);

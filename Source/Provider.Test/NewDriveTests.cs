@@ -20,13 +20,25 @@ namespace CmisProvider.Test
         [Test]
         public void CreateNewDrive()
         {
-            var cmd = GetNewDriveCommand();
+            var cmd = GetNewDriveCommand(true);
             var res = Shell.Execute(cmd);
             Assert.That(res.Count, Is.EqualTo(1));
             var drive = res.First() as CmisDrive;
             Assert.That(drive, Is.Not.Null);
             Assert.That(drive.Connection, Is.Not.Null);
             Assert.That(drive.Connection.RepositoryInfo.Name, Is.EqualTo(TestRepository));
+        }
+
+        [Test]
+        public void ChangeIntoNewDrive()
+        {
+            var res = Shell.Execute(
+                GetNewDriveCommand(),
+                "Set-Location CmisTest:",
+                "Get-Location"
+            );
+            Assert.That(res.Count, Is.EqualTo(1));
+            Assert.That(res[1].ToString(), Is.EqualTo("/"));
         }
     }
 }

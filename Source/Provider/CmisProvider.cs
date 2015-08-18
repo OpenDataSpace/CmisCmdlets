@@ -52,13 +52,13 @@ namespace CmisProvider
         {
             var drive = CurrentDrive();
             ICmisObject obj;
-            return drive.Navigation.TryGet(drive.NormalizePath(path), out obj);
+            return drive.Navigation.TryGet(path, out obj);
         }
 
         protected override bool IsValidPath(string path)
         {
             try {
-                new CmisPath(CurrentDrive().NormalizePath(path));
+                new CmisPath(path);
             } catch (CmisPathException) {
                 return false;
             }
@@ -102,7 +102,6 @@ namespace CmisProvider
         protected override void GetChildItems(string path, bool recurse)
         {
             var drive = CurrentDrive();
-            path = drive.NormalizePath(path);
             IList<ITree<IFileableCmisObject>> descendants;
             try
             {
@@ -144,16 +143,27 @@ namespace CmisProvider
 
         protected override bool IsItemContainer(string path)
         {
-            return base.IsItemContainer(path);
+            return CurrentDrive().Navigation.Get(path) is IFolder;
         }
 
         protected override string GetParentPath(string path, string root)
         {
-            return new CmisPath(path).Combine("..").ToString();
+            var cmisPath = new CmisPath(path);
+            if (!cmisPath.IsRoot())
+            {
+                cmisPath = cmisPath.Combine("..");
+            }
+            return cmisPath.ToString();
         }
 
         protected override string MakePath(string parent, string child)
         {
+            var cmisPath = new CmisPath(parent);
+            var cmisChild = new CmisPath(child);
+            if (cmisPath.IsRoot() && cmisChild.WithoutTrailingSlash().ToString() == "..")
+            {
+                return cmisPath.ToString();
+            }
             return new CmisPath(parent).Combine(child).ToString();
         }
 

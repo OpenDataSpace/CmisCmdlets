@@ -19,11 +19,12 @@ namespace CmisProvider.Test
         {
         }
 
-        protected string GetNewDriveCommand()
+        protected string GetNewDriveCommand(bool passThru = false)
         {
+            var ptPrefix = passThru ? "" : "[void] ";
             var credential = CreateCredentialCommand(TestUser, TestPassword);
-            return "New-PSDrive -PSProvider 'Cmis' -Name 'CmisTest' -Credential " + credential +
-                   " -Host '" + TestURL + "' -Root '" + TestRepository + ":/'";
+            return "(" + ptPrefix + "(New-PSDrive -PSProvider 'Cmis' -Name 'CmisTest' -Credential " + credential +
+                   " -CmisURL '" + TestURL + "' -Repository '" + TestRepository + "' -Root '/'))";
         }
 
         protected string CreateCredentialCommand(string username, string password)

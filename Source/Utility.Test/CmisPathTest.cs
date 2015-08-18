@@ -71,6 +71,16 @@ namespace CmisUtility.Test
             var components = new string[] { comp1, comp2 };
             Assert.That(new CmisPath(path).GetComponents(), Is.EquivalentTo(components));
         }
+
+        [TestCase(@"")]
+        [TestCase(@"/")]
+        [TestCase(@"\")]
+        [TestCase(@"//")]
+        [TestCase(@"/\")]
+        public void TestRootPath(string path)
+        {
+            Assert.That(new CmisPath(path).IsRoot(), Is.True);
+        }
     }
 }
 

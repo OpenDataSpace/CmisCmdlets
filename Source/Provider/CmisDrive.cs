@@ -24,31 +24,13 @@ namespace CmisProvider
 
         public CmisDrive(PSDriveInfo drive, CmisDriveParameters driveParameters) : base(drive)
         {
-            if (driveParameters == null || String.IsNullOrEmpty(driveParameters.Host))
-            {
-                throw new ArgumentException("No host was specified");
-            }
-
             var unsecurePassword = ConvertToUnsecureString(Credential.Password);
-            var connectionParams = ConnectionFactory.CreateAtomPubParams(driveParameters.Host,
+            var connectionParams = ConnectionFactory.CreateAtomPubParams(driveParameters.CmisURL,
                 Credential.UserName, unsecurePassword);
-            var Repository = Root.Split(new [] { ":" }, 2, StringSplitOptions.None)[0];
+            var Repository = driveParameters.Repository;
 
             Connection = ConnectionFactory.Connect(connectionParams, Repository);
-            Navigation = new CmisNavigation(Connection, NormalizePath(Root));
-        }
-
-        public string NormalizePath(string path)
-        {
-            if (path.StartsWith(Repository + ":"))
-            {
-                path = path.Substring(Repository.Length + 1);
-            }
-            if (path.Length == 0)
-            {
-                path = "/";
-            }
-            return path;
+            Navigation = new CmisNavigation(Connection, Root);
         }
 
         private static string ConvertToUnsecureString(SecureString securePassword)

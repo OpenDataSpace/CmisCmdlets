@@ -15,7 +15,11 @@ namespace CmisProvider
     public class CmisDriveParameters
     {
         [Parameter(Mandatory = true)]
-        public string Host { get; set; }
+        [Alias("Url")]
+        public string CmisURL { get; set; }
+
+        [Parameter(Mandatory = true)]
+        public string Repository { get; set; }
     }
 }
 
