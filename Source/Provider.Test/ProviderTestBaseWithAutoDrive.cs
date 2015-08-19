@@ -12,22 +12,14 @@ using NUnit.Framework;
 
 namespace CmisProvider.Test
 {
-    [TestFixture]
     public class ProviderTestBaseWithAutoDrive : ProviderTestBase
     {
         public ProviderTestBaseWithAutoDrive()
         {
             Shell.SetPreExecutionCommands(
                 GetNewDriveCommand(),
-                "Set-Location " + TestDrive + ":"
+                "Set-Location '" + TestDrive + ":'"
             );
-        }
-
-        [Test]
-        public void DefaultLocationIsCorrect()
-        {
-            var res = Shell.Execute("[string] Get-Location");
-            Assert.That(res[0].ToString(), Is.EqualTo(TestDrive + ":" + SystemSlash));
         }
     }
 }

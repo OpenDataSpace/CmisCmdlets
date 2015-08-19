@@ -17,7 +17,7 @@ namespace CmisProvider.Test
     public class ProviderTestBase : CmisTestBase
     {
         protected const string TestDrive = "CmisTest";
-        protected const string SystemSlash = Path.DirectorySeparatorChar;
+        protected readonly string SystemSlash = Path.DirectorySeparatorChar.ToString();
 
         public ProviderTestBase() : base(typeof(CmisProvider))
         {
