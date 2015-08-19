@@ -8,6 +8,7 @@
 // not distributed with this file, You can obtain one at
 //  http://mozilla.org/MPL/2.0/.
 using System;
+using System.Linq;
 using System.Management.Automation.Provider;
 using System.Management.Automation;
 using System.Collections.Generic;
@@ -138,7 +139,17 @@ namespace CmisProvider
 
         protected override string GetChildName(string path)
         {
-            return base.GetChildName(path);
+            var cmisPath = new CmisPath(path);
+            if (cmisPath.HasTrailingSlash()) // docs say we should return the path itself if there's no item child
+            {
+                return path;
+            }
+            if (IsItemContainer(path))
+            {
+                return path;
+            }
+            var normalizedPath = cmisPath.ToString();
+            return normalizedPath.Substring(normalizedPath.IndexOf(CmisPath.CorrectSlash, StringComparison.OrdinalIgnoreCase) + 1);
         }
 
         protected override bool IsItemContainer(string path)
@@ -148,12 +159,12 @@ namespace CmisProvider
 
         protected override string GetParentPath(string path, string root)
         {
-            var cmisPath = new CmisPath(path);
-            if (!cmisPath.IsRoot())
+            var normalizedPath = new CmisPath(path).WithoutTrailingSlash().ToString();
+            if (!String.IsNullOrEmpty(root) && !normalizedPath.Contains(new CmisPath(root).WithoutTrailingSlash().ToString()))
             {
-                cmisPath = cmisPath.Combine("..");
+                return null;
             }
-            return cmisPath.ToString();
+            return normalizedPath.Substring(0, normalizedPath.LastIndexOf(CmisPath.CorrectSlash, StringComparison.OrdinalIgnoreCase));
         }
 
         protected override string MakePath(string parent, string child)
@@ -162,9 +173,9 @@ namespace CmisProvider
             var cmisChild = new CmisPath(child);
             if (cmisPath.IsRoot() && cmisChild.WithoutTrailingSlash().ToString() == "..")
             {
-                return cmisPath.ToString();
+                return "..";
             }
-            return new CmisPath(parent).Combine(child).ToString();
+            return new CmisPath(parent).Combine(child).WithoutTrailingSlash().ToString();
         }
 
         #endregion

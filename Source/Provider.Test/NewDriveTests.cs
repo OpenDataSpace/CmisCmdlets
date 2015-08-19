@@ -38,7 +38,7 @@ namespace CmisProvider.Test
                 "Get-Location"
             );
             Assert.That(res.Count, Is.EqualTo(1));
-            Assert.That(res[1].ToString(), Is.EqualTo("/"));
+            Assert.That(res[0].ToString(), Is.EqualTo("CmisTest:\\"));
         }
     }
 }
