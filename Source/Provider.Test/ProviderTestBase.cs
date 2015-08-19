@@ -10,11 +10,15 @@
 using System;
 using CmisUtility.Test;
 using CmisProvider;
+using System.IO;
 
 namespace CmisProvider.Test
 {
     public class ProviderTestBase : CmisTestBase
     {
+        protected const string TestDrive = "CmisTest";
+        protected const string SystemSlash = Path.DirectorySeparatorChar;
+
         public ProviderTestBase() : base(typeof(CmisProvider))
         {
         }
@@ -23,8 +27,9 @@ namespace CmisProvider.Test
         {
             var ptPrefix = passThru ? "" : "[void] ";
             var credential = CreateCredentialCommand(TestUser, TestPassword);
-            return "(" + ptPrefix + "(New-PSDrive -PSProvider 'Cmis' -Name 'CmisTest' -Credential " + credential +
-                   " -CmisURL '" + TestURL + "' -Repository '" + TestRepository + "' -Root '/'))";
+            return "(" + ptPrefix + "(New-PSDrive -PSProvider 'Cmis' -Name '" + TestDrive + "'" +
+                   " -Credential " + credential + " -CmisURL '" + TestURL + "'" +
+                   " -Repository '" + TestRepository + "' -Root '/'))";
         }
 
         protected string CreateCredentialCommand(string username, string password)

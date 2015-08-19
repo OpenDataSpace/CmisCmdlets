@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="ProviderTestBase.cs" />
     <Compile Include="NewDriveTests.cs" />
+    <Compile Include="GetChildItemsTests.cs" />
+    <Compile Include="ProviderTestBaseWithAutoDrive.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utility.Test\Utility.Test.csproj">
@@ -71,6 +73,10 @@
     <ProjectReference Include="..\Provider\Provider.csproj">
       <Project>{6C68931A-5533-4709-B382-AE31B069D848}</Project>
       <Name>Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{B1CD36BA-E449-492F-8B93-A462FCF2A42D}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
