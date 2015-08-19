@@ -103,19 +103,8 @@ namespace CmisProvider
         protected override void GetChildItems(string path, bool recurse)
         {
             var drive = CurrentDrive();
-            IList<ITree<IFileableCmisObject>> descendants;
-            try
-            {
-                var folder = drive.Navigation.GetFolder(path);
-                descendants = folder.GetDescendants(100); // TODO: useful depth
-            }
-            catch (CmisBaseException e)
-            {
-                ThrowTerminatingError(new ErrorRecord(e, "GetChildItemsFailed",
-                    ErrorCategory.ResourceUnavailable, path));
-                return;
-            }
-            WriteTreeList(descendants);
+            var folder = drive.Navigation.GetFolder(path);
+            WriteTreeList(folder.GetDescendants(recurse ? 100 : 1));
         }
 
         protected override void CopyItem(string path, string copyPath, bool recurse)
@@ -164,7 +153,12 @@ namespace CmisProvider
             {
                 return null;
             }
-            return normalizedPath.Substring(0, normalizedPath.LastIndexOf(CmisPath.CorrectSlash, StringComparison.OrdinalIgnoreCase));
+            int slashIdx = normalizedPath.LastIndexOf(CmisPath.CorrectSlash, StringComparison.OrdinalIgnoreCase);
+            if (slashIdx < 0)
+            {
+                return "";
+            }
+            return normalizedPath.Substring(0, slashIdx);
         }
 
         protected override string MakePath(string parent, string child)
