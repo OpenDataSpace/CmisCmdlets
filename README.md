@@ -174,4 +174,10 @@ Last but not least, you can query common CMIS properties, or the properties of a
 $cmisObj | Get-CmisProperty -Name "*time*"
 ```
 
+
+# Provider
+A Powershell/Pash provider is in development. It's currently developed in the providerImplementation branch.
+First things already work. Check the tests for example usages.
+
+# Bug reports
 Please feel free to submit request and bug reports!
